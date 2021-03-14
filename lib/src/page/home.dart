@@ -7,10 +7,7 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State {
-  final textStyleEnviar = TextStyle(color: Color(0xFEA4A1A73), fontSize: 20.0);
-
-  final textStyleDireccion =
-      TextStyle(color: Color(0x00978181), fontSize: 20.0);
+  final textStyleEnviar = TextStyle(color: Color(0xFF4B4A4A3), fontSize: 20.0);
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -69,12 +66,15 @@ class HomeState extends State {
         SizedBox(
           width: 10.0,
         ),
-        Text(
-          "Calle 38B # 1c-75",
-          style: TextStyle(
-              color: Color(0xFF000000),
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold),
+        InkWell(
+          child: Text(
+            "Calle 38B # 1c-75",
+            style: TextStyle(
+                color: Color(0xFF000000),
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold),
+          ),
+          onTap: () => {Navigator.pushNamed(context, 'searchDireccion')},
         )
       ],
     );
@@ -85,8 +85,6 @@ class HomeState extends State {
       key: formKey,
       child: TextFormField(
         decoration: InputDecoration(
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
             hintText: "Busca un plato",
             labelStyle:
                 TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
@@ -96,6 +94,13 @@ class HomeState extends State {
             ),
             focusColor: Color(0xffffffff),
             fillColor: Color(0xF2F2F2F2),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
+              borderSide: BorderSide(
+                color: Colors.white,
+                width: 2.0,
+              ),
+            ),
             filled: true),
       ),
     );

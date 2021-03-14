@@ -2,6 +2,7 @@ import 'package:app_restaurante/src/page/home.dart';
 import 'package:app_restaurante/src/page/login.dart';
 import 'package:app_restaurante/src/page/loginVerificacion.dart';
 import 'package:app_restaurante/src/page/registro.dart';
+import 'package:app_restaurante/src/page/searchDireccion.dart';
 import 'package:app_restaurante/src/splashscreen.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         'loginVerificacion': (BuildContext context) => LoginVerificacion(),
         'registro': (BuildContext context) => Registro(),
         'home': (BuildContext context) => Home(),
+        'searchDireccion': (BuildContext context) => SearchDireccion()
       },
     );
   }
