@@ -1,3 +1,4 @@
+import 'package:app_restaurante/src/page/home.dart';
 import 'package:app_restaurante/src/page/login.dart';
 import 'package:app_restaurante/src/page/loginVerificacion.dart';
 import 'package:app_restaurante/src/page/registro.dart';
@@ -13,19 +14,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        fontFamily: 'MPLUSRounded1c'
-        ),
-     
-     debugShowCheckedModeBanner: false,
-     initialRoute: 'splashScreen',
-     routes: {
-       'splashScreen': (BuildContext context)=>SplashsCreen(),
-       'login': (BuildContext context)=>Login(),
-       'loginVerificacion':(BuildContext context)=> LoginVerificacion(),
-       'registro':(BuildContext context)=>Registro()
-     },
+      theme: ThemeData(fontFamily: 'MPLUSRounded1c'),
+      debugShowCheckedModeBanner: false,
+      initialRoute: 'home',
+      routes: {
+        'splashScreen': (BuildContext context) => SplashsCreen(),
+        'login': (BuildContext context) => Login(),
+        'loginVerificacion': (BuildContext context) => LoginVerificacion(),
+        'registro': (BuildContext context) => Registro(),
+        'home': (BuildContext context) => Home(),
+      },
     );
   }
 }
-
