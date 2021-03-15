@@ -1,3 +1,5 @@
+import 'package:app_restaurante/src/page/carrito.dart';
+import 'package:app_restaurante/src/page/description.dart';
 import 'package:app_restaurante/src/page/home.dart';
 import 'package:app_restaurante/src/page/login.dart';
 import 'package:app_restaurante/src/page/loginVerificacion.dart';
@@ -24,7 +26,9 @@ class MyApp extends StatelessWidget {
         'loginVerificacion': (BuildContext context) => LoginVerificacion(),
         'registro': (BuildContext context) => Registro(),
         'home': (BuildContext context) => Home(),
-        'searchDireccion': (BuildContext context) => SearchDireccion()
+        'searchDireccion': (BuildContext context) => SearchDireccion(),
+        'descriptionDish': (BuildContext context) => DescriptionDish(),
+        'carrito':(BuildContext context)=> Carrito()
       },
     );
   }
