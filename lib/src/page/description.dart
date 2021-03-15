@@ -30,7 +30,7 @@ class _DescriptionDishState extends State<DescriptionDish> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              _tituloProducto("Hamburguesa secilla", 'barranquilla',
+              _tituloProducto("Hamburguesa sencilla", 'barranquilla',
                   '10 - 20 min', '20.000', 'Hamburguesa'),
               SizedBox(height: 10),
               _bodyProducto(AssetImage('assets/img/burger.jpg')),
@@ -159,13 +159,13 @@ Widget _tituloProducto(String title, String ubicacion, String tiempo,
         Text(
           ubicacion,
           style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w800, color: Colors.grey),
+              fontSize: 20, fontWeight: FontWeight.w800, color: Color(0xF2979797)),
         ),
         Row(
           children: [
             Container(
               decoration: BoxDecoration(
-                  color: Colors.grey, borderRadius: BorderRadius.circular(20)),
+                  color: Color(0xF2D6D4D4), borderRadius: BorderRadius.circular(20)),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Row(
@@ -183,7 +183,7 @@ Widget _tituloProducto(String title, String ubicacion, String tiempo,
             SizedBox(width: 8),
             Container(
               decoration: BoxDecoration(
-                  color: Colors.grey, borderRadius: BorderRadius.circular(20)),
+                  color: Color(0xF2D6D4D4), borderRadius: BorderRadius.circular(20)),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Row(
@@ -205,9 +205,9 @@ Widget _tituloProducto(String title, String ubicacion, String tiempo,
         ),
         Container(
           decoration: BoxDecoration(
-              color: Colors.grey, borderRadius: BorderRadius.circular(20)),
+              color: Color(0xF2D6D4D4), borderRadius: BorderRadius.circular(20)),
           child: Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(
               categoria,
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
