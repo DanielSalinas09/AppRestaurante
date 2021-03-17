@@ -91,18 +91,18 @@ class SearchPlatoState extends State<SearchPlato> {
           SizedBox(
             height: 15.0,
           ),
-          _card("pizza de jamon y queso", AssetImage('assets/img/pizza.jpg'),
-              "7.000"),
+          _card("hamburguesa pollo", AssetImage('assets/img/burger.jpg'),
+              "6.000"),
           SizedBox(
             height: 15.0,
           ),
-          _card("hamburguesa secilla", AssetImage('assets/img/burger.jpg'),
-              "5.000"),
+          _card("hamburguesa doble", AssetImage('assets/img/burger.jpg'),
+              "15.000"),
           SizedBox(
             height: 15.0,
           ),
-          _card("pizza de jamon y queso", AssetImage('assets/img/pizza.jpg'),
-              "7.000"),
+          _card("hamburguesa doble pollo", AssetImage('assets/img/burger.jpg'),
+              "18.000"),
           SizedBox(
             height: 15.0,
           ),

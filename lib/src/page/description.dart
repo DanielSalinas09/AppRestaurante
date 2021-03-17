@@ -39,7 +39,12 @@ class _DescriptionDishState extends State<DescriptionDish> {
           ),
         ),
       ),
-      bottomNavigationBar: _button('22.000', context),
+      bottomNavigationBar: Row(
+        children: [
+          _counterProduct(),
+          _button('22.000', context),
+        ],
+      ),
     );
   }
 }
@@ -111,8 +116,8 @@ Widget _button(String valor, BuildContext context) {
           child: Row(
             children: [
               Text(
-                'Add Carrito',
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                'Agregar',
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 width: 5,
@@ -120,9 +125,12 @@ Widget _button(String valor, BuildContext context) {
               Icon(Icons.attach_money),
               Text(
                 valor,
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
-              Icon(Icons.shopping_cart)
+              Icon(
+                Icons.shopping_cart,
+                size: 19,
+              )
             ],
           ),
         ),
@@ -231,5 +239,46 @@ Widget _bodyProducto(ImageProvider img) {
             image: DecorationImage(image: img, fit: BoxFit.fill)),
       )
     ],
+  );
+}
+
+Widget _counterProduct() {
+  return Container(
+    height: 60.0,
+    margin: EdgeInsets.only(left: 5.0),
+    decoration: BoxDecoration(
+        color: Color(0x25979797), borderRadius: BorderRadius.circular(20)),
+    child: Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Row(
+        children: [
+          InkWell(
+            child: Icon(
+              Icons.remove,
+              size: 30,
+            ),
+            onTap: () {
+              print('menos');
+            },
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          Text(
+            '1',
+            style: TextStyle(fontSize: 20),
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          InkWell(
+            child: Icon(Icons.add, size: 30),
+            onTap: () {
+              print('max');
+            },
+          )
+        ],
+      ),
+    ),
   );
 }
