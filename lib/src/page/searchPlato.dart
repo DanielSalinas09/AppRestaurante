@@ -30,6 +30,16 @@ class SearchPlatoState extends State<SearchPlato> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Text(
+                "hamburguesa",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30.0),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
               _scrollCard(),
             ],
           ),
