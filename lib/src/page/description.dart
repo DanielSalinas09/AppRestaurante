@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class DescriptionDish extends StatefulWidget {
@@ -73,26 +71,25 @@ Widget _ingrediente(String ingredientes) {
           ),
           Container(
               child: Row(
-                children: [
-                  Icon(Icons.comment),
-                  Text(
-                    'Observación',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                )
-               ],
-          )
+            children: [
+              Icon(Icons.comment),
+              Text(
+                'Observación',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              )
+            ],
+          )),
+          SizedBox(
+            height: 10,
           ),
-          SizedBox(height: 10,),
           TextField(
-           keyboardType: TextInputType.multiline,
-           maxLines: 7,
-           maxLength: 2000,
-           decoration: InputDecoration(
-             border: OutlineInputBorder(),
-             hintText: 'Ej: sin cebbolla, sin picante, mayonesa aparte, etc.',
-             ),
-           
-          
+            keyboardType: TextInputType.multiline,
+            maxLines: 7,
+            maxLength: 2000,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Ej: sin cebbolla, sin picante, mayonesa aparte, etc.',
+            ),
           )
         ],
       ),
@@ -129,7 +126,7 @@ Widget _button(String valor, BuildContext context) {
             ],
           ),
         ),
-        onPressed: () =>Navigator.pushNamed(context, 'carrito'),
+        onPressed: () => Navigator.pushNamed(context, 'carrito'),
       ),
     ),
   );
@@ -159,13 +156,16 @@ Widget _tituloProducto(String title, String ubicacion, String tiempo,
         Text(
           ubicacion,
           style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w800, color: Color(0xF2979797)),
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+              color: Color(0xF2979797)),
         ),
         Row(
           children: [
             Container(
               decoration: BoxDecoration(
-                  color: Color(0xF2D6D4D4), borderRadius: BorderRadius.circular(20)),
+                  color: Color(0xF2D6D4D4),
+                  borderRadius: BorderRadius.circular(20)),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Row(
@@ -183,7 +183,8 @@ Widget _tituloProducto(String title, String ubicacion, String tiempo,
             SizedBox(width: 8),
             Container(
               decoration: BoxDecoration(
-                  color: Color(0xF2D6D4D4), borderRadius: BorderRadius.circular(20)),
+                  color: Color(0xF2D6D4D4),
+                  borderRadius: BorderRadius.circular(20)),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Row(
@@ -205,7 +206,8 @@ Widget _tituloProducto(String title, String ubicacion, String tiempo,
         ),
         Container(
           decoration: BoxDecoration(
-              color: Color(0xF2D6D4D4), borderRadius: BorderRadius.circular(20)),
+              color: Color(0xF2D6D4D4),
+              borderRadius: BorderRadius.circular(20)),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(

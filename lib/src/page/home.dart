@@ -1,4 +1,3 @@
-import 'package:app_restaurante/src/page/description.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -103,6 +102,8 @@ class HomeState extends State {
               ),
             ),
             filled: true),
+        onFieldSubmitted: (value) =>
+            {Navigator.pushNamed(context, 'searchPlato')},
       ),
     );
   }
@@ -150,35 +151,36 @@ class HomeState extends State {
 
   Widget _card(String title, ImageProvider image, String valor) {
     return InkWell(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 500,
-            height: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(15.0)),
-              image: DecorationImage(fit: BoxFit.fill, image: image),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 500,
+              height: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                image: DecorationImage(fit: BoxFit.fill, image: image),
+              ),
             ),
-          ),
-          SizedBox(height: 10.0),
-          Text(
-            title,
-            style: TextStyle(
-                fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.black),
-          ),
-          Text(
-            "Atlantico . colombia",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
-          ),
-          Text(
-            "valor " + valor,
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
-          ),
-        ],
-      ),
-      onTap: ()=> Navigator.pushNamed(context, 'descriptionDish')
-    );
+            SizedBox(height: 10.0),
+            Text(
+              title,
+              style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+            Text(
+              "Atlantico . colombia",
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+            ),
+            Text(
+              "valor " + valor,
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+            ),
+          ],
+        ),
+        onTap: () => Navigator.pushNamed(context, 'descriptionDish'));
   }
 
   Widget _scrollCard() {
