@@ -8,8 +8,6 @@ class Home extends StatefulWidget {
   HomeState createState() => HomeState();
 }
 
-
-
 class HomeState extends State {
   final textStyleEnviar = TextStyle(color: Color(0xFF4B4A4A3), fontSize: 20.0);
   final formKey = GlobalKey<FormState>();
@@ -17,7 +15,6 @@ class HomeState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
-        
         backgroundColor: Colors.white,
         color: Color(0xF2EB1515),
         height: 50,
@@ -27,12 +24,21 @@ class HomeState extends State {
           Icon(Icons.person, size: 25),
         ],
         onTap: (index) {
-          setState(() {
-            
-          });
+          switch (index) {
+            case 0:
+              Navigator.pushNamed(context, 'home');
+              break;
+            case 1:
+              Navigator.pushNamed(context, 'chekout');
+              break;
+            case 2:
+              Navigator.pushNamed(context, 'profile');
+              break;
+            default:
+          }
+          setState(() {});
         },
       ),
-     
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
@@ -51,8 +57,6 @@ class HomeState extends State {
               _scrollHorizontalCategory(),
               SizedBox(height: 30.0),
               _scrollCard(),
-               
-              
             ],
           ),
         ),
@@ -222,20 +226,16 @@ class HomeState extends State {
     );
   }
 
-
   _loadPage(int currentIndex, BuildContext context) {
-    switch(currentIndex){
+    switch (currentIndex) {
       case 0:
         return Home();
       case 1:
         return OrderProduct();
-      case 2: 
+      case 2:
         return Usuario();
       default:
         return Home();
-
     }
-
-
   }
 }

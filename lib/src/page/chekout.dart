@@ -1,45 +1,45 @@
 import 'package:flutter/material.dart';
 
-class Carrito extends StatefulWidget {
-  Carrito({Key key}) : super(key: key);
+class Chekout extends StatefulWidget {
+  Chekout({Key key}) : super(key: key);
 
   @override
-  _CarritoState createState() => _CarritoState();
+  _ChekoutState createState() => _ChekoutState();
 }
 
-class _CarritoState extends State<Carrito> {
+class _ChekoutState extends State<Chekout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 1,
-        iconTheme: IconThemeData(color: Color(0xF2979797)),
         backgroundColor: Colors.white,
-        centerTitle: true,
-        title: Text('Carrito',
-            style: TextStyle(
-                color: Color(0xF2979797),
-                fontSize: 30,
-                fontWeight: FontWeight.bold)),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _orden(context),
-            SizedBox(
-              height: 40,
-            ),
-            _resumen('68.000', '7.800', '75.800'),
-          ],
+        appBar: AppBar(
+          elevation: 1,
+          iconTheme: IconThemeData(color: Color(0xF2979797)),
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          title: Text('Chekout',
+              style: TextStyle(
+                  color: Color(0xF2979797),
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold)),
         ),
-      ),
-      bottomNavigationBar: _button(context)
-    );
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _orden(context),
+              SizedBox(
+                height: 40,
+              ),
+              _resumen('68.000', '7.800', '75.800'),
+            ],
+          ),
+        ),
+        bottomNavigationBar: _button(context));
   }
 }
+
 Widget _button(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.all(20),
@@ -51,12 +51,12 @@ Widget _button(BuildContext context) {
             ElevatedButton.styleFrom(primary: Color(0xF2EB1515), elevation: 5),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
-          child:Text(
-                'Hacer Pedido',
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
-              ),
+          child: Text(
+            'Hacer Pedido',
+            style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+          ),
         ),
-        onPressed: () =>Navigator.pushNamed(context, 'reviewOrder'),
+        onPressed: () => Navigator.pushNamed(context, 'reviewOrder'),
       ),
     ),
   );
@@ -66,7 +66,6 @@ Widget _resumen(String subtotal, String envio, String total) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      
       Text(
         'Resumen',
         style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -76,12 +75,16 @@ Widget _resumen(String subtotal, String envio, String total) {
         height: 3,
         width: 100,
       ),
-      SizedBox(height: 20, ),
-       Container(
-              color: Color(0xF2C7C7C7),
-              height: 3,
-            ),
-             SizedBox(height: 20, ),
+      SizedBox(
+        height: 20,
+      ),
+      Container(
+        color: Color(0xF2C7C7C7),
+        height: 3,
+      ),
+      SizedBox(
+        height: 20,
+      ),
       Column(
         children: [
           Row(
@@ -89,40 +92,33 @@ Widget _resumen(String subtotal, String envio, String total) {
             children: [
               Text(
                 'Costo del Produto',
-                style: TextStyle(
-                  fontSize: 19,
-                  color: Color(0xF2979797)
-                ),
+                style: TextStyle(fontSize: 19, color: Color(0xF2979797)),
               ),
               Container(
                 child: Row(
                   children: [
-                    Icon(Icons.attach_money, color: Color(0xF2979797),),
+                    Icon(
+                      Icons.attach_money,
+                      color: Color(0xF2979797),
+                    ),
                     Text(
                       subtotal,
-                      style: TextStyle(
-                        fontSize: 19,
-                        color: Color(0xF2979797)
-                      ),
+                      style: TextStyle(fontSize: 19, color: Color(0xF2979797)),
                     )
                   ],
                 ),
               ),
             ],
-          ), 
-          SizedBox(height: 10, ),
-
-
-
+          ),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Costo del envio',
-                style: TextStyle(
-                  fontSize: 19,
-                  color: Color(0xF2979797)
-                ),
+                style: TextStyle(fontSize: 19, color: Color(0xF2979797)),
               ),
               Container(
                 child: Row(
@@ -130,28 +126,22 @@ Widget _resumen(String subtotal, String envio, String total) {
                     Icon(Icons.attach_money, color: Color(0xF2979797)),
                     Text(
                       envio,
-                      style: TextStyle(
-                        fontSize: 19,
-                        color: Color(0xF2979797)
-                      ),
+                      style: TextStyle(fontSize: 19, color: Color(0xF2979797)),
                     )
                   ],
                 ),
               ),
             ],
-          ), 
-          SizedBox(height: 20, ),
-
+          ),
+          SizedBox(
+            height: 20,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Total',
-                style: TextStyle(
-                  fontSize: 20,
-                  
-                  fontWeight: FontWeight.bold
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               Container(
                 child: Row(
@@ -159,20 +149,14 @@ Widget _resumen(String subtotal, String envio, String total) {
                     Icon(Icons.attach_money),
                     Text(
                       total,
-                      style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold
-                      ),
+                      style:
+                          TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
               ),
             ],
-          ), 
-
-
-         
-         
+          ),
         ],
       )
     ],
@@ -190,7 +174,7 @@ Widget _orden(BuildContext context) {
             style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
           ),
           InkWell(
-            onTap: () =>Navigator.pushNamed(context, 'home'),
+            onTap: () => Navigator.pushNamed(context, 'home'),
             child: Row(
               children: [
                 Text(
@@ -248,12 +232,16 @@ Widget _pedidos(String nombre, String precio) {
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                     )),
-                    SizedBox(width: 5, ),
-                    InkWell(
-                      child:Icon(Icons.more_vert, color: Color(0xF2EB1515),),
-                      onTap: (){},
-                    )
-                    
+                SizedBox(
+                  width: 5,
+                ),
+                InkWell(
+                  child: Icon(
+                    Icons.more_vert,
+                    color: Color(0xF2EB1515),
+                  ),
+                  onTap: () {},
+                )
               ],
             ),
           )

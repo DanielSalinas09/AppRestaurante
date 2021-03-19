@@ -11,29 +11,45 @@ class _SendingOrderState extends State<SendingOrder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Pedido",
+          style: TextStyle(color: Color(0xFF7575753)),
+        ),
+        elevation: 0,
+        iconTheme: IconThemeData(color: Color(0xFF7575753)),
+
+        shadowColor: Colors.white,
+
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        // color
+      ),
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Se esta preparando tu pedido',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'Llegara en 10 - 20 min',
-              style: TextStyle(fontSize: 19, color: Color(0xFF807E7E)),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            _card(),
-            SizedBox(
-              height: 10,
-            ),
-            _lisView('10:00 PM','Cra 46# 53 -130')
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Se esta preparando tu pedido',
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                'Llegara en 10 - 20 min',
+                style: TextStyle(fontSize: 19, color: Color(0xFF807E7E)),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              _card(),
+              SizedBox(
+                height: 10,
+              ),
+              _lisView('10:00 PM', 'Cra 46# 53 -130')
+            ],
+          ),
         ),
       ),
     );
@@ -121,7 +137,9 @@ class _SendingOrderState extends State<SendingOrder> {
         ),
         Text(
           tiempo,
-          style: TextStyle(fontSize: 18, ),
+          style: TextStyle(
+            fontSize: 18,
+          ),
         ),
         Text(
           'Garantizado',
@@ -137,7 +155,9 @@ class _SendingOrderState extends State<SendingOrder> {
         ),
         Text(
           direcccion,
-          style: TextStyle(fontSize: 18, ),
+          style: TextStyle(
+            fontSize: 18,
+          ),
         ),
         Divider(),
         Row(
@@ -148,9 +168,13 @@ class _SendingOrderState extends State<SendingOrder> {
               style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600),
             ),
             InkWell(
-              onTap: ()=>Navigator.pushNamed(context, 'order'),
-                child: Text('Ver \norden',
-              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: Color(0xF2EB1515)),
+              onTap: () => Navigator.pushNamed(context, 'order'),
+              child: Text(
+                'Ver \norden',
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xF2EB1515)),
               ),
             )
           ],

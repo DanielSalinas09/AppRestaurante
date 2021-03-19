@@ -1,5 +1,5 @@
 import 'package:app_restaurante/src/page/ReviewOrder.dart';
-import 'package:app_restaurante/src/page/carrito.dart';
+import 'package:app_restaurante/src/page/chekout.dart';
 import 'package:app_restaurante/src/page/description.dart';
 import 'package:app_restaurante/src/page/home.dart';
 import 'package:app_restaurante/src/page/login.dart';
@@ -33,10 +33,10 @@ class MyApp extends StatelessWidget {
         'searchPlato': (BuildContext context) => SearchPlato(),
         'searchDireccion': (BuildContext context) => SearchDireccion(),
         'descriptionDish': (BuildContext context) => DescriptionDish(),
-        'carrito': (BuildContext context) => Carrito(),
-        'reviewOrder':(BuildContext context)=>ReviewOrder(),
-        'order': (BuildContext context)=>OrderProduct(),
-        'sendingOrder':(BuildContext context)=>SendingOrder()
+        'chekout': (BuildContext context) => Chekout(),
+        'reviewOrder': (BuildContext context) => ReviewOrder(),
+        'order': (BuildContext context) => OrderProduct(),
+        'sendingOrder': (BuildContext context) => SendingOrder()
       },
     );
   }
