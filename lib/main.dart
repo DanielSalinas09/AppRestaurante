@@ -1,4 +1,5 @@
 import 'package:app_restaurante/src/page/ReviewOrder.dart';
+import 'package:app_restaurante/src/page/carrito.dart';
 import 'package:app_restaurante/src/page/chekout.dart';
 import 'package:app_restaurante/src/page/description.dart';
 import 'package:app_restaurante/src/page/home.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         'searchDireccion': (BuildContext context) => SearchDireccion(),
         'descriptionDish': (BuildContext context) => DescriptionDish(),
         'chekout': (BuildContext context) => Chekout(),
+        'carrito':(BuildContext context)=> Carrito(),
         'reviewOrder': (BuildContext context) => ReviewOrder(),
         'order': (BuildContext context) => OrderProduct(),
         'sendingOrder': (BuildContext context) => SendingOrder()

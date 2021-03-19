@@ -134,7 +134,7 @@ Widget _button(String valor, BuildContext context) {
             ],
           ),
         ),
-        onPressed: () => Navigator.pushNamed(context, 'chekout'),
+        onPressed: () => Navigator.pushNamed(context, 'carrito'),
       ),
     ),
   );
