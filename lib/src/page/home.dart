@@ -1,6 +1,7 @@
+import 'package:app_restaurante/src/page/carrito.dart';
 import 'package:app_restaurante/src/page/order.dart';
 import 'package:app_restaurante/src/page/usuario.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -14,31 +15,7 @@ class HomeState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.white,
-        color: Color(0xF2EB1515),
-        height: 50,
-        items: <Widget>[
-          Icon(Icons.home, size: 25),
-          Icon(Icons.shopping_cart_outlined, size: 25),
-          Icon(Icons.person, size: 25),
-        ],
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.pushNamed(context, 'home');
-              break;
-            case 1:
-              Navigator.pushNamed(context, 'chekout');
-              break;
-            case 2:
-              Navigator.pushNamed(context, 'profile');
-              break;
-            default:
-          }
-          setState(() {});
-        },
-      ),
+     
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,

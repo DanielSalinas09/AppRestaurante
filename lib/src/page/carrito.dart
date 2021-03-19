@@ -58,7 +58,7 @@ class _CarritoState extends State<Carrito> {
             style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
           ),
         ),
-        onPressed: () => Navigator.pushNamed(context, 'checkout'),
+        onPressed: () => Navigator.pushNamed(context, 'chekout'),
       ),
     ),
   );

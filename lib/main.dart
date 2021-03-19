@@ -5,6 +5,7 @@ import 'package:app_restaurante/src/page/description.dart';
 import 'package:app_restaurante/src/page/home.dart';
 import 'package:app_restaurante/src/page/login.dart';
 import 'package:app_restaurante/src/page/loginVerificacion.dart';
+import 'package:app_restaurante/src/page/navigation.dart';
 import 'package:app_restaurante/src/page/order.dart';
 import 'package:app_restaurante/src/page/registro.dart';
 import 'package:app_restaurante/src/page/searchDireccion.dart';
@@ -24,12 +25,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'MPLUSRounded1c'),
       debugShowCheckedModeBanner: false,
-      initialRoute: 'home',
+      initialRoute: 'navigation',
       routes: {
         'splashScreen': (BuildContext context) => SplashsCreen(),
         'login': (BuildContext context) => Login(),
         'loginVerificacion': (BuildContext context) => LoginVerificacion(),
         'registro': (BuildContext context) => Registro(),
+        'navigation': (BuildContext context)=>Navegation(),
         'home': (BuildContext context) => Home(),
         'searchPlato': (BuildContext context) => SearchPlato(),
         'searchDireccion': (BuildContext context) => SearchDireccion(),
