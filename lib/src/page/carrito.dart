@@ -36,11 +36,11 @@ class _CarritoState extends State<Carrito> {
           ],
         ),
       ),
-      bottomNavigationBar: _button()
+      bottomNavigationBar: _button(context)
     );
   }
 }
-Widget _button() {
+Widget _button(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.all(20),
     child: BottomAppBar(
@@ -56,7 +56,7 @@ Widget _button() {
                 style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
               ),
         ),
-        onPressed: () {},
+        onPressed: () =>Navigator.pushNamed(context, 'reviewOrder'),
       ),
     ),
   );

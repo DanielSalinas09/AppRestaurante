@@ -1,11 +1,14 @@
+import 'package:app_restaurante/src/page/ReviewOrder.dart';
 import 'package:app_restaurante/src/page/carrito.dart';
 import 'package:app_restaurante/src/page/description.dart';
 import 'package:app_restaurante/src/page/home.dart';
 import 'package:app_restaurante/src/page/login.dart';
 import 'package:app_restaurante/src/page/loginVerificacion.dart';
+import 'package:app_restaurante/src/page/order.dart';
 import 'package:app_restaurante/src/page/registro.dart';
 import 'package:app_restaurante/src/page/searchDireccion.dart';
 import 'package:app_restaurante/src/page/searchPlato.dart';
+import 'package:app_restaurante/src/page/sendingOrden.dart';
 import 'package:app_restaurante/src/splashscreen.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +33,10 @@ class MyApp extends StatelessWidget {
         'searchPlato': (BuildContext context) => SearchPlato(),
         'searchDireccion': (BuildContext context) => SearchDireccion(),
         'descriptionDish': (BuildContext context) => DescriptionDish(),
-        'carrito': (BuildContext context) => Carrito()
+        'carrito': (BuildContext context) => Carrito(),
+        'reviewOrder':(BuildContext context)=>ReviewOrder(),
+        'order': (BuildContext context)=>OrderProduct(),
+        'sendingOrder':(BuildContext context)=>SendingOrder()
       },
     );
   }
