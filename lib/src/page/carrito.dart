@@ -32,7 +32,7 @@ class _CarritoState extends State<Carrito> {
               _orden('Hamburguesa sencilla','miercoles, 21 de marzo', '75.800'),
               _orden('Perro suizo','miercoles, 21 de marzo', '15.800'),
                _orden('Salchipapa','miercoles, 21 de marzo', '25.800'),
-               SizedBox( height: 300,),
+               SizedBox( height: 250,),
                _button(context)
               
 
@@ -73,11 +73,14 @@ class _CarritoState extends State<Carrito> {
            Column(
              crossAxisAlignment: CrossAxisAlignment.start,
              children: [
-             Text(nombre,
-             style: TextStyle(
-               fontSize: 22,
-               fontWeight: FontWeight.bold
-             ),
+             Container(
+               width: 140,
+               child: Text(nombre,
+               style: TextStyle(
+                 fontSize: 20,
+                 fontWeight: FontWeight.bold
+               ),
+               ),
              ),
              
 

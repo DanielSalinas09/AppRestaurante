@@ -46,16 +46,22 @@ class _OrderProductState extends State<OrderProduct> {
            Column(
              crossAxisAlignment: CrossAxisAlignment.start,
              children: [
-             Text(nombre,
-             style: TextStyle(
-               fontSize: 22,
-               fontWeight: FontWeight.bold
+             Container(
+               width: 150,
+               child: Text(nombre,
+               style: TextStyle(
+                 fontSize: 20,
+                 fontWeight: FontWeight.bold
+               ),
+               ),
              ),
-             ),
-             Text(fecha,
-             style: TextStyle(
-               fontSize: 18,
-               color: Color(0xFFCACACAf)
+             Container(
+               width: 180,
+               child: Text(fecha,
+               style: TextStyle(
+                 fontSize: 18,
+                 color: Color(0xFFCACACAf),
+                 ),
                ),
              )
 

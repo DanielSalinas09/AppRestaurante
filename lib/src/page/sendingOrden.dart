@@ -14,7 +14,10 @@ class _SendingOrderState extends State<SendingOrder> {
       appBar: AppBar(
         title: Text(
           "Pedido",
-          style: TextStyle(color: Color(0xFF7575753)),
+          style: TextStyle(
+                fontSize: 30,
+                color: Color(0xF2979797),
+                fontWeight: FontWeight.bold),
         ),
         elevation: 0,
         iconTheme: IconThemeData(color: Color(0xFF7575753)),
