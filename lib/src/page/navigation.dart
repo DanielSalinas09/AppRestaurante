@@ -13,36 +13,35 @@ class Navegation extends StatefulWidget {
 }
 
 class _NavegationState extends State<Navegation> {
-  int currentIndex=0;
+  int currentIndex = 0;
 
-  final Home homePage=Home();
-  final Carrito carritoPage =Carrito();
-  final Usuario usuario=Usuario();
+  final Home homePage = Home();
+  final Carrito carritoPage = Carrito();
+  final Usuario usuario = Usuario();
 
-  Widget _showPage=new Home();
+  Widget _showPage = new Home();
 
-  Widget _loadPage(int index){
+  Widget _loadPage(int index) {
     switch (index) {
-            case 0:
-              return homePage;
-              break;
-            case 1:
-              return carritoPage;
-              break;
-            case 2:
-              return usuario;
-              break;
-            default:
-            return new Container(
-              child: Text('No a seleccionado ninguna pagina')
-            );
-          }
+      case 0:
+        return homePage;
+        break;
+      case 1:
+        return carritoPage;
+        break;
+      case 2:
+        return usuario;
+        break;
+      default:
+        return new Container(child: Text('No a seleccionado ninguna pagina'));
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       bottomNavigationBar: CurvedNavigationBar(
-         index: currentIndex,
+      bottomNavigationBar: CurvedNavigationBar(
+        index: currentIndex,
         backgroundColor: Colors.white,
         color: Color(0xF2EB1515),
         height: 50,
@@ -52,10 +51,8 @@ class _NavegationState extends State<Navegation> {
           Icon(Icons.person, size: 25),
         ],
         onTap: (index) {
-          
           setState(() {
-            _showPage=_loadPage(index);
-
+            _showPage = _loadPage(index);
           });
         },
       ),

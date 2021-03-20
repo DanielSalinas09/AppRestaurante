@@ -15,7 +15,6 @@ class HomeState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
@@ -125,18 +124,21 @@ class HomeState extends State {
   }
 
   Widget _categoryItem(String text, Color colorBackground, Color colorText) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5.0),
-      padding: EdgeInsets.all(10.0),
-      decoration: new BoxDecoration(
-        color: colorBackground, //new Color.fromRGBO(255, 0, 0, 0.0),
-        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+    return InkWell(
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 5.0),
+        padding: EdgeInsets.all(10.0),
+        decoration: new BoxDecoration(
+          color: colorBackground, //new Color.fromRGBO(255, 0, 0, 0.0),
+          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+              color: colorText, fontSize: 18.0, fontWeight: FontWeight.bold),
+        ),
       ),
-      child: Text(
-        text,
-        style: TextStyle(
-            color: colorText, fontSize: 18.0, fontWeight: FontWeight.bold),
-      ),
+      onTap: () => {Navigator.pushNamed(context, 'category')},
     );
   }
 
