@@ -94,5 +94,5 @@ Widget _button(BuildContext context) {
         'Verificar Codigo',
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
       ),
-      onPressed: () => {Navigator.pushNamed(context, 'navigation')});
+      onPressed: () => {Navigator.of(context).pushNamedAndRemoveUntil('navigation', (route) => false)});
 }
