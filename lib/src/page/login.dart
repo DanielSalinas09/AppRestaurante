@@ -79,7 +79,7 @@ Widget _fondo(BuildContext context) {
                   'Registro',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                onTap: () => Navigator.pushNamed(context, 'registro'),
+                onTap: () => Navigator.popAndPushNamed(context, 'registro'),
               ),
             ],
           )),

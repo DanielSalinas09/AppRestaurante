@@ -69,7 +69,7 @@ Widget _fondo(BuildContext context) {
                   'Iniciar Sesion',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                onTap: () => Navigator.pushNamed(context, 'login'),
+                onTap: () => Navigator.popAndPushNamed(context, 'login'),
               ),
             ],
           )),
