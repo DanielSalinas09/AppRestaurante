@@ -11,7 +11,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFD1D1D1),
+      backgroundColor: Color(0xFFE6E6E6),
       body: SingleChildScrollView(
               child: Column(
           children: [
@@ -94,5 +94,5 @@ Widget _button(BuildContext context) {
         'Verificar Codigo',
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
       ),
-      onPressed: () => {Navigator.pushNamed(context, 'home')});
+      onPressed: () => {Navigator.pushNamed(context, 'navigation')});
 }
