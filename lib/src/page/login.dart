@@ -28,6 +28,7 @@ class _LoginState extends State<Login> {
 }
 
 Widget _button(BuildContext context) {
+  // ignore: deprecated_member_use
   return RaisedButton(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
       color: Color(0xF2EB1515),

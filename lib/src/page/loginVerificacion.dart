@@ -13,7 +13,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
     return Scaffold(
       backgroundColor: Color(0xFFE6E6E6),
       body: SingleChildScrollView(
-              child: Column(
+        child: Column(
           children: [
             _fondo(),
             SizedBox(height: 10),
@@ -84,6 +84,7 @@ Widget _input() {
 }
 
 Widget _button(BuildContext context) {
+  // ignore: deprecated_member_use
   return RaisedButton(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
       color: Color(0xF2EB1515),
@@ -92,7 +93,11 @@ Widget _button(BuildContext context) {
       ),
       child: Text(
         'Verificar Codigo',
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+        style: TextStyle(
+            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
       ),
-      onPressed: () => {Navigator.of(context).pushNamedAndRemoveUntil('navigation', (route) => false)});
+      onPressed: () => {
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('navigation', (route) => false)
+          });
 }

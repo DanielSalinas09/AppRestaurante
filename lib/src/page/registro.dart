@@ -31,6 +31,7 @@ Widget _button(BuildContext context) {
     margin: EdgeInsets.symmetric(
       vertical: 0,
     ),
+    // ignore: deprecated_member_use
     child: RaisedButton(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
         color: Color(0xF2EB1515),
@@ -48,7 +49,7 @@ Widget _button(BuildContext context) {
 
 Widget _fondo(BuildContext context) {
   return Container(
-    height: 300,
+    height: 280,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(40), bottomRight: Radius.circular(40)),
