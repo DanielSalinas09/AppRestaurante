@@ -11,15 +11,17 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(242, 242, 242, 100),
-      body: Column(
-        children: [
-          _fondo(),
-          SizedBox(height: 10),
-          _form(),
-          SizedBox(height: 150),
-          _button(context)
-        ],
+      backgroundColor: Color(0xFFD1D1D1),
+      body: SingleChildScrollView(
+              child: Column(
+          children: [
+            _fondo(),
+            SizedBox(height: 10),
+            _form(),
+            SizedBox(height: 150),
+            _button(context)
+          ],
+        ),
       ),
     );
   }
@@ -84,13 +86,13 @@ Widget _input() {
 Widget _button(BuildContext context) {
   return RaisedButton(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-      color: Color.fromRGBO(233, 47, 72, 100),
+      color: Color(0xF2EB1515),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(60),
       ),
       child: Text(
         'Verificar Codigo',
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
       ),
       onPressed: () => {Navigator.pushNamed(context, 'navigation')});
 }
