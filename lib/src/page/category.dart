@@ -1,5 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Category extends StatefulWidget {
   Category({Key key}) : super(key: key);
@@ -9,14 +13,44 @@ class Category extends StatefulWidget {
 }
 
 class CategoryState extends State<Category> {
+
+  getUserData() async {
+    final response = await http.get(
+    Uri.parse('https://backend-delivery.azurewebsites.net/api/category/'),
+    headers: {'x-access-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1lcm8iOjMwMTYxNjI5MjYsImNvZGlnbyI6ODk2MDk0LCJpYXQiOjE2MTgxNzc4MDEsImV4cCI6MTYxODIwNjYwMX0.PHFCCTWkWKKduqDpQJMvdv5bfszjaJCuZ1wTS_KSa8o"},
+  );
+  final jsonData = jsonDecode(response.body);
+   var users =[];
+      
+      var data = jsonData["category"][0]['nombre'].toString();
+      print(jsonData["category"]);
+      List<String> cat;
+      
+      for (var catArray in jsonData["category"]) {
+        cat.add(catArray["nombre"]);
+         
+        
+      }
+      print(cat);
+
+      CategoriaData user = CategoriaData(data);
+      users.add(user);
+    
+    print(response.body);
+    return users;
+  }
+
+
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+
+
+        return Scaffold(
+            appBar: AppBar(
         title: Text(
-          "Perros calientes",
+          "Categorias",
           style: TextStyle(color: Color(0xFF7575753)),
         ),
         elevation: 0,
@@ -28,22 +62,41 @@ class CategoryState extends State<Category> {
         centerTitle: true,
         // color
       ),
-      body: SingleChildScrollView(
+      body:Container(child: Card(child: FutureBuilder(
+        future: getUserData(),
+        builder: (context, snapshot){
+          if(snapshot.data==null){
+            return Container
+            (child: Center(
+              child: Text('Loading...'),
+              ),
+              );
+          }else return ListView.builder(
+            itemCount: snapshot.data.length,
+           itemBuilder: (context, i){
+            return SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.all(13.0),
           color: Colors.white,
           child: Column(
             children: [
+              
               _formSearch(),
               SizedBox(
                 height: 20.0,
               ),
-              _scrollCard(),
+              _scrollCard((snapshot.data[i].category)),
             ],
           ),
         ),
-      ),
+      );
+
+     } );
+        },
+      ),),
+      ), 
     );
+
   }
 
   Widget _formSearch() {
@@ -51,7 +104,7 @@ class CategoryState extends State<Category> {
       key: formKey,
       child: TextFormField(
         decoration: InputDecoration(
-            hintText: "Buscar un palto",
+            hintText: "Buscar un plato",
             labelStyle:
                 TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             prefixIcon: Icon(
@@ -106,10 +159,10 @@ class CategoryState extends State<Category> {
         onTap: () => Navigator.pushNamed(context, 'descriptionDish'));
   }
 
-  Widget _scrollCard() {
+  Widget _scrollCard(String perroCaliente) {
     return Column(
       children: [
-        _card("hamburguesa secilla", AssetImage('assets/img/burger.jpg'),
+        _card(perroCaliente, AssetImage('assets/img/burger.jpg'),
             "5.000"),
         SizedBox(
           height: 15.0,
@@ -132,4 +185,10 @@ class CategoryState extends State<Category> {
       ],
     );
   }
+}
+
+class CategoriaData{
+  final String category;
+  
+  CategoriaData(this.category);
 }

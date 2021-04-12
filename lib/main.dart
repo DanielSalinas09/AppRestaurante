@@ -16,6 +16,7 @@ import 'package:app_restaurante/src/page/searchDireccion.dart';
 import 'package:app_restaurante/src/page/searchPlato.dart';
 import 'package:app_restaurante/src/page/sendingOrden.dart';
 import 'package:app_restaurante/src/splashscreen.dart';
+import 'src/page/prueba.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'MPLUSRounded1c'),
       debugShowCheckedModeBanner: false,
-      initialRoute: 'login',
+      initialRoute: 'category',
       routes: {
         'splashScreen': (BuildContext context) => SplashsCreen(),
         'login': (BuildContext context) => Login(),
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         'category': (BuildContext context) => Category(),
         'historialPedidos': (BuildContext context) => HistorialPedidos(),
         'configuracion': (BuildContext context) => ConfiguracionUser(),
+        'prueba': (BuildContext context) => MyhomePage(),
       },
     );
   }
