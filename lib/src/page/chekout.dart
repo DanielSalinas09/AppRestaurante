@@ -174,7 +174,7 @@ Widget _orden(BuildContext context) {
             style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
           ),
           InkWell(
-            onTap: () => Navigator.pushNamed(context, 'home'),
+            onTap: () => Navigator.pushNamed(context, 'navigation'),
             child: Row(
               children: [
                 Text(

@@ -1,7 +1,3 @@
-import 'package:app_restaurante/src/page/carrito.dart';
-import 'package:app_restaurante/src/page/order.dart';
-import 'package:app_restaurante/src/page/usuario.dart';
-
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -205,16 +201,16 @@ class HomeState extends State {
     );
   }
 
-  _loadPage(int currentIndex, BuildContext context) {
-    switch (currentIndex) {
-      case 0:
-        return Home();
-      case 1:
-        return OrderProduct();
-      case 2:
-        return Usuario();
-      default:
-        return Home();
-    }
-  }
+  // _loadPage(int currentIndex, BuildContext context) {
+  //   switch (currentIndex) {
+  //     case 0:
+  //       return Home();
+  //     case 1:
+  //       return OrderProduct();
+  //     case 2:
+  //       return Usuario();
+  //     default:
+  //       return Home();
+  //   }
+  // }
 }

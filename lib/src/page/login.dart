@@ -1,5 +1,7 @@
+import 'package:app_restaurante/src/models/loginModals.dart';
+import 'package:app_restaurante/src/utils/utils.dart' as utils;
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -9,141 +11,142 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final formKey = GlobalKey<FormState>();
+
+  LoginModal loginModal = new LoginModal();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE6E6E6),
       body: SingleChildScrollView(
-        child: Column(children: [
-          _fondo(context),
-          SizedBox(height: 20),
-          _form(),
-          SizedBox(height: 150),
-          _button(context)
-          
-          
-        ],),
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              _fondo(context),
+              SizedBox(height: 20),
+              _form(),
+              SizedBox(height: 80),
+              _button(context)
+            ],
+          ),
+        ),
       ),
     );
   }
-}
 
-Widget _button(BuildContext context) {
-  return RaisedButton(
-    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-    color: Color(0xF2EB1515),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(60),
+  Widget _button(BuildContext context) {
+    // ignore: deprecated_member_use
+    return RaisedButton(
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
+      color: Color(0xF2EB1515),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(60),
       ),
-      child: Text('Enviar Codigo',
-      style: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-        color: Colors.white
-        ),
+      child: Text(
+        'Enviar Codigo',
+        style: TextStyle(
+            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
       ),
-    onPressed: ()=>{Navigator.pushNamed(context, 'loginVerificacion')});
-}
+      onPressed: () => submit(),
+    );
+  }
 
+  submit() {
+    if (formKey.currentState.validate()) {
+      formKey.currentState.save();
+      print(loginModal.numero);
+      Navigator.pushNamed(context, 'loginVerificacion');
+    }
+  }
 
-Widget _fondo(BuildContext context) {
-  return Container(
-    height: 350,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.only(
-        bottomLeft: Radius.circular(40),
-        bottomRight: Radius.circular(40)
-        ),
-      color: Colors.white,
+  Widget _fondo(BuildContext context) {
+    return Container(
+      height: 350,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(40), bottomRight: Radius.circular(40)),
+        color: Colors.white,
       ),
-      
       child: Column(
         children: [
           _logo(),
-          SizedBox(height: 10,),
-          Row(
-            
+          SizedBox(
+            height: 10,
+          ),
+          Row(children: [
+            Expanded(
+                child: Column(
+              children: [
+                Text(
+                  'Iniciar Sesion',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  color: Color(0xF2EB1515),
+                  height: 9,
+                  width: 137,
+                ),
+              ],
+            )),
+            Expanded(
+                child: Column(
+              children: [
+                InkWell(
+                  child: Text(
+                    'Registro',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  onTap: () => Navigator.popAndPushNamed(context, 'registro'),
+                ),
+              ],
+            )),
+          ]),
+        ],
+      ),
+    );
+  }
+
+  Widget _logo() {
+    return Container(
+      child: Center(
+        heightFactor: 1.8,
+        child: Image(
+          image: AssetImage('assets/img/logo.jpg'),
+        ),
+      ),
+    );
+  }
+
+  Widget _form() {
+    return Container(
+      child: Padding(
+          padding: EdgeInsets.all(25),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    Text('Iniciar Sesion',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
-                    ),
-                    ),
-                    Container(
-                      color: Color(0xF2EB1515),
-                      height: 9,
-                      width: 137,
-                    ),
-
-                ],)
+              Text(
+                'Telefono',
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),
-            
-              Expanded(
-                child: Column(
-                  children: [
-                    InkWell(
-                      child: Text('Registro',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold
-                      ),
-                      ),
-                      onTap: ()=>Navigator.pushNamed(context, 'registro'),
-                    ),
-                    
+              _input(),
+            ],
+          )),
+    );
+  }
 
-                ],)
-              ),
-            ]
-          ),
-        ],
-      ),
-  );
-}
-
-Widget _logo() {
-  return Container(
-    child: Center(
-      heightFactor: 1.8,
-      child: Image(
-        image: AssetImage('assets/img/logo.jpg'),
-        
-      ),
-    ),
-  );
-}
-
-Widget _form() {
-  return Container(
-
-    
-    child: Padding(
-      padding: EdgeInsets.all(25),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Telefono',
-          style: TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.bold
-          ),
-          ),
-          _input(),
-        ],
-      )
-      ),
-      
-  );
-}
-
-Widget _input() {
-  return TextField(
-    
-    keyboardType: TextInputType.number,
-    decoration: InputDecoration(),
-  );
+  Widget _input() {
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(),
+      onSaved: (value) => loginModal.numero = int.parse(value),
+      validator: (value) {
+        if (utils.isNumeric(value) && value.length == 10) {
+          return null;
+        } else {
+          return 'Ingrese su numero de telefono';
+        }
+      },
+    );
+  }
 }
