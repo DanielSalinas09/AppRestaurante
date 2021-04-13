@@ -56,16 +56,46 @@ class _RegistroState extends State<Registro> {
     );
   }
 
-  _submit() {
+  _submit() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
 
-      registerProvider.register(registros);
+      bool info = await registerProvider.register(registros.numero,
+          registros.nombre, registros.apellido, registros.email);
+      print(info);
+      if (info) {
+        print("El estado es :" + registerProvider.state);
+        Navigator.pushNamed(context, 'login');
+      } else {
+        print("El Usuario ya existe");
+        _mostrarAlert();
+      }
     }
   }
 
-  //Navigator.pushNamed(context, 'loginVerificacion')
-  //
+  void _mostrarAlert() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Informacion incorrecta',
+              style: TextStyle(fontSize: 25),
+            ),
+            content: Text(
+              "Este numero ya a sido registrado",
+              style: TextStyle(fontSize: 18),
+            ),
+            actions: [
+              TextButton(
+                child: Text('Ok', style: TextStyle(fontSize: 20)),
+                onPressed: () => Navigator.of(context).pop(),
+              )
+            ],
+          );
+        });
+  }
+
   Widget _fondo(BuildContext context) {
     return Container(
       height: 280,
@@ -187,7 +217,7 @@ class _RegistroState extends State<Registro> {
         if (value.isNotEmpty) {
           return null;
         } else {
-          return 'Escribe tu apellido';
+          return 'Escriba su apellido';
         }
       },
     );
@@ -202,7 +232,7 @@ class _RegistroState extends State<Registro> {
         if (value.isNotEmpty) {
           return null;
         } else {
-          return 'Escribe tu nombre';
+          return 'Escriba su nombre';
         }
       },
     );
@@ -214,10 +244,10 @@ class _RegistroState extends State<Registro> {
       decoration: InputDecoration(),
       onSaved: (value) => registros.numero = int.parse(value),
       validator: (value) {
-        if (isNumeric(value)) {
+        if (isNumeric(value) && value.length == 10) {
           return null;
         } else {
-          return 'Solo numeros';
+          return 'Ingrese su numero de telefono';
         }
       },
     );

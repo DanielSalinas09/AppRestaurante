@@ -1,27 +1,9 @@
-// To parse this JSON data, do
-//
-//     final loginModal = loginModalFromJson(jsonString);
+import 'package:app_restaurante/src/models/registroModal.dart';
 
-import 'dart:convert';
-
-//Recibir Json
-LoginModal loginModalFromJson(String str) =>
-    LoginModal.fromJson(json.decode(str));
-
-String loginModalToJson(LoginModal data) => json.encode(data.toJson());
-
-class LoginModal {
-  int numero;
+class LoginModal extends Usuario {
+  int code;
 
   LoginModal({
-    this.numero,
+    this.code,
   });
-
-  factory LoginModal.fromJson(Map<String, dynamic> json) => LoginModal(
-        numero: json["numero"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "numero": numero,
-      };
 }

@@ -1,4 +1,5 @@
 import 'package:app_restaurante/src/models/loginModals.dart';
+import 'package:app_restaurante/src/providers/loginProvider-verification.dart';
 import 'package:app_restaurante/src/utils/utils.dart' as utils;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,8 +13,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
-
+  final loginProvider = new LoginProvider();
   LoginModal loginModal = new LoginModal();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,12 +54,43 @@ class _LoginState extends State<Login> {
     );
   }
 
-  submit() {
+  submit() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      print(loginModal.numero);
-      Navigator.pushNamed(context, 'loginVerificacion');
+
+      bool info = await loginProvider.user(loginModal.numero);
+      print("Codigo " + loginModal.code.toString());
+      if (info) {
+        Navigator.pushNamed(context, 'loginVerificacion');
+      } else {
+        _mostrarAlert(loginProvider.message);
+      }
+      print(info);
     }
+  }
+
+  void _mostrarAlert(String message) {
+    showDialog(
+        useSafeArea: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Informacion incorrecta',
+              style: TextStyle(fontSize: 25),
+            ),
+            content: Text(
+              message,
+              style: TextStyle(fontSize: 18),
+            ),
+            actions: [
+              TextButton(
+                child: Text('Ok', style: TextStyle(fontSize: 20)),
+                onPressed: () => Navigator.of(context).pop(),
+              )
+            ],
+          );
+        });
   }
 
   Widget _fondo(BuildContext context) {

@@ -1,19 +1,15 @@
-import 'dart:convert';
-
-String registroModalToJson(RegistroModal data) => json.encode(data.toJson());
-
-class RegistroModal {
+abstract class Usuario {
   int numero;
+}
+
+class RegistroModal extends Usuario {
   String nombre;
   String apellido;
   String email;
 
-  RegistroModal({this.nombre, this.apellido, this.email, this.numero});
-
-  Map<String, dynamic> toJson() => {
-        'numero': numero,
-        'nombre': nombre,
-        'apellidos:': apellido,
-        'email': email
-      };
+  RegistroModal({
+    this.nombre,
+    this.apellido,
+    this.email,
+  });
 }

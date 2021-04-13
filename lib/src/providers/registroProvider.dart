@@ -1,19 +1,37 @@
 import 'dart:convert';
 
-import 'package:app_restaurante/src/models/registroModal.dart';
 import 'package:http/http.dart' as http;
 
 class RegisterProvider {
-  Future<bool> register(RegistroModal register) async {
-    String url = "https://backend-delivery.azurewebsites.net/api/auth/registro";
+  String _state;
 
-    var response = await http.post(Uri.parse(url),
-        headers: {"Content-Type": "application/json"},
-        body: registroModalToJson(register));
+  String get state {
+    return _state;
+  }
+
+  set states(String valor) {
+    _state = valor;
+  }
+
+  Future<bool> register(
+      int numero, String nombre, String apellido, String email) async {
+    String url = "https://backend-delivery.azurewebsites.net/api/auth/registro";
+    print(numero.toString() + " - " + nombre + " - " + apellido);
+    var response = await http.post(Uri.parse(url), body: {
+      "numero": numero.toString(),
+      "nombre": nombre,
+      "apellidos": apellido,
+      "email": email
+    });
 
     final decodeResp = jsonDecode(response.body);
 
     print(decodeResp);
-    return true;
+    _state = decodeResp['message'];
+    if (_state == "usuario guardado correctametne") {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

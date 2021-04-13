@@ -1,3 +1,5 @@
+import 'package:app_restaurante/src/models/loginModals.dart';
+import 'package:app_restaurante/src/providers/loginProvider-verification.dart';
 import 'package:app_restaurante/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +11,10 @@ class LoginVerificacion extends StatefulWidget {
 }
 
 class _LoginVerificacionState extends State<LoginVerificacion> {
+  int verify;
   final formKey = GlobalKey<FormState>();
+  final loginModal = new LoginModal();
+  final loginVerificationProvider = new LoginVerificationProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
               SizedBox(height: 10),
               _form(),
               SizedBox(height: 150),
-              _button(context)
+              _button()
             ],
           ),
         ),
@@ -85,6 +90,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(),
+      onSaved: (value) => verify = int.parse(value),
       validator: (value) {
         if (isNumeric(value) && value.length == 6) {
           return null;
@@ -95,7 +101,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
     );
   }
 
-  Widget _button(BuildContext context) {
+  Widget _button() {
     // ignore: deprecated_member_use
     return RaisedButton(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
@@ -111,10 +117,44 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
         onPressed: () => {_submit()});
   }
 
-  _submit() {
+  _submit() async {
     if (formKey.currentState.validate()) {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil('navigation', (route) => false);
+      formKey.currentState.save();
+      print("========Verificacion====");
+
+      print("Codigo digitado" + verify.toString());
+      bool info = await loginVerificationProvider.verification(verify);
+      print(info);
+      if (info) {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('navigation', (route) => false);
+      } else {
+        _mostrarAlert("El codigo es Incorrecto");
+      }
     }
+  }
+
+  void _mostrarAlert(String message) {
+    showDialog(
+        useSafeArea: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Informacion incorrecta',
+              style: TextStyle(fontSize: 25),
+            ),
+            content: Text(
+              message,
+              style: TextStyle(fontSize: 18),
+            ),
+            actions: [
+              TextButton(
+                child: Text('Ok', style: TextStyle(fontSize: 20)),
+                onPressed: () => Navigator.of(context).pop(),
+              )
+            ],
+          );
+        });
   }
 }
