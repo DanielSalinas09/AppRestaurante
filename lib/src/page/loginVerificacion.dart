@@ -119,10 +119,13 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        onPressed: () => {_submit(number)});
+        onPressed: () => {_submit()});
   }
 
-  _submit(int number) async {
+  _submit() async {
+    final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
+    int number = infoProvider.number;
+    print(number);
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       print("========Verificacion====");
