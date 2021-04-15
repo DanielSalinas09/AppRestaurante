@@ -1,4 +1,8 @@
+import 'package:provider/provider.dart';
+
 import 'package:app_restaurante/src/models/loginModals.dart';
+
+import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:app_restaurante/src/providers/loginProvider-verification.dart';
 import 'package:app_restaurante/src/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +22,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
 
   @override
   Widget build(BuildContext context) {
+    final infoProvider = Provider.of<InfoProvider>(context);
     return Scaffold(
       backgroundColor: Color(0xFFE6E6E6),
       body: SingleChildScrollView(
@@ -29,7 +34,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
               SizedBox(height: 10),
               _form(),
               SizedBox(height: 150),
-              _button()
+              _button(infoProvider.number)
             ],
           ),
         ),
@@ -101,7 +106,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
     );
   }
 
-  Widget _button() {
+  Widget _button(int number) {
     // ignore: deprecated_member_use
     return RaisedButton(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
@@ -114,20 +119,20 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        onPressed: () => {_submit()});
+        onPressed: () => {_submit(number)});
   }
 
-  _submit() async {
+  _submit(int number) async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       print("========Verificacion====");
 
       print("Codigo digitado" + verify.toString());
-      bool info = await loginVerificationProvider.verification(verify);
+
+      bool info = await loginVerificationProvider.verification(verify, number);
       print(info);
       if (info) {
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil('navigation', (route) => false);
+        //Navigator.of(context).pushNamedAndRemoveUntil('navigation', (route) => false);
       } else {
         _mostrarAlert("El codigo es Incorrecto");
       }

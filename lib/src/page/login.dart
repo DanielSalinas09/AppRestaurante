@@ -1,4 +1,7 @@
+import 'package:provider/provider.dart';
+
 import 'package:app_restaurante/src/models/loginModals.dart';
+import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:app_restaurante/src/providers/loginProvider-verification.dart';
 import 'package:app_restaurante/src/utils/utils.dart' as utils;
 import 'package:flutter/material.dart';
@@ -18,6 +21,9 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final infoProvider = Provider.of<InfoProvider>(context);
+    infoProvider.number = loginModal.numero;
+
     return Scaffold(
       backgroundColor: Color(0xFFE6E6E6),
       body: SingleChildScrollView(

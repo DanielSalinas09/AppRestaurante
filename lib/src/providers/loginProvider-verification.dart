@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app_restaurante/src/models/loginModals.dart';
+import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:http/http.dart' as http;
 
 class LoginProvider {
@@ -10,6 +11,7 @@ class LoginProvider {
     return _message;
   }
 
+  final infoProvider = new InfoProvider();
   final loginModal = new LoginModal();
   Future<bool> user(int number) async {
     String url = "https://backend-delivery.azurewebsites.net/api/auth/login";
@@ -20,7 +22,7 @@ class LoginProvider {
     final respDecode = jsonDecode(response.body);
     loginModal.code = respDecode["codigo"];
 
-    print("El numero es " + loginModal.code.toString());
+    print("El Codigo es " + loginModal.code.toString());
     //print(respDecode);
 
     if (loginModal.code == null) {
@@ -35,11 +37,11 @@ class LoginProvider {
 
 class LoginVerificationProvider {
   final loginModal = new LoginModal();
-  Future<bool> verification(int code) async {
+  Future<bool> verification(int code, int number) async {
     String url = " https://backend-delivery.azurewebsites.net/api/auth/verify";
 
     final resp = await http.post(Uri.parse(url), body: {
-      "numero": loginModal.numero,
+      "numero": number,
       "codigo": code,
     });
 
