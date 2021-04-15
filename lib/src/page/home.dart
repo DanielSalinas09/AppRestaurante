@@ -167,7 +167,7 @@ class HomeState extends State {
                   color: Colors.black),
             ),
             Text(
-              "Atlantico . colombia",
+              "Barranquilla . Atlantico",
               style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
             ),
             Text(
@@ -186,6 +186,7 @@ class HomeState extends State {
         if (snapshot.hasData) {
           // return Text("hola");
           return ListView.builder(
+            physics: ScrollPhysics(parent: ScrollPhysics()),
             shrinkWrap: true,
             itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, int index) {

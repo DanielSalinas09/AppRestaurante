@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class PlatosProvider {
   String x_access_token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1lcm8iOjMwMDU1MjUwMjgsImNvZGlnbyI6OTY5NjE1LCJpYXQiOjE2MTg0MzI4NjUsImV4cCI6MTYxODQ2MTY2NX0.U61nUhuBz0yIf0pEiyHLje5OhR_MhMeK88dhXz_wP9E';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJudW1lcm8iOjMxMDg5OTQ5OTEsImNvZGlnbyI6MzY2MzE5LCJpYXQiOjE2MTg0NDgyOTksImV4cCI6MTYxODQ3NzA5OX0.0DXiIrPwSmeEjj3Nosbv3xNjD1ttU_DVeK6Oh2sffnk';
   String _url = 'backend-delivery.azurewebsites.net';
 
   Future<List<Plato>> getAll() async {
