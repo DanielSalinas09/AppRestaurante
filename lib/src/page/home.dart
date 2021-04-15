@@ -1,3 +1,4 @@
+import 'package:app_restaurante/src/providers/platosProdiver.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -8,28 +9,31 @@ class Home extends StatefulWidget {
 class HomeState extends State {
   final textStyleEnviar = TextStyle(color: Color(0xFF4B4A4A3), fontSize: 20.0);
   final formKey = GlobalKey<FormState>();
+  final platosProvider = new PlatosProvider();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _enviarDireccion(),
-              SizedBox(
-                height: 20.0,
-              ),
-              _formSearch(),
-              SizedBox(height: 10.0),
-              _descubre(),
-              SizedBox(height: 10.0),
-              _scrollHorizontalCategory(),
-              SizedBox(height: 30.0),
-              _scrollCard(),
-            ],
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _enviarDireccion(),
+                SizedBox(
+                  height: 20.0,
+                ),
+                _formSearch(),
+                SizedBox(height: 10.0),
+                _descubre(),
+                SizedBox(height: 10.0),
+                _scrollHorizontalCategory(),
+                SizedBox(height: 30.0),
+                _scrollCard(),
+              ],
+            ),
           ),
         ),
       ),
@@ -138,7 +142,7 @@ class HomeState extends State {
     );
   }
 
-  Widget _card(String title, ImageProvider image, String valor) {
+  Widget _card(String title, String imageUrl, String valor) {
     return InkWell(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,9 +150,12 @@ class HomeState extends State {
             Container(
               width: 500,
               height: 200,
+              child: FadeInImage(
+                placeholder: AssetImage('assets/img/no-image.jpg'),
+                image: NetworkImage(imageUrl),
+              ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                image: DecorationImage(fit: BoxFit.fill, image: image),
               ),
             ),
             SizedBox(height: 10.0),
@@ -173,32 +180,66 @@ class HomeState extends State {
   }
 
   Widget _scrollCard() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          _card("hamburguesa secilla", AssetImage('assets/img/burger.jpg'),
-              "5.000"),
-          SizedBox(
-            height: 15.0,
-          ),
-          _card("pizza de jamon y queso", AssetImage('assets/img/pizza.jpg'),
-              "7.000"),
-          SizedBox(
-            height: 15.0,
-          ),
-          _card("hamburguesa secilla", AssetImage('assets/img/burger.jpg'),
-              "5.000"),
-          SizedBox(
-            height: 15.0,
-          ),
-          _card("pizza de jamon y queso", AssetImage('assets/img/pizza.jpg'),
-              "7.000"),
-          SizedBox(
-            height: 15.0,
-          ),
-        ],
-      ),
+    return FutureBuilder(
+      future: platosProvider.getAll(),
+      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+        if (snapshot.hasData) {
+          // return Text("hola");
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: snapshot.data.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _card(
+                  snapshot.data[index].nombre,
+                  'https://' + snapshot.data[index].imgUri,
+                  snapshot.data[index].precio.toString());
+              // return Text("jpñga");
+            },
+          );
+          // return SingleChildScrollView(
+          //   child: Column(
+
+          //    _ card(snapshot.data., AssetImage('assets/img/burger.jpg'),
+          //         "5.000"),
+          //     SizedBox(
+          //       height: 15.0,
+          //     ),
+          //   ),
+          // );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
+
+    // SingleChildScrollView(
+    // child: Column(
+    //   children: [
+    //     _card("hamburguesa secilla", AssetImage('assets/img/burger.jpg'),
+    //         "5.000"),
+    //     SizedBox(
+    //       height: 15.0,
+    //     ),
+    //     _card("pizza de jamon y queso", AssetImage('assets/img/pizza.jpg'),
+    //         "7.000"),
+    //     SizedBox(
+    //       height: 15.0,
+    //     ),
+    //     _card("hamburguesa secilla", AssetImage('assets/img/burger.jpg'),
+    //         "5.000"),
+    //     SizedBox(
+    //       height: 15.0,
+    //     ),
+    //     _card("pizza de jamon y queso", AssetImage('assets/img/pizza.jpg'),
+    //         "7.000"),
+    //     SizedBox(
+    //       height: 15.0,
+    //     ),
+    //   ],
+    // ),
+    // );
   }
 
   // _loadPage(int currentIndex, BuildContext context) {

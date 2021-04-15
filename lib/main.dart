@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'MPLUSRounded1c'),
       debugShowCheckedModeBanner: false,
-      initialRoute: 'login',
+      initialRoute: 'home',
       routes: {
         'splashScreen': (BuildContext context) => SplashsCreen(),
         'login': (BuildContext context) => Login(),
