@@ -19,11 +19,9 @@ class _LoginState extends State<Login> {
   final loginProvider = new LoginProvider();
   LoginModal loginModal = new LoginModal();
 
+  // InfoProvider infoProvider;
   @override
   Widget build(BuildContext context) {
-    final infoProvider = Provider.of<InfoProvider>(context);
-    infoProvider.number = loginModal.numero;
-
     return Scaffold(
       backgroundColor: Color(0xFFE6E6E6),
       body: SingleChildScrollView(
@@ -33,9 +31,9 @@ class _LoginState extends State<Login> {
             children: [
               _fondo(context),
               SizedBox(height: 20),
-              _form(),
+              _form(context),
               SizedBox(height: 80),
-              _button(context)
+              _button()
             ],
           ),
         ),
@@ -43,7 +41,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget _button(BuildContext context) {
+  Widget _button() {
     // ignore: deprecated_member_use
     return RaisedButton(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
@@ -61,10 +59,11 @@ class _LoginState extends State<Login> {
   }
 
   submit() async {
+    final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
 
-      bool info = await loginProvider.user(loginModal.numero);
+      bool info = await loginProvider.user(infoProvider.number);
       print("Codigo " + loginModal.code.toString());
       if (info) {
         Navigator.pushNamed(context, 'loginVerificacion');
@@ -157,7 +156,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget _form() {
+  Widget _form(BuildContext context) {
     return Container(
       child: Padding(
           padding: EdgeInsets.all(25),
@@ -175,10 +174,11 @@ class _LoginState extends State<Login> {
   }
 
   Widget _input() {
+    final infoProvider = Provider.of<InfoProvider>(this.context);
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(),
-      onSaved: (value) => loginModal.numero = int.parse(value),
+      onSaved: (value) => infoProvider.number = int.parse(value),
       validator: (value) {
         if (utils.isNumeric(value) && value.length == 10) {
           return null;
