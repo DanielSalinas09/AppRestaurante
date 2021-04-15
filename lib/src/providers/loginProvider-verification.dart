@@ -37,16 +37,23 @@ class LoginProvider {
 
 class LoginVerificationProvider {
   final loginModal = new LoginModal();
+  final infoProvider = new InfoProvider();
   Future<bool> verification(int code, int number) async {
     String url = "https://backend-delivery.azurewebsites.net/api/auth/verify";
 
     final resp = await http.post(Uri.parse(url), body: {
-      "numero": number,
-      "codigo": code,
+      "numero": number.toString(),
+      "codigo": code.toString(),
     });
 
     Map<String, dynamic> respDecode = jsonDecode(resp.body);
+    infoProvider.token = respDecode["token"];
     print(respDecode);
-    return true;
+
+    if (respDecode["message"] == "verificacion completada") {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

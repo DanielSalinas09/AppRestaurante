@@ -22,7 +22,6 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
 
   @override
   Widget build(BuildContext context) {
-    final infoProvider = Provider.of<InfoProvider>(context);
     return Scaffold(
       backgroundColor: Color(0xFFE6E6E6),
       body: SingleChildScrollView(
@@ -34,7 +33,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
               SizedBox(height: 10),
               _form(),
               SizedBox(height: 150),
-              _button(infoProvider.number)
+              _button()
             ],
           ),
         ),
@@ -106,7 +105,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
     );
   }
 
-  Widget _button(int number) {
+  Widget _button() {
     // ignore: deprecated_member_use
     return RaisedButton(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
@@ -125,7 +124,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
   _submit() async {
     final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
     int number = infoProvider.number;
-    print(number);
+    print("El numero de telefono es :" + number.toString());
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       print("========Verificacion====");
@@ -135,7 +134,8 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
       bool info = await loginVerificationProvider.verification(verify, number);
       print(info);
       if (info) {
-        //Navigator.of(context).pushNamedAndRemoveUntil('navigation', (route) => false);
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('navigation', (route) => false);
       } else {
         _mostrarAlert("El codigo es Incorrecto");
       }
