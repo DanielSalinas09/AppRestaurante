@@ -38,7 +38,7 @@ class LoginProvider {
 class LoginVerificationProvider {
   final loginModal = new LoginModal();
   Future<bool> verification(int code, int number) async {
-    String url = " https://backend-delivery.azurewebsites.net/api/auth/verify";
+    String url = "https://backend-delivery.azurewebsites.net/api/auth/verify";
 
     final resp = await http.post(Uri.parse(url), body: {
       "numero": number,
