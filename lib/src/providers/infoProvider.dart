@@ -1,8 +1,17 @@
 import 'package:flutter/foundation.dart';
 
 class InfoProvider with ChangeNotifier {
-  String _token = 'hola';
+  String _token;
   int _number;
+  String _idDirection;
+
+  get idDirection {
+    return _idDirection;
+  }
+
+  set idDirection(idDirection) {
+    this._idDirection = idDirection;
+  }
 
   get number {
     return _number;

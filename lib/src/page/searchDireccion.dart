@@ -1,5 +1,10 @@
+import 'package:app_restaurante/src/models/directionModal.dart';
+import 'package:app_restaurante/src/providers/directionProvider.dart';
+import 'package:app_restaurante/src/providers/infoProvider.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SearchDireccion extends StatefulWidget {
   SearchDireccion({Key key}) : super(key: key);
@@ -10,9 +15,11 @@ class SearchDireccion extends StatefulWidget {
 
 class SearchDireccionState extends State<SearchDireccion> {
   final formKey = GlobalKey<FormState>();
+  final directionProvider = new DirectionProvider();
 
   @override
   Widget build(BuildContext context) {
+    final infoProvider = Provider.of<InfoProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -37,21 +44,31 @@ class SearchDireccionState extends State<SearchDireccion> {
             SizedBox(
               height: 20.0,
             ),
-            _direccion("calle 38B #1c-72"),
-            SizedBox(
-              height: 20.0,
-            ),
-            _direccion("calle 38B #1c-72"),
-            SizedBox(
-              height: 20.0,
-            ),
-            _direccion("calle 38B #1c-72"),
-            SizedBox(
-              height: 20.0,
-            ),
+            _showDirection(infoProvider.token, infoProvider.number)
           ],
         ),
       ),
+    );
+  }
+
+  Widget _showDirection(String token, int number) {
+    return FutureBuilder(
+      future: directionProvider.showDirection(token, number),
+      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, i) {
+              return _crearItem(context, snapshot.data[i], token);
+            },
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 
@@ -59,7 +76,18 @@ class SearchDireccionState extends State<SearchDireccion> {
     return Form(
       key: formKey,
       child: TextFormField(
+        onFieldSubmitted: (value) {
+          _submitSearch(value);
+        },
+        validator: (value) {
+          if (value.isNotEmpty) {
+            return null;
+          } else {
+            return 'Escriba su direccion';
+          }
+        },
         decoration: InputDecoration(
+            border: InputBorder.none,
             hintText: "Agregar una direccion",
             labelStyle:
                 TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
@@ -81,18 +109,43 @@ class SearchDireccionState extends State<SearchDireccion> {
     );
   }
 
-  Widget _direccion(String direccion) {
-    return Row(
-      children: [
-        Icon(
-          Icons.location_on_outlined,
-          size: 26,
-        ),
-        Text(
-          direccion,
-          style: TextStyle(fontSize: 17.0, color: Color(0xFF4B4A4A3)),
-        )
-      ],
+  _submitSearch(String value) async {
+    final infoProvider = Provider.of<InfoProvider>(context, listen: false);
+    if (formKey.currentState.validate()) {
+      formKey.currentState.save();
+      var info = await directionProvider.createAddres(
+          value, infoProvider.token, infoProvider.number);
+      infoProvider.idDirection = info[0];
+    }
+  }
+
+  Widget _crearItem(BuildContext context, DirectionModal direction, token) {
+    print(direction.id);
+    return Dismissible(
+      direction: DismissDirection.endToStart,
+      key: UniqueKey(),
+      background: Container(
+        color: Color(0x9DEB1515),
+      ),
+      onDismissed: (direccion) {
+        directionProvider.deleteDirection(direction.id, token);
+      },
+      child: ListTile(
+          title: Row(
+        children: [
+          Icon(
+            Icons.location_on_outlined,
+            size: 26,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            direction.direction,
+            style: TextStyle(fontSize: 19.0, color: Color(0xFF3535353)),
+          )
+        ],
+      )),
     );
   }
 }

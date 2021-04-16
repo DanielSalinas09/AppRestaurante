@@ -1,3 +1,7 @@
+import 'package:app_restaurante/src/providers/infoProvider.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
 import 'package:app_restaurante/src/providers/platosProdiver.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +14,10 @@ class HomeState extends State {
   final textStyleEnviar = TextStyle(color: Color(0xFF4B4A4A3), fontSize: 20.0);
   final formKey = GlobalKey<FormState>();
   final platosProvider = new PlatosProvider();
+
   @override
   Widget build(BuildContext context) {
+    final infoProvider = Provider.of<InfoProvider>(context);
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -31,7 +37,7 @@ class HomeState extends State {
                 SizedBox(height: 10.0),
                 _scrollHorizontalCategory(),
                 SizedBox(height: 30.0),
-                _scrollCard(),
+                _scrollCard(infoProvider.token),
               ],
             ),
           ),
@@ -143,45 +149,74 @@ class HomeState extends State {
   }
 
   Widget _card(String title, String imageUrl, String valor) {
+    var precio = NumberFormat("#,###", 'es-CO');
     return InkWell(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 500,
-              height: 200,
-              child: FadeInImage(
-                placeholder: AssetImage('assets/img/no-image.jpg'),
-                image: NetworkImage(imageUrl),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20.0),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10.0,
+                    spreadRadius: 1.0,
+                    offset: Offset(1.0, 3.0))
+              ]),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 500,
+                    height: 200,
+                    child: FadeInImage(
+                      placeholder: AssetImage('assets/img/no-image.jpg'),
+                      image: NetworkImage(imageUrl, scale: 1.0),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
+                        Text(
+                          "Barranquilla . Atlantico",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.grey),
+                        ),
+                        Text(
+                          "valor " + precio.format(int.parse(valor)),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.grey),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(15.0)),
-              ),
             ),
-            SizedBox(height: 10.0),
-            Text(
-              title,
-              style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-            Text(
-              "Barranquilla . Atlantico",
-              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
-            ),
-            Text(
-              "valor " + valor,
-              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
-            ),
-          ],
+          ),
         ),
         onTap: () => Navigator.pushNamed(context, 'descriptionDish'));
   }
 
-  Widget _scrollCard() {
+  Widget _scrollCard(String token) {
     return FutureBuilder(
-      future: platosProvider.getAll(),
+      future: platosProvider.getAll(token),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.hasData) {
           // return Text("hola");
@@ -190,10 +225,17 @@ class HomeState extends State {
             shrinkWrap: true,
             itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, int index) {
-              return _card(
-                  snapshot.data[index].nombre,
-                  'https://' + snapshot.data[index].imgUri,
-                  snapshot.data[index].precio.toString());
+              return Column(
+                children: [
+                  _card(
+                      snapshot.data[index].nombre,
+                      'https://' + snapshot.data[index].imgUri,
+                      snapshot.data[index].precio.toString()),
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+              );
               // return Text("jpñga");
             },
           );

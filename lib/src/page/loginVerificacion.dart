@@ -124,16 +124,14 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
   _submit() async {
     final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
     int number = infoProvider.number;
-    print("El numero de telefono es :" + number.toString());
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      print("========Verificacion====");
-
       print("Codigo digitado" + verify.toString());
 
-      bool info = await loginVerificationProvider.verification(verify, number);
+      var info = await loginVerificationProvider.verification(verify, number);
+      infoProvider.token = info[1];
       print(info);
-      if (info) {
+      if (info[0]) {
         Navigator.of(context)
             .pushNamedAndRemoveUntil('navigation', (route) => false);
       } else {

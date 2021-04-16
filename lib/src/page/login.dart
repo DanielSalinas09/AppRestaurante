@@ -64,13 +64,12 @@ class _LoginState extends State<Login> {
       formKey.currentState.save();
 
       bool info = await loginProvider.user(infoProvider.number);
-      print("Codigo " + loginModal.code.toString());
+
       if (info) {
         Navigator.pushNamed(context, 'loginVerificacion');
       } else {
         _mostrarAlert(loginProvider.message);
       }
-      print(info);
     }
   }
 
