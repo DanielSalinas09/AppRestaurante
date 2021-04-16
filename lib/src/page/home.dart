@@ -83,6 +83,7 @@ class HomeState extends State {
   }
 
   Widget _formSearch() {
+    String plato;
     return Form(
       key: formKey,
       child: TextFormField(
@@ -104,10 +105,27 @@ class HomeState extends State {
               ),
             ),
             filled: true),
-        onFieldSubmitted: (value) =>
-            {Navigator.pushNamed(context, 'searchPlato')},
+        validator: (value) {
+          if (value.isNotEmpty) {
+            return null;
+          } else {
+            return 'Escriba un plato';
+          }
+        },
+        onFieldSubmitted: (value) => _submitPlato(value),
       ),
     );
+  }
+
+  _submitPlato(String plato) async {
+    final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
+    if (formKey.currentState.validate()) {
+      formKey.currentState.save();
+      final value = plato.replaceAll(" ", "_");
+      print(value);
+      List info = await platosProvider.searchPlato(value, infoProvider.token);
+      print("La informacion es :" + info.toString());
+    }
   }
 
   Widget _descubre() {
@@ -303,4 +321,5 @@ class HomeState extends State {
   //       return Home();
   //   }
   // }
+
 }

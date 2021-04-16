@@ -14,6 +14,7 @@ class PlatosProvider {
 
     return platos.platos;
   }
+
   /*Future<Plato> getOne(String id) async {
     final url = Uri.https(_url, '/api/plato/' + id);
     final response =
@@ -24,4 +25,15 @@ class PlatosProvider {
     return plato;
   }
   */
+  Future<List<dynamic>> searchPlato(String plate, String token) async {
+    final url = Uri.https(_url, '/api/plato/getbyname/$plate');
+
+    final resp = await http.get(url, headers: {
+      'x-access-token': token,
+    });
+
+    final respDecode = json.decode(resp.body);
+    print(respDecode);
+    return [true, respDecode['platos']];
+  }
 }
