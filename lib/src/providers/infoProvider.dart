@@ -4,6 +4,15 @@ class InfoProvider with ChangeNotifier {
   String _token;
   int _number;
   String _idDirection;
+  String _direccion = "Escoja su direccion";
+
+  get direction {
+    return _direccion;
+  }
+
+  set direction(String direction) {
+    this._direccion = direction;
+  }
 
   get idDirection {
     return _idDirection;

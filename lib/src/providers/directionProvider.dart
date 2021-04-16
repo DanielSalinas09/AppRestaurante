@@ -27,7 +27,7 @@ class DirectionProvider {
       "numero": number.toString(),
     });
     final respDecode = json.decode(resp.body);
-    print(respDecode);
+
     final direccion =
         new DirectionModals.fromJsonList(respDecode['direcciones']);
     print(direccion.direcciones);

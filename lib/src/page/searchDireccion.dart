@@ -125,27 +125,43 @@ class SearchDireccionState extends State<SearchDireccion> {
       direction: DismissDirection.endToStart,
       key: UniqueKey(),
       background: Container(
-        color: Color(0x9DEB1515),
+        color: Color(0xDCDB0D0D),
       ),
       onDismissed: (direccion) {
         directionProvider.deleteDirection(direction.id, token);
       },
       child: ListTile(
-          title: Row(
-        children: [
-          Icon(
-            Icons.location_on_outlined,
-            size: 26,
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Text(
-            direction.direction,
-            style: TextStyle(fontSize: 19.0, color: Color(0xFF3535353)),
-          )
-        ],
-      )),
+        title: Row(
+          children: [
+            Icon(
+              Icons.location_on_outlined,
+              size: 26,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              direction.direction,
+              style: TextStyle(fontSize: 19.0, color: Color(0xFF3535353)),
+            )
+          ],
+        ),
+        onTap: () {
+          setState(() {
+            _submitDireccion(direction);
+          });
+        },
+      ),
     );
+  }
+
+  _submitDireccion(DirectionModal direction) {
+    setState(() {
+      final infoProvider =
+          Provider.of<InfoProvider>(this.context, listen: false);
+      infoProvider.direction = direction.direction;
+    });
+
+    return Navigator.of(context).pushReplacementNamed("navigation");
   }
 }

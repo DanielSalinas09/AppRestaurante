@@ -1,14 +1,14 @@
 class DirectionModal {
   String id;
   String direction;
-  String usuario_id;
+  String usuarioId;
 
-  DirectionModal({this.id, this.direction, this.usuario_id});
+  DirectionModal({this.id, this.direction, this.usuarioId});
 
   DirectionModal.fromJsonMap(Map<String, dynamic> json) {
     id = json['_id'];
     direction = json['direccion'];
-    usuario_id = json['usuario_id'];
+    usuarioId = json['usuario_id'];
   }
 }
 

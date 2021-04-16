@@ -1,3 +1,4 @@
+import 'package:app_restaurante/src/models/directionModal.dart';
 import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -14,10 +15,12 @@ class HomeState extends State {
   final textStyleEnviar = TextStyle(color: Color(0xFF4B4A4A3), fontSize: 20.0);
   final formKey = GlobalKey<FormState>();
   final platosProvider = new PlatosProvider();
+  DirectionModal direction = new DirectionModal();
 
   @override
   Widget build(BuildContext context) {
     final infoProvider = Provider.of<InfoProvider>(context);
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -47,6 +50,9 @@ class HomeState extends State {
   }
 
   Widget _enviarDireccion() {
+    final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
+    String direccion = infoProvider.direction;
+    print(direccion);
     return Row(
       children: [
         Text(
@@ -64,7 +70,7 @@ class HomeState extends State {
         ),
         InkWell(
           child: Text(
-            "Calle 38B # 1c-75",
+            direccion,
             style: TextStyle(
                 color: Color(0xFF000000),
                 fontSize: 20.0,
