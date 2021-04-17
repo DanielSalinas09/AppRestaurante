@@ -61,32 +61,6 @@ class CategoryState extends State<Category> {
         ));
   }
 
-  Widget _formSearch() {
-    return Form(
-      key: formKey,
-      child: TextFormField(
-        decoration: InputDecoration(
-            hintText: "Buscar un plato",
-            labelStyle:
-                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-            prefixIcon: Icon(
-              Icons.search,
-              color: Color(0x7E838989),
-            ),
-            focusColor: Color(0xffffffff),
-            fillColor: Color(0xF2F2F2F2),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15.0),
-              borderSide: BorderSide(
-                color: Colors.white,
-                width: 2.0,
-              ),
-            ),
-            filled: true),
-      ),
-    );
-  }
-
   Widget _card(String title, String imageUrl, String valor) {
     var precio = NumberFormat("#,###", 'es-CO');
     return InkWell(
