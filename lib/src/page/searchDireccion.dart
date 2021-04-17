@@ -21,12 +21,13 @@ class SearchDireccionState extends State<SearchDireccion> {
   Widget build(BuildContext context) {
     final infoProvider = Provider.of<InfoProvider>(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           "Direccion",
           style: TextStyle(color: Color(0xFF7575753)),
         ),
-        elevation: 0,
+        elevation: 2,
         iconTheme: IconThemeData(color: Color(0xFF7575753)),
 
         shadowColor: Colors.white,
@@ -35,17 +36,19 @@ class SearchDireccionState extends State<SearchDireccion> {
         centerTitle: true,
         // color
       ),
-      body: Container(
-        margin: EdgeInsets.all(13.0),
-        color: Colors.white,
-        child: Column(
-          children: [
-            _formSearch(),
-            SizedBox(
-              height: 20.0,
-            ),
-            _showDirection(infoProvider.token, infoProvider.number)
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          color: Colors.white,
+          padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+          child: Column(
+            children: [
+              _formSearch(),
+              SizedBox(
+                height: 40.0,
+              ),
+              _showDirection(infoProvider.token, infoProvider.number)
+            ],
+          ),
         ),
       ),
     );

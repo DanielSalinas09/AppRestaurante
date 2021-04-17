@@ -92,6 +92,7 @@ class HomeState extends State {
       child: TextFormField(
         controller: clear,
         decoration: InputDecoration(
+            border: InputBorder.none,
             hintText: "Busca un plato",
             labelStyle:
                 TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
@@ -158,6 +159,7 @@ class HomeState extends State {
                   children: [
                     _categoryItem(
                       snapshot.data[i].nombre,
+                      snapshot.data[i].id,
                     )
                   ],
                 );
@@ -169,11 +171,7 @@ class HomeState extends State {
     );
   }
 
-  Widget scrolls() {
-    return SingleChildScrollView();
-  }
-
-  Widget _categoryItem(String text) {
+  Widget _categoryItem(String text, String id) {
     return InkWell(
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 5.0),
@@ -188,7 +186,10 @@ class HomeState extends State {
               color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
       ),
-      onTap: () => {Navigator.pushNamed(context, 'category')},
+      onTap: () {
+        Navigator.pushNamed(context, 'category',
+            arguments: {'id': id, 'nombre': text});
+      },
     );
   }
 
