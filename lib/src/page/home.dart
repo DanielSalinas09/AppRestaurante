@@ -1,4 +1,5 @@
 import 'package:app_restaurante/src/models/directionModal.dart';
+import 'package:app_restaurante/src/providers/categoryProvider.dart';
 
 import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:intl/intl.dart';
@@ -17,7 +18,9 @@ class HomeState extends State {
   final formKey = GlobalKey<FormState>();
   final platosProvider = new PlatosProvider();
   DirectionModal direction = new DirectionModal();
+  final categoryProvider = new CateroryProvider();
   TextEditingController clear = new TextEditingController();
+  ScrollController scroll = new ScrollController();
   @override
   Widget build(BuildContext context) {
     final infoProvider = Provider.of<InfoProvider>(context);
@@ -39,7 +42,7 @@ class HomeState extends State {
                 SizedBox(height: 10.0),
                 _descubre(),
                 SizedBox(height: 10.0),
-                _scrollHorizontalCategory(),
+                _scrollHorizontalCategory(infoProvider.token),
                 SizedBox(height: 30.0),
                 _scrollCard(infoProvider.token),
               ],
@@ -140,35 +143,49 @@ class HomeState extends State {
     );
   }
 
-  Widget _scrollHorizontalCategory() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          _categoryItem("perros calientes", Color(0xF2EB1515), Colors.white),
-          _categoryItem("salchipapa", Color(0xF2F2F2F2), Colors.black),
-          _categoryItem("hamburguezas", Color(0xF2F2F2F2), Colors.black),
-          _categoryItem("pizzas", Color(0xF2F2F2F2), Colors.black),
-          _categoryItem("bebidas", Color(0xF2F2F2F2), Colors.black),
-          _categoryItem("asados", Color(0xF2F2F2F2), Colors.black),
-        ],
-      ),
+  Widget _scrollHorizontalCategory(String token) {
+    return FutureBuilder(
+      future: categoryProvider.showCategory(token),
+      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+              controller: scroll,
+              physics: ScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, i) {
+                return Row(
+                  children: [
+                    _categoryItem(
+                      snapshot.data[i].nombre,
+                    )
+                  ],
+                );
+              });
+        } else {
+          return Text("no hay categoria");
+        }
+      },
     );
   }
 
-  Widget _categoryItem(String text, Color colorBackground, Color colorText) {
+  Widget scrolls() {
+    return SingleChildScrollView();
+  }
+
+  Widget _categoryItem(String text) {
     return InkWell(
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 5.0),
         padding: EdgeInsets.all(10.0),
         decoration: new BoxDecoration(
-          color: colorBackground, //new Color.fromRGBO(255, 0, 0, 0.0),
+          color: Color(0xF2EB1515), //new Color.fromRGBO(255, 0, 0, 0.0),
           borderRadius: BorderRadius.all(Radius.circular(15.0)),
         ),
         child: Text(
           text,
           style: TextStyle(
-              color: colorText, fontSize: 18.0, fontWeight: FontWeight.bold),
+              color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
       ),
       onTap: () => {Navigator.pushNamed(context, 'category')},
