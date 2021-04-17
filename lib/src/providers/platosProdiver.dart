@@ -25,7 +25,7 @@ class PlatosProvider {
     return plato;
   }
   */
-  Future<List<dynamic>> searchPlato(String plate, String token) async {
+  Future<List<Plato>> searchPlato(String plate, String token) async {
     final url = Uri.https(_url, '/api/plato/getbyname/$plate');
 
     final resp = await http.get(url, headers: {
@@ -33,7 +33,9 @@ class PlatosProvider {
     });
 
     final respDecode = json.decode(resp.body);
+
+    final platosList = Platos.fromJsonList(respDecode['platos']);
     print(respDecode);
-    return [true, respDecode['platos']];
+    return platosList.platos;
   }
 }

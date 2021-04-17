@@ -1,4 +1,5 @@
 import 'package:app_restaurante/src/models/directionModal.dart';
+
 import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class HomeState extends State {
   final formKey = GlobalKey<FormState>();
   final platosProvider = new PlatosProvider();
   DirectionModal direction = new DirectionModal();
-
+  TextEditingController clear = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     final infoProvider = Provider.of<InfoProvider>(context);
@@ -83,10 +84,10 @@ class HomeState extends State {
   }
 
   Widget _formSearch() {
-    String plato;
     return Form(
       key: formKey,
       child: TextFormField(
+        controller: clear,
         decoration: InputDecoration(
             hintText: "Busca un plato",
             labelStyle:
@@ -112,19 +113,21 @@ class HomeState extends State {
             return 'Escriba un plato';
           }
         },
-        onFieldSubmitted: (value) => _submitPlato(value),
+        onFieldSubmitted: (value) {
+          _submitPlato(value);
+          clear.clear();
+        },
       ),
     );
   }
 
   _submitPlato(String plato) async {
-    final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       final value = plato.replaceAll(" ", "_");
       print(value);
-      List info = await platosProvider.searchPlato(value, infoProvider.token);
-      print("La informacion es :" + info.toString());
+
+      Navigator.pushNamed(context, 'searchPlato', arguments: {"value": value});
     }
   }
 
