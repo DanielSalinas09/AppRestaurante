@@ -144,28 +144,26 @@ class HomeState extends State {
   }
 
   Widget _scrollHorizontalCategory(String token) {
-    return FutureBuilder(
-      future: categoryProvider.showCategory(token),
-      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-        if (snapshot.hasData) {
-          return ListView.builder(
-              controller: scroll,
-              physics: ScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, i) {
-                return Row(
-                  children: [
-                    _categoryItem(
-                      snapshot.data[i].nombre,
-                    )
-                  ],
-                );
-              });
-        } else {
-          return Text("no hay categoria");
-        }
-      },
+    return Container(
+      height: 50,
+      child: FutureBuilder(
+        future: categoryProvider.showCategory(token),
+        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, i) {
+                  return _categoryItem(
+                    snapshot.data[i].nombre,
+                  );
+                });
+          } else {
+            return Text("no hay categoria");
+          }
+        },
+      ),
     );
   }
 
@@ -176,7 +174,7 @@ class HomeState extends State {
   Widget _categoryItem(String text) {
     return InkWell(
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5.0),
+        margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
         padding: EdgeInsets.all(10.0),
         decoration: new BoxDecoration(
           color: Color(0xF2EB1515), //new Color.fromRGBO(255, 0, 0, 0.0),
