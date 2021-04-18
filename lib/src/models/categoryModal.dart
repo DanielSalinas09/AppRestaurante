@@ -5,7 +5,7 @@ class CategoryModal {
   CategoryModal(this.id, this.nombre);
 
   CategoryModal.fromJsonMap(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['_id'];
     nombre = json['nombre'];
   }
 }
