@@ -1,3 +1,4 @@
+import 'package:app_restaurante/src/models/categoryModal.dart';
 import 'package:app_restaurante/src/models/directionModal.dart';
 import 'package:app_restaurante/src/providers/categoryProvider.dart';
 
@@ -56,7 +57,6 @@ class HomeState extends State {
   Widget _enviarDireccion() {
     final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
     String direccion = infoProvider.direction;
-    print(direccion);
     return Row(
       children: [
         Text(
@@ -80,7 +80,10 @@ class HomeState extends State {
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold),
           ),
-          onTap: () => {Navigator.pushNamed(context, 'searchDireccion')},
+          onTap: () async {
+            await Navigator.pushNamed(context, 'searchDireccion');
+            setState(() {});
+          },
         )
       ],
     );
@@ -129,7 +132,6 @@ class HomeState extends State {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       final value = plato.replaceAll(" ", "_");
-      print(value);
 
       Navigator.pushNamed(context, 'searchPlato', arguments: {"value": value});
     }
@@ -145,28 +147,46 @@ class HomeState extends State {
   }
 
   Widget _scrollHorizontalCategory(String token) {
-    return Container(
-      height: 50,
-      child: FutureBuilder(
-        future: categoryProvider.showCategory(token),
-        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: snapshot.data.length,
-                itemBuilder: (context, i) {
-                  return _categoryItem(
-                    snapshot.data[i].nombre,
-                    snapshot.data[i].id,
-                  );
-                });
-          } else {
-            return Text("no hay categoria");
-          }
-        },
-      ),
-    );
+    final infoProvider = Provider.of<InfoProvider>(context);
+    if (infoProvider.categoria.length == 0) {
+      return Container(
+        height: 50,
+        child: FutureBuilder(
+          future: categoryProvider.showCategory(token),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<CategoryModal>> snapshot) {
+            infoProvider.categoria = snapshot.data;
+            if (snapshot.hasData) {
+              return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, i) {
+                    return _categoryItem(
+                      snapshot.data[i].nombre,
+                      snapshot.data[i].id,
+                    );
+                  });
+            } else {
+              return Text("no hay categoria");
+            }
+          },
+        ),
+      );
+    } else {
+      return Container(
+          height: 50,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              itemCount: infoProvider.categoria.length,
+              itemBuilder: (context, i) {
+                return _categoryItem(
+                  infoProvider.categoria[i].nombre,
+                  infoProvider.categoria[i].id,
+                );
+              }));
+    }
   }
 
   Widget _categoryItem(String text, String id) {
@@ -258,47 +278,85 @@ class HomeState extends State {
   }
 
   Widget _scrollCard(String token) {
-    return FutureBuilder(
-      future: platosProvider.getAll(token),
-      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-        if (snapshot.hasData) {
-          // return Text("hola");
-          return ListView.builder(
-            physics: ScrollPhysics(parent: ScrollPhysics()),
-            shrinkWrap: true,
-            itemCount: snapshot.data.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Column(
-                children: [
-                  _card(
-                      snapshot.data[index].nombre,
-                      'https://' + snapshot.data[index].imgUri,
-                      snapshot.data[index].precio.toString()),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              );
-              // return Text("jpñga");
-            },
-          );
-          // return SingleChildScrollView(
-          //   child: Column(
+    final infoProvider = Provider.of<InfoProvider>(context, listen: false);
+    print(infoProvider.plato);
+    if (infoProvider.plato.length == 0) {
+      print("array vacia");
+      return FutureBuilder(
+        future: platosProvider.getAll(token),
+        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+          if (snapshot.hasData) {
+            infoProvider.plato = snapshot.data;
 
-          //    _ card(snapshot.data., AssetImage('assets/img/burger.jpg'),
-          //         "5.000"),
-          //     SizedBox(
-          //       height: 15.0,
-          //     ),
-          //   ),
-          // );
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
+            return ListView.builder(
+              physics: ScrollPhysics(parent: ScrollPhysics()),
+              shrinkWrap: true,
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  children: [
+                    _card(
+                        snapshot.data[index].nombre,
+                        'https://' + snapshot.data[index].imgUri,
+                        snapshot.data[index].precio.toString()),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                );
+                // return Text("jpñga");
+              },
+            );
+            // return SingleChildScrollView(
+            //   child: Column(
+
+            //    _ card(snapshot.data., AssetImage('assets/img/burger.jpg'),
+            //         "5.000"),
+            //     SizedBox(
+            //       height: 15.0,
+            //     ),
+            //   ),
+            // );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      );
+    } else {
+      print("array llena");
+      return ListView.builder(
+        physics: ScrollPhysics(parent: ScrollPhysics()),
+        shrinkWrap: true,
+        itemCount: infoProvider.plato.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            children: [
+              _card(
+                  infoProvider.plato[index].nombre,
+                  'https://' + infoProvider.plato[index].imgUri,
+                  infoProvider.plato[index].precio.toString()),
+              SizedBox(
+                height: 20,
+              ),
+            ],
           );
-        }
-      },
-    );
+          // return Text("jpñga");
+        },
+      );
+      // return SingleChildScrollView(
+      //   child: Column(
+
+      //    _ card(snapshot.data., AssetImage('assets/img/burger.jpg'),
+      //         "5.000"),
+      //     SizedBox(
+      //       height: 15.0,
+      //     ),
+      //   ),
+      // );
+
+    }
 
     // SingleChildScrollView(
     // child: Column(

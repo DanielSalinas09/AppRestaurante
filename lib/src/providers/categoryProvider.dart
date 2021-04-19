@@ -11,7 +11,6 @@ class CateroryProvider {
     final resp = await http.get(url, headers: {'x-access-token': token});
     final respDecode = json.decode(resp.body);
     final category = new CategoriesModal.fromJsonList(respDecode['category']);
-    print(respDecode);
     return category.categorys;
   }
 
