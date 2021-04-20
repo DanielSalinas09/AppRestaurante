@@ -57,10 +57,6 @@ class HomeState extends State {
   Widget _enviarDireccion() {
     final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
     String direccion = infoProvider.direction;
-<<<<<<< HEAD
-
-=======
->>>>>>> c49c64967fc5cdef7f13528e1adbe95e7f14ab41
     return Row(
       children: [
         Text(
@@ -215,12 +211,7 @@ class HomeState extends State {
     );
   }
 
-<<<<<<< HEAD
-  Widget _card(String title, String imageUrl, String valor, String id,
-      String ingrediente, Map categoria) {
-=======
   Widget _card(Plato plato) {
->>>>>>> c49c64967fc5cdef7f13528e1adbe95e7f14ab41
     var precio = NumberFormat("#,###", 'es-CO');
     return InkWell(
         child: Container(
@@ -284,53 +275,6 @@ class HomeState extends State {
             ),
           ),
         ),
-<<<<<<< HEAD
-        onTap: () {
-          if (ingrediente == null) {
-            ingrediente = "";
-          }
-          Navigator.pushNamed(context, 'descriptionDish', arguments: {
-            'id': id,
-            'nombre': title,
-            'ingredientes': ingrediente,
-            'imagen': imageUrl,
-            'precio': valor,
-            'categoria': categoria
-          });
-        });
-  }
-
-  Widget _scrollCard(String token) {
-    return FutureBuilder(
-      future: platosProvider.getAll(token),
-      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-        if (snapshot.hasData) {
-          // return Text("hola");
-          return ListView.builder(
-            physics: ScrollPhysics(parent: ScrollPhysics()),
-            shrinkWrap: true,
-            itemCount: snapshot.data.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Column(
-                children: [
-                  _card(
-                      snapshot.data[index].nombre,
-                      'https://' + snapshot.data[index].imgUri,
-                      snapshot.data[index].precio.toString(),
-                      snapshot.data[index].id,
-                      snapshot.data[index].ingredientes,
-                      snapshot.data[index].categoryId),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              );
-              // return Text("jpñga");
-            },
-          );
-          // return SingleChildScrollView(
-          //   child: Column(
-=======
         onTap: () => Navigator.pushNamed(context, 'descriptionDish',
             arguments: {'plato': plato}));
   }
@@ -345,7 +289,6 @@ class HomeState extends State {
         builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.hasData) {
             infoProvider.plato = snapshot.data;
->>>>>>> c49c64967fc5cdef7f13528e1adbe95e7f14ab41
 
             return ListView.builder(
               physics: ScrollPhysics(parent: ScrollPhysics()),

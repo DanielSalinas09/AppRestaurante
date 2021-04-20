@@ -1,3 +1,4 @@
+import 'package:app_restaurante/src/models/platoModel.dart';
 import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -81,13 +82,7 @@ class SearchPlatoState extends State<SearchPlato> {
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
-                      _card(
-                          snapshot.data[index].nombre,
-                          'https://' + snapshot.data[index].imgUri,
-                          snapshot.data[index].precio.toString(),
-                          snapshot.data[index].id,
-                          snapshot.data[index].ingredientes,
-                          snapshot.data[index].categoryId),
+                      _card(snapshot.data[index]),
                       SizedBox(
                         height: 20,
                       ),
@@ -104,8 +99,7 @@ class SearchPlatoState extends State<SearchPlato> {
     );
   }
 
-  Widget _card(String title, String imageUrl, String valor, String id,
-      String ingrediente, Map categoria) {
+  Widget _card(Plato plato) {
     var precio = NumberFormat("#,###", 'es-CO');
     return InkWell(
         child: Container(
@@ -130,7 +124,8 @@ class SearchPlatoState extends State<SearchPlato> {
                     height: 200,
                     child: FadeInImage(
                       placeholder: AssetImage('assets/img/no-image.jpg'),
-                      image: NetworkImage(imageUrl, scale: 1.0),
+                      image:
+                          NetworkImage('https://' + plato.imgUri, scale: 1.0),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -141,7 +136,7 @@ class SearchPlatoState extends State<SearchPlato> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          title,
+                          plato.nombre,
                           style: TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.bold,
@@ -153,7 +148,7 @@ class SearchPlatoState extends State<SearchPlato> {
                               fontWeight: FontWeight.bold, color: Colors.grey),
                         ),
                         Text(
-                          "valor " + precio.format(int.parse(valor)),
+                          "valor " + precio.format(plato.precio),
                           style: TextStyle(
                               fontWeight: FontWeight.bold, color: Colors.grey),
                         ),
@@ -169,17 +164,11 @@ class SearchPlatoState extends State<SearchPlato> {
           ),
         ),
         onTap: () {
-          if (ingrediente == null) {
-            ingrediente = "";
+          if (plato.ingredientes == null) {
+            plato.ingredientes = "";
           }
-          Navigator.pushNamed(context, 'descriptionDish', arguments: {
-            'id': id,
-            'nombre': title,
-            'ingredientes': ingrediente,
-            'imagen': imageUrl,
-            'precio': valor,
-            'categoria': categoria
-          });
+          Navigator.pushNamed(context, 'descriptionDish',
+              arguments: {'plato': plato});
         });
   }
 }
