@@ -1,3 +1,4 @@
+import 'package:app_restaurante/src/providers/CarritoProvider.dart';
 import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => InfoProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => CarritoProvider(),
+        )
       ],
       child: MaterialApp(
         theme: ThemeData(fontFamily: 'MPLUSRounded1c'),

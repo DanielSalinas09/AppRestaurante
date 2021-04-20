@@ -7,7 +7,7 @@ class Plato {
   Map categoryId;
   String imgUri;
   String ingredientes;
-
+  int cantidad;
   Plato({
     this.id,
     this.nombre,
@@ -15,10 +15,11 @@ class Plato {
     this.categoryId,
     this.imgUri,
     this.ingredientes,
+    this.cantidad = 1,
   });
 
   Plato.fromJsonMap(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['_id'];
     nombre = json['nombre'];
     precio = json['precio'];
     categoryId = json['category_id'];

@@ -1,5 +1,6 @@
 import 'package:app_restaurante/src/models/categoryModal.dart';
 import 'package:app_restaurante/src/models/directionModal.dart';
+import 'package:app_restaurante/src/models/platoModel.dart';
 import 'package:app_restaurante/src/providers/categoryProvider.dart';
 
 import 'package:app_restaurante/src/providers/infoProvider.dart';
@@ -211,7 +212,7 @@ class HomeState extends State {
     );
   }
 
-  Widget _card(String title, String imageUrl, String valor) {
+  Widget _card(Plato plato) {
     var precio = NumberFormat("#,###", 'es-CO');
     return InkWell(
         child: Container(
@@ -236,7 +237,8 @@ class HomeState extends State {
                     height: 200,
                     child: FadeInImage(
                       placeholder: AssetImage('assets/img/no-image.jpg'),
-                      image: NetworkImage(imageUrl, scale: 1.0),
+                      image:
+                          NetworkImage('https://' + plato.imgUri, scale: 1.0),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -247,7 +249,7 @@ class HomeState extends State {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          title,
+                          plato.nombre,
                           style: TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.bold,
@@ -259,7 +261,7 @@ class HomeState extends State {
                               fontWeight: FontWeight.bold, color: Colors.grey),
                         ),
                         Text(
-                          "valor " + precio.format(int.parse(valor)),
+                          "valor " + precio.format(plato.precio),
                           style: TextStyle(
                               fontWeight: FontWeight.bold, color: Colors.grey),
                         ),
@@ -274,7 +276,8 @@ class HomeState extends State {
             ),
           ),
         ),
-        onTap: () => Navigator.pushNamed(context, 'descriptionDish'));
+        onTap: () => Navigator.pushNamed(context, 'descriptionDish',
+            arguments: {'plato': plato}));
   }
 
   Widget _scrollCard(String token) {
@@ -295,10 +298,7 @@ class HomeState extends State {
               itemBuilder: (BuildContext context, int index) {
                 return Column(
                   children: [
-                    _card(
-                        snapshot.data[index].nombre,
-                        'https://' + snapshot.data[index].imgUri,
-                        snapshot.data[index].precio.toString()),
+                    _card(snapshot.data[index]),
                     SizedBox(
                       height: 20,
                     ),
@@ -333,10 +333,7 @@ class HomeState extends State {
         itemBuilder: (BuildContext context, int index) {
           return Column(
             children: [
-              _card(
-                  infoProvider.plato[index].nombre,
-                  'https://' + infoProvider.plato[index].imgUri,
-                  infoProvider.plato[index].precio.toString()),
+              _card(infoProvider.plato[index]),
               SizedBox(
                 height: 20,
               ),
