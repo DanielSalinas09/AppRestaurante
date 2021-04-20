@@ -1,4 +1,4 @@
-# app_restaurante
+# app_restaurante from students
 
 A new Flutter project.
 
