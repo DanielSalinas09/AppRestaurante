@@ -164,6 +164,6 @@ class SearchDireccionState extends State<SearchDireccion> {
       infoProvider.direction = direction.direction;
     });
 
-    return Navigator.of(context).pushReplacementNamed("navigation");
+    return Navigator.pop(context);
   }
 }
