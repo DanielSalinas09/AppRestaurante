@@ -123,7 +123,6 @@ class SearchDireccionState extends State<SearchDireccion> {
   }
 
   Widget _crearItem(BuildContext context, DirectionModal direction, token) {
-    print(direction.id);
     return Dismissible(
       direction: DismissDirection.endToStart,
       key: UniqueKey(),

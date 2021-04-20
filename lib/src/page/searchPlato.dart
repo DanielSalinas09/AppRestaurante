@@ -17,8 +17,7 @@ class SearchPlatoState extends State<SearchPlato> {
 
   Widget build(BuildContext context) {
     Map parametro = ModalRoute.of(context).settings.arguments;
-    print(parametro["value"]);
-    print(parametro);
+
     buscador = parametro["value"];
     final buscadores = buscador.replaceAll("_", " ");
     return Scaffold(
@@ -68,7 +67,6 @@ class SearchPlatoState extends State<SearchPlato> {
       future: platoProvider.searchPlato(plato, infoProvider.token),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.hasData) {
-          print("Hola si: " + snapshot.data.toString());
           if (snapshot.data.isEmpty) {
             return Center(
                 child: Text(
@@ -86,7 +84,10 @@ class SearchPlatoState extends State<SearchPlato> {
                       _card(
                           snapshot.data[index].nombre,
                           'https://' + snapshot.data[index].imgUri,
-                          snapshot.data[index].precio.toString()),
+                          snapshot.data[index].precio.toString(),
+                          snapshot.data[index].id,
+                          snapshot.data[index].ingredientes,
+                          snapshot.data[index].categoryId),
                       SizedBox(
                         height: 20,
                       ),
@@ -103,7 +104,8 @@ class SearchPlatoState extends State<SearchPlato> {
     );
   }
 
-  Widget _card(String title, String imageUrl, String valor) {
+  Widget _card(String title, String imageUrl, String valor, String id,
+      String ingrediente, Map categoria) {
     var precio = NumberFormat("#,###", 'es-CO');
     return InkWell(
         child: Container(
@@ -166,6 +168,18 @@ class SearchPlatoState extends State<SearchPlato> {
             ),
           ),
         ),
-        onTap: () => Navigator.pushNamed(context, 'descriptionDish'));
+        onTap: () {
+          if (ingrediente == null) {
+            ingrediente = "";
+          }
+          Navigator.pushNamed(context, 'descriptionDish', arguments: {
+            'id': id,
+            'nombre': title,
+            'ingredientes': ingrediente,
+            'imagen': imageUrl,
+            'precio': valor,
+            'categoria': categoria
+          });
+        });
   }
 }

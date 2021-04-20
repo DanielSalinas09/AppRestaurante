@@ -1,4 +1,8 @@
+import 'package:app_restaurante/src/providers/infoProvider.dart';
+import 'package:app_restaurante/src/providers/platosProdiver.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class DescriptionDish extends StatefulWidget {
   DescriptionDish({Key key}) : super(key: key);
@@ -8,42 +12,55 @@ class DescriptionDish extends StatefulWidget {
 }
 
 class _DescriptionDishState extends State<DescriptionDish> {
+  final platosProvider = new PlatosProvider();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+    Map parametro = ModalRoute.of(context).settings.arguments;
+    String id = parametro['id'];
+    String nombre = parametro['nombre'];
+    String ingrediente = parametro['ingredientes'];
+    Map categoria = parametro['categoria'];
+    String imagen = parametro['imagen'];
+    String precio = parametro['precio'];
+
+    return SafeArea(
+      top: false,
+      child: Scaffold(
         backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-              color: Colors.black,
-              icon: Icon(Icons.search),
-              onPressed: () => Navigator.pushNamed(context, 'searchDireccion')),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              _tituloProducto("Hamburguesa sencilla", 'barranquilla',
-                  '10 - 20 min', '20.000', 'Hamburguesa'),
-              SizedBox(height: 10),
-              _bodyProducto(AssetImage('assets/img/burger.jpg')),
-              SizedBox(height: 20),
-              _ingrediente(
-                  'Pan artesanal finas hierbas, doble carne de res (300 gr), jamon, tocineta ahumada, doble queso mozarella, salsas de la casa, vegetales frescos.')
-            ],
+        appBar: AppBar(
+          elevation: 2,
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.white,
+          actions: [
+            IconButton(
+                color: Colors.black,
+                icon: Icon(Icons.search),
+                onPressed: () =>
+                    Navigator.pushNamed(context, 'searchDireccion')),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                _tituloProducto(nombre, 'barranquilla', '30 - 40 min',
+                    int.parse(precio), categoria['nombre']),
+                SizedBox(height: 10),
+                _bodyProducto(imagen),
+                SizedBox(height: 20),
+                _ingrediente(ingrediente)
+              ],
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: Row(
-        children: [
-          _counterProduct(),
-          _button('22.000', context),
-        ],
+        bottomNavigationBar: Row(
+          children: [
+            _counterProduct(),
+            _button(precio.toString(), context),
+          ],
+        ),
       ),
     );
   }
@@ -103,6 +120,7 @@ Widget _ingrediente(String ingredientes) {
 }
 
 Widget _button(String valor, BuildContext context) {
+  var precio = NumberFormat("#,###", 'es-CO');
   return Padding(
     padding: const EdgeInsets.all(10),
     child: BottomAppBar(
@@ -124,7 +142,7 @@ Widget _button(String valor, BuildContext context) {
               ),
               Icon(Icons.attach_money),
               Text(
-                valor,
+                precio.format(int.parse(valor)),
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
               Icon(
@@ -140,8 +158,9 @@ Widget _button(String valor, BuildContext context) {
   );
 }
 
-Widget _tituloProducto(String title, String ubicacion, String tiempo,
-    String valor, String categoria) {
+Widget _tituloProducto(String title, String ubicacion, String tiempo, int valor,
+    String categoria) {
+  var precio = NumberFormat("#,###", 'es-CO');
   return Container(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,7 +218,7 @@ Widget _tituloProducto(String title, String ubicacion, String tiempo,
                   children: [
                     Icon(Icons.attach_money),
                     Text(
-                      valor,
+                      precio.format(valor),
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                     ),
@@ -229,14 +248,14 @@ Widget _tituloProducto(String title, String ubicacion, String tiempo,
   );
 }
 
-Widget _bodyProducto(ImageProvider img) {
+Widget _bodyProducto(String img) {
   return Column(
     children: [
       Container(
         height: 300,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(image: img, fit: BoxFit.fill)),
+            image: DecorationImage(image: NetworkImage(img), fit: BoxFit.fill)),
       )
     ],
   );

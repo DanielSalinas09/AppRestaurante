@@ -11,19 +11,14 @@ class CateroryProvider {
     final resp = await http.get(url, headers: {'x-access-token': token});
     final respDecode = json.decode(resp.body);
     final category = new CategoriesModal.fromJsonList(respDecode['category']);
-    print(respDecode);
     return category.categorys;
   }
 
   Future<List<Plato>> showPlato(String token, String categoryId) async {
     final url = Uri.https(_url, '/api/plato/category/$categoryId');
-
     final resp = await http.get(url, headers: {'x-access-token': token});
-
     final respDecode = json.decode(resp.body);
-
     final categoryPlato = Platos.fromJsonList(respDecode['platos']);
-
     return categoryPlato.platos;
   }
 }

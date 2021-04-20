@@ -24,7 +24,6 @@ class HomeState extends State {
   @override
   Widget build(BuildContext context) {
     final infoProvider = Provider.of<InfoProvider>(context);
-
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -56,7 +55,7 @@ class HomeState extends State {
   Widget _enviarDireccion() {
     final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
     String direccion = infoProvider.direction;
-    print(direccion);
+
     return Row(
       children: [
         Text(
@@ -129,7 +128,6 @@ class HomeState extends State {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       final value = plato.replaceAll(" ", "_");
-      print(value);
 
       Navigator.pushNamed(context, 'searchPlato', arguments: {"value": value});
     }
@@ -193,7 +191,8 @@ class HomeState extends State {
     );
   }
 
-  Widget _card(String title, String imageUrl, String valor) {
+  Widget _card(String title, String imageUrl, String valor, String id,
+      String ingrediente, Map categoria) {
     var precio = NumberFormat("#,###", 'es-CO');
     return InkWell(
         child: Container(
@@ -256,7 +255,19 @@ class HomeState extends State {
             ),
           ),
         ),
-        onTap: () => Navigator.pushNamed(context, 'descriptionDish'));
+        onTap: () {
+          if (ingrediente == null) {
+            ingrediente = "";
+          }
+          Navigator.pushNamed(context, 'descriptionDish', arguments: {
+            'id': id,
+            'nombre': title,
+            'ingredientes': ingrediente,
+            'imagen': imageUrl,
+            'precio': valor,
+            'categoria': categoria
+          });
+        });
   }
 
   Widget _scrollCard(String token) {
@@ -275,7 +286,10 @@ class HomeState extends State {
                   _card(
                       snapshot.data[index].nombre,
                       'https://' + snapshot.data[index].imgUri,
-                      snapshot.data[index].precio.toString()),
+                      snapshot.data[index].precio.toString(),
+                      snapshot.data[index].id,
+                      snapshot.data[index].ingredientes,
+                      snapshot.data[index].categoryId),
                   SizedBox(
                     height: 20,
                   ),
@@ -329,18 +343,4 @@ class HomeState extends State {
     // ),
     // );
   }
-
-  // _loadPage(int currentIndex, BuildContext context) {
-  //   switch (currentIndex) {
-  //     case 0:
-  //       return Home();
-  //     case 1:
-  //       return OrderProduct();
-  //     case 2:
-  //       return Usuario();
-  //     default:
-  //       return Home();
-  //   }
-  // }
-
 }

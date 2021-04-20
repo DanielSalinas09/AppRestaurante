@@ -1,3 +1,4 @@
+import 'package:app_restaurante/src/providers/cartProvider.dart';
 import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,6 @@ import 'package:app_restaurante/src/page/searchDireccion.dart';
 import 'package:app_restaurante/src/page/searchPlato.dart';
 import 'package:app_restaurante/src/page/sendingOrden.dart';
 import 'package:app_restaurante/src/splashscreen.dart';
-import 'src/page/prueba.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => InfoProvider(),
         ),
+        ChangeNotifierProvider(create: (_) => CarritoProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData(fontFamily: 'MPLUSRounded1c'),
@@ -59,7 +60,6 @@ class MyApp extends StatelessWidget {
           'category': (BuildContext context) => Category(),
           'historialPedidos': (BuildContext context) => HistorialPedidos(),
           'configuracion': (BuildContext context) => ConfiguracionUser(),
-          'prueba': (BuildContext context) => MyhomePage(),
         },
       ),
     );

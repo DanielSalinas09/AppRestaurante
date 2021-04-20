@@ -19,49 +19,53 @@ class CategoryState extends State<Category> {
   Widget build(BuildContext context) {
     Map parametro = ModalRoute.of(context).settings.arguments;
     final infoProvider = Provider.of<InfoProvider>(context);
-    print("Mapa de categoria :" + parametro['id']);
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text(
-            "Categorias",
-            style: TextStyle(color: Color(0xFF7575753)),
-          ),
-          elevation: 2,
-          iconTheme: IconThemeData(color: Color(0xFF7575753)),
 
-          shadowColor: Colors.white,
-
+    return SafeArea(
+      top: false,
+      child: Scaffold(
           backgroundColor: Colors.white,
-          centerTitle: true,
-          // color
-        ),
-        body: SingleChildScrollView(
-          child: Container(
-              margin: EdgeInsets.all(13.0),
-              color: Colors.white,
-              child: Column(
-                children: [
-                  Text(
-                    parametro['nombre'],
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30.0),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _scrollCard(infoProvider.token, parametro['id']),
-                ],
-              )),
-        ));
+          appBar: AppBar(
+            title: Text(
+              "Categorias",
+              style: TextStyle(color: Color(0xFF7575753)),
+            ),
+            elevation: 2,
+            iconTheme: IconThemeData(color: Color(0xFF7575753)),
+
+            shadowColor: Colors.white,
+
+            backgroundColor: Colors.white,
+            centerTitle: true,
+            // color
+          ),
+          body: SingleChildScrollView(
+            child: Container(
+                margin: EdgeInsets.all(13.0),
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    Text(
+                      parametro['nombre'],
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30.0),
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    _scrollCard(infoProvider.token, parametro['id']),
+                  ],
+                )),
+          )),
+    );
   }
 
-  Widget _card(String title, String imageUrl, String valor) {
+  Widget _card(String title, String imageUrl, String valor, String id,
+      String ingrediente, Map categoria) {
     var precio = NumberFormat("#,###", 'es-CO');
     return InkWell(
         child: Container(
@@ -124,7 +128,19 @@ class CategoryState extends State<Category> {
             ),
           ),
         ),
-        onTap: () => Navigator.pushNamed(context, 'descriptionDish'));
+        onTap: () {
+          if (ingrediente == null) {
+            ingrediente = "";
+          }
+          Navigator.pushNamed(context, 'descriptionDish', arguments: {
+            'id': id,
+            'nombre': title,
+            'ingredientes': ingrediente,
+            'imagen': imageUrl,
+            'precio': valor,
+            'categoria': categoria
+          });
+        });
   }
 
   Widget _scrollCard(String token, String id) {
@@ -149,7 +165,10 @@ class CategoryState extends State<Category> {
                     _card(
                         snapshot.data[index].nombre,
                         'https://' + snapshot.data[index].imgUri,
-                        snapshot.data[index].precio.toString()),
+                        snapshot.data[index].precio.toString(),
+                        snapshot.data[index].id,
+                        snapshot.data[index].ingredientes,
+                        snapshot.data[index].categoryId),
                     SizedBox(
                       height: 20,
                     ),
