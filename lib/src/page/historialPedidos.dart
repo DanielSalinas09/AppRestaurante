@@ -1,4 +1,13 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:app_restaurante/src/models/historialPedidos.dart';
+import 'package:app_restaurante/src/providers/historialpedidosProvider.dart';
+import 'package:app_restaurante/src/providers/infoProvider.dart';
+import 'package:provider/provider.dart';
 
 class HistorialPedidos extends StatefulWidget {
   HistorialPedidos({Key key}) : super(key: key);
@@ -8,16 +17,17 @@ class HistorialPedidos extends StatefulWidget {
 }
 
 class _HistorialPedidosState extends State<HistorialPedidos> {
-   final formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-         return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.grey),
         shadowColor: Colors.black,
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("Historial de pedidos", style: TextStyle(color: Colors.grey)),
+        title:
+            Text("Historial de pedidos", style: TextStyle(color: Colors.grey)),
       ),
       body: ListView(
         children: [
@@ -30,37 +40,11 @@ class _HistorialPedidosState extends State<HistorialPedidos> {
                 SizedBox(
                   height: 20.0,
                 ),
-                _pedido("1", "Enviado"),
+                _builderCategorias(context),
                 Divider(
                   color: Colors.grey,
                   height: 30.0,
                 ),
-                _pedido("2", "Enviado"),
-                Divider(
-                  color: Colors.grey,
-                  height: 30.0,
-                ),
-                _pedido("3", "Enviado"),
-                Divider(
-                  color: Colors.grey,
-                  height: 30.0,
-                ),
-                _pedido("4", "Enviado"),
-                Divider(
-                  color: Colors.grey,
-                  height: 30.0,
-                ),
-                _pedido("5", "Enviado"),
-                Divider(
-                  color: Colors.grey,
-                  height: 30.0,
-                ),
-                _pedido("6", "Enviado"),
-                Divider(
-                  color: Colors.grey,
-                  height: 30.0,
-                ),
-                _pedido("7", "Enviado"),
               ],
             ),
           )
@@ -97,16 +81,16 @@ class _HistorialPedidosState extends State<HistorialPedidos> {
     );
   }
 
-  Widget _pedido(String numeroPedido, String estado) {
+  Widget _pedido(int numeroPedido, String estado, int valor, String plato) {
     Color colorBar;
     switch (estado) {
-      case "Enviado":
+      case "enviado":
         colorBar = Colors.blue;
         break;
-      case "Enviado":
+      case "enviado":
         colorBar = Colors.blue;
         break;
-      case "Enviado":
+      case "enviado":
         colorBar = Colors.blue;
         break;
       default:
@@ -117,12 +101,12 @@ class _HistorialPedidosState extends State<HistorialPedidos> {
         Row(
           children: [
             Text(
-              "pedido # " + numeroPedido,
+              "pedido # " + numeroPedido.toString(),
               style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
             Expanded(child: SizedBox()),
             Text(
-              "20.000",
+              valor.toString(),
               style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
             Expanded(child: SizedBox()),
@@ -131,7 +115,7 @@ class _HistorialPedidosState extends State<HistorialPedidos> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _listPedido(),
+            _listPedido(plato.toString()),
             Container(
               decoration: BoxDecoration(
                   color: colorBar, borderRadius: BorderRadius.circular(20.0)),
@@ -165,22 +149,22 @@ class _HistorialPedidosState extends State<HistorialPedidos> {
             ),
             SizedBox()
           ],
-        )
+        ),
+        Divider(
+        color: Colors.black,
+        height: 27,
+        thickness: 1.1,
+      ),
       ],
     );
   }
 
-  Widget _listPedido() {
+  Widget _listPedido(String platos) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _itemList("1 perro sencillo"),
+        _itemList(platos),
         SizedBox(height: 5.0),
-        _itemList("2 perro gemelo"),
-        SizedBox(height: 5.0),
-        _itemList("1 pizza small"),
-        SizedBox(height: 5.0),
-        _itemList("1 perro sencillo"),
       ],
     );
   }
@@ -193,4 +177,35 @@ class _HistorialPedidosState extends State<HistorialPedidos> {
       ),
     );
   }
+
+
+  Widget _builderCategorias(BuildContext context) {
+  final infoProvider = Provider.of<InfoProvider>(context);
+  return FutureBuilder(
+    future: CategoriaProvider().getAll(infoProvider.token),
+    builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+      if (snapshot.hasData) {
+        // return Text("hola");
+        return ListView.builder(
+          physics: ScrollPhysics(parent: ScrollPhysics()),
+          shrinkWrap: true,
+          itemCount: snapshot.data.length,
+          padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+          itemBuilder: (BuildContext context, int index) {
+            print(snapshot.data[index].nombre[0]["nombre"]);
+            return 
+              
+                _pedido(snapshot.data[index].numero, snapshot.data[index].estado,snapshot.data[index].valor,snapshot.data[index].nombre[0]["nombre"]);
+              
+            
+          },
+        );
+      } else {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+    },
+  );
+}
 }

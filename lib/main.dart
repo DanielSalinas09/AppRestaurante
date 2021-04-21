@@ -3,7 +3,6 @@ import 'package:app_restaurante/src/providers/CarritoProvider.dart';
 import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:app_restaurante/src/page/ReviewOrder.dart';
 import 'package:app_restaurante/src/page/carrito.dart';
 import 'package:app_restaurante/src/page/category.dart';
