@@ -1,3 +1,4 @@
+import 'package:app_restaurante/src/providers/CarritoProvider.dart';
 import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:app_restaurante/src/providers/pedidoProvider.dart';
 import 'package:flutter/material.dart';
@@ -66,8 +67,12 @@ class _SendingOrderState extends State<SendingOrder> {
   }
 
   Future<bool> _willPopCallback() async {
+    final carritoProvider =
+        Provider.of<CarritoProvider>(this.context, listen: false);
+    carritoProvider.vaciarCarrito();
     Navigator.of(context)
-        .pushNamedAndRemoveUntil('navigation', (route) => false);
+        .pushNamedAndRemoveUntil("navigation", (Route<dynamic> route) => false);
+
     return true; // return true if the route to be popped
   }
 
@@ -257,9 +262,14 @@ class _SendingOrderState extends State<SendingOrder> {
             actions: [
               TextButton(
                   child: Text('Ok', style: TextStyle(fontSize: 20)),
-                  onPressed: () => Navigator.of(context)
-                      .pushNamedAndRemoveUntil(
-                          "navigation", (Route<dynamic> route) => false))
+                  onPressed: () {
+                    final carritoProvider = Provider.of<CarritoProvider>(
+                        this.context,
+                        listen: false);
+                    carritoProvider.vaciarCarrito();
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        "navigation", (Route<dynamic> route) => false);
+                  })
             ],
           );
         });

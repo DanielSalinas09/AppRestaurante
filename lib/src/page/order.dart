@@ -2,6 +2,7 @@ import 'package:app_restaurante/src/models/platoModel.dart';
 import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:app_restaurante/src/providers/pedidoProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class OrderProduct extends StatefulWidget {
@@ -13,6 +14,7 @@ class OrderProduct extends StatefulWidget {
 
 class _OrderProductState extends State<OrderProduct> {
   final pedidoProvider = new PedidoProvider();
+  var precio = NumberFormat("#,###", 'es-CO');
   @override
   Widget build(BuildContext context) {
     final infoProvider = Provider.of<InfoProvider>(context, listen: false);
@@ -36,7 +38,29 @@ class _OrderProductState extends State<OrderProduct> {
     );
   }
 
-  Widget _showOrder(InfoProvider infoProvider) {}
+  Widget _showOrder(InfoProvider infoProvider) {
+    return FutureBuilder(
+        future: pedidoProvider.showPedido(
+            infoProvider.token, infoProvider.idPedido),
+        builder: (BuildContext context, AsyncSnapshot<List<Plato>> snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, i) {
+                return Column(
+                  children: [
+                    _orden(snapshot.data[i].nombre, snapshot.data[i].precio)
+                  ],
+                );
+              },
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
+  }
 
   Widget _orden(String nombre, int valor) {
     return Column(
@@ -54,16 +78,6 @@ class _OrderProductState extends State<OrderProduct> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Container(
-                  width: 180,
-                  child: Text(
-                    "fecha",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Color(0xFFCACACAf),
-                    ),
-                  ),
-                )
               ],
             ),
             Row(
@@ -73,7 +87,7 @@ class _OrderProductState extends State<OrderProduct> {
                   size: 22,
                 ),
                 Text(
-                  valor.toString(),
+                  precio.format(valor),
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 )
               ],

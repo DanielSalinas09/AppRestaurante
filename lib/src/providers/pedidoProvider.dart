@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app_restaurante/src/models/platoModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -37,5 +38,17 @@ class PedidoProvider {
     final respDecode = jsonDecode(resp.body);
     print(respDecode);
     return respDecode;
+  }
+
+  Future<List<Plato>> showPedido(String token, String id) async {
+    final url = Uri.https(_url, '/api/pedido/$id');
+
+    final resp = await http.get(url, headers: {'x-access-token': token});
+
+    final respDecode = json.decode(resp.body);
+    print(respDecode);
+    final plato = Platos.fromJsonList(respDecode["pedido"]["platos"]);
+
+    return plato.platos;
   }
 }
