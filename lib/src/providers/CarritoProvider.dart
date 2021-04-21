@@ -5,6 +5,11 @@ class CarritoProvider extends ChangeNotifier {
   Map<String, Plato> _items = {};
 
   int _total = 0;
+  List<String> dato = [];
+
+  List<String> get datos {
+    return dato;
+  }
 
   Map<String, Plato> get items {
     return {..._items};
@@ -49,6 +54,19 @@ class CarritoProvider extends ChangeNotifier {
 
   void vaciarCarrito() {
     _items = {};
+  }
+
+  void realizarPedido() {
+    dato.clear();
+    _items.forEach((key, value) {
+      print(key);
+      print(value.cantidad);
+      for (int i = 0; i < value.cantidad; i++) {
+        print(i.toString() + "posiscion" + key);
+        dato.add(key);
+      }
+    });
+    print(dato);
   }
 
   @override

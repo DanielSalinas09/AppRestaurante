@@ -98,7 +98,7 @@ class _CarritoState extends State<Carrito> {
                     SizedBox(
                       height: 250,
                     ),
-                    _button(context)
+                    _button(context, carritoProvider)
                   ],
                 ),
               ),
@@ -114,7 +114,7 @@ class _CarritoState extends State<Carrito> {
     return true; // return true if the route to be popped
   }
 
-  Widget _button(BuildContext context) {
+  Widget _button(BuildContext context, CarritoProvider carritoProvider) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: BottomAppBar(
@@ -130,7 +130,9 @@ class _CarritoState extends State<Carrito> {
               style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
             ),
           ),
-          onPressed: () => Navigator.pushNamed(context, 'chekout'),
+          onPressed: () {
+            Navigator.pushNamed(context, 'chekout');
+          },
         ),
       ),
     );

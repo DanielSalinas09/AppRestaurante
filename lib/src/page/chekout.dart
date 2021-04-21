@@ -39,7 +39,7 @@ class _ChekoutState extends State<Chekout> {
               SizedBox(
                 height: 40,
               ),
-              _resumen('68.000', '7.800', '75.800'),
+              _resumen(carritoProvider),
             ],
           ),
         ),
@@ -101,16 +101,19 @@ class _ChekoutState extends State<Chekout> {
   }
 
   Widget _orden(BuildContext context, CarritoProvider carritoProvider) {
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: carritoProvider.items.length,
-        itemBuilder: (BuildContext context, i) {
-          String key = carritoProvider.items.keys.elementAt(i);
-          return _pedidos(
-              carritoProvider.items[key].nombre,
-              (carritoProvider.items[key].precio *
-                  carritoProvider.items[key].cantidad));
-        });
+    return Container(
+      height: 250,
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: carritoProvider.items.length,
+          itemBuilder: (BuildContext context, i) {
+            String key = carritoProvider.items.keys.elementAt(i);
+            return _pedidos(
+                carritoProvider.items[key].nombre,
+                (carritoProvider.items[key].precio *
+                    carritoProvider.items[key].cantidad));
+          }),
+    );
   }
 
   Widget _pedidos(String nombre, int precio) {
@@ -174,7 +177,7 @@ class _ChekoutState extends State<Chekout> {
     );
   }
 
-  Widget _resumen(String subtotal, String envio, String total) {
+  Widget _resumen(CarritoProvider carritoProvider) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -214,7 +217,7 @@ class _ChekoutState extends State<Chekout> {
                         color: Color(0xF2979797),
                       ),
                       Text(
-                        subtotal,
+                        conver.format(carritoProvider.total),
                         style:
                             TextStyle(fontSize: 19, color: Color(0xF2979797)),
                       )
@@ -238,7 +241,7 @@ class _ChekoutState extends State<Chekout> {
                     children: [
                       Icon(Icons.attach_money, color: Color(0xF2979797)),
                       Text(
-                        envio,
+                        "Gratis",
                         style:
                             TextStyle(fontSize: 19, color: Color(0xF2979797)),
                       )
@@ -262,7 +265,7 @@ class _ChekoutState extends State<Chekout> {
                     children: [
                       Icon(Icons.attach_money),
                       Text(
-                        total,
+                        conver.format(carritoProvider.total),
                         style: TextStyle(
                             fontSize: 19, fontWeight: FontWeight.bold),
                       )

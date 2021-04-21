@@ -36,12 +36,12 @@ class PlatosProvider {
     return platosList.platos;
   }
 
-  Future<Plato> showPlatoSpecific(String id, String token) async {
+  /*Future<Plato> showPlatoSpecific(String id, String token) async {
     final url = Uri.https(_url, '/api/plato/$id');
     final resp = await http.get(url, headers: {'x-access-token': token});
     final respDecode = json.decode(resp.body);
     final plato = Plato.fromJsonMap(respDecode['plato']);
 
     return plato;
-  }
+  }*/
 }

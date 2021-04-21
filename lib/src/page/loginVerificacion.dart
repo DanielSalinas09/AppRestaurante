@@ -129,9 +129,14 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
       print("Codigo digitado" + verify.toString());
 
       var info = await loginVerificationProvider.verification(verify, number);
-      infoProvider.token = info[1];
+
       print(info);
       if (info[0]) {
+        infoProvider.token = info[1];
+        infoProvider.nombre = info[2]["nombre"];
+        infoProvider.apellido = info[2]["apellidos"];
+        infoProvider.idUsuario = info[2]["_id"];
+
         Navigator.of(context)
             .pushNamedAndRemoveUntil('navigation', (route) => false);
       } else {

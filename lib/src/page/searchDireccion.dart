@@ -16,6 +16,7 @@ class SearchDireccion extends StatefulWidget {
 class SearchDireccionState extends State<SearchDireccion> {
   final formKey = GlobalKey<FormState>();
   final directionProvider = new DirectionProvider();
+  TextEditingController clear = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +80,10 @@ class SearchDireccionState extends State<SearchDireccion> {
     return Form(
       key: formKey,
       child: TextFormField(
+        controller: clear,
         onFieldSubmitted: (value) {
           _submitSearch(value);
+          clear.clear();
         },
         validator: (value) {
           if (value.isNotEmpty) {
@@ -162,6 +165,7 @@ class SearchDireccionState extends State<SearchDireccion> {
       final infoProvider =
           Provider.of<InfoProvider>(this.context, listen: false);
       infoProvider.direction = direction.direction;
+      infoProvider.idDirection = direction.id;
     });
 
     return Navigator.pop(context);
