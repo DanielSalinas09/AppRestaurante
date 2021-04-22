@@ -142,14 +142,14 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
               Text(
                 "calle 38B # 1c-72",
                 style: TextStyle(
-                    fontSize: 18.0,
+                    fontSize: 17.0,
                     color: Colors.black,
                     fontWeight: FontWeight.bold),
               ),
               Text(
                 "Estado: " + estado,
                 style: TextStyle(
-                    fontSize: 16.0,
+                    fontSize: 14.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.black),
               ),

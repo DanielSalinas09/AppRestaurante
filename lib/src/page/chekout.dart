@@ -31,16 +31,18 @@ class _ChekoutState extends State<Chekout> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _titulo(context),
-              _orden(context, carritoProvider),
-              SizedBox(
-                height: 40,
-              ),
-              _resumen(carritoProvider),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _titulo(context),
+                _orden(context, carritoProvider),
+                SizedBox(
+                  height: 40,
+                ),
+                _resumen(carritoProvider),
+              ],
+            ),
           ),
         ),
         bottomNavigationBar: _button(context));
@@ -102,7 +104,6 @@ class _ChekoutState extends State<Chekout> {
 
   Widget _orden(BuildContext context, CarritoProvider carritoProvider) {
     return Container(
-      height: 250,
       child: ListView.builder(
           shrinkWrap: true,
           itemCount: carritoProvider.items.length,
@@ -131,7 +132,7 @@ class _ChekoutState extends State<Chekout> {
                     color: Color(0xF2EB1515),
                   ),
                   Container(
-                    width: 180,
+                    width: 150,
                     child: Text(
                       nombre,
                       style: TextStyle(

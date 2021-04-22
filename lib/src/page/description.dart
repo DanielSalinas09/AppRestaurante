@@ -44,12 +44,6 @@ class _DescriptionDishState extends State<DescriptionDish> {
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-              color: Colors.black,
-              icon: Icon(Icons.search),
-              onPressed: () => Navigator.pushNamed(context, 'searchDireccion')),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -201,9 +195,11 @@ class _DescriptionDishState extends State<DescriptionDish> {
           Container(
             child: Row(
               children: [
-                Text(
-                  title,
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
                 ),
                 Icon(
                   Icons.check_circle,
@@ -295,7 +291,7 @@ class _DescriptionDishState extends State<DescriptionDish> {
             InkWell(
               child: Icon(
                 Icons.remove,
-                size: 30,
+                size: 25,
               ),
               onTap: () {
                 if (counter == 1) {
@@ -318,7 +314,10 @@ class _DescriptionDishState extends State<DescriptionDish> {
               width: 15,
             ),
             InkWell(
-              child: Icon(Icons.add, size: 30),
+              child: Icon(
+                Icons.add,
+                size: 25,
+              ),
               onTap: () {
                 setState(() {
                   counter++;
