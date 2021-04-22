@@ -3,6 +3,7 @@ import 'package:app_restaurante/src/models/platoModel.dart';
 import 'package:flutter/foundation.dart';
 
 class InfoProvider with ChangeNotifier {
+  
   String _token;
   int _number;
   String _idDirection;

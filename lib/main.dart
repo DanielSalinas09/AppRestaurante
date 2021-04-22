@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           'sendingOrder': (BuildContext context) => SendingOrder(),
           'pagosOnline': (BuildContext context) => PagosOnline(),
           'category': (BuildContext context) => Category(),
-          'historialPedidos': (BuildContext context) => HistorialPedidos(),
+          'historialPedidos': (BuildContext context) => PedidosPendientes(),
           'configuracion': (BuildContext context) => ConfiguracionUser(),
         },
       ),

@@ -3,8 +3,8 @@
 import 'dart:convert';
 
 class Historialenviados {
-    List<String> platos;
-  List nombre;
+    List platos;
+  String nombre;
   String id;
   int valor;
   String usuarioId;
@@ -27,7 +27,8 @@ class Historialenviados {
   });
 
   Historialenviados.fromJsonMap(Map<String, dynamic> json) {
-    nombre= json["platos"] ;
+    platos=json["platos"];
+    nombre= json["nombre"] ;
     id = json['_id'];
     valor = json['valor'];
     usuarioId = json['usuario_id'];

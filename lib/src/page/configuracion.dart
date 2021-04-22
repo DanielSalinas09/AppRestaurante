@@ -15,7 +15,7 @@ class _ConfiguracionUserState extends State<ConfiguracionUser> {
         iconTheme: IconThemeData(color: Colors.grey),
         shadowColor: Colors.black,
         backgroundColor: Colors.white,
-        centerTitle: true,
+        centerTitle: true, 
         title: Text("Configuracion", style: TextStyle(color: Colors.black54)),
       ),
       body: Column(
