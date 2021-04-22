@@ -44,12 +44,6 @@ class _DescriptionDishState extends State<DescriptionDish> {
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-              color: Colors.black,
-              icon: Icon(Icons.search),
-              onPressed: () => Navigator.pushNamed(context, 'searchDireccion')),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -201,9 +195,11 @@ class _DescriptionDishState extends State<DescriptionDish> {
           Container(
             child: Row(
               children: [
-                Text(
-                  title,
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
                 ),
                 Icon(
                   Icons.check_circle,
@@ -284,10 +280,11 @@ class _DescriptionDishState extends State<DescriptionDish> {
 
   Widget _counterProduct(int precio) {
     return Container(
-      height: 50.0,
-      margin: EdgeInsets.only(left: 5.0),
+      height: 45.0,
+      
+      margin: EdgeInsets.only(left: 10.0, right: 10.0),
       decoration: BoxDecoration(
-          color: Color(0x25979797), borderRadius: BorderRadius.circular(20)),
+          color: Color(0x25979797), borderRadius: BorderRadius.circular(18)),
       child: Padding(
         padding: const EdgeInsets.all(5.0),
         child: Row(
@@ -295,7 +292,11 @@ class _DescriptionDishState extends State<DescriptionDish> {
             InkWell(
               child: Icon(
                 Icons.remove,
-                size: 30,
+<<<<<<< HEAD
+                size: 25,
+=======
+                size: 20,
+>>>>>>> ca9df2f265e2790136a818e982390c12dc5c8825
               ),
               onTap: () {
                 if (counter == 1) {
@@ -318,7 +319,14 @@ class _DescriptionDishState extends State<DescriptionDish> {
               width: 15,
             ),
             InkWell(
-              child: Icon(Icons.add, size: 30),
+<<<<<<< HEAD
+              child: Icon(
+                Icons.add,
+                size: 25,
+              ),
+=======
+              child: Icon(Icons.add, size: 20),
+>>>>>>> ca9df2f265e2790136a818e982390c12dc5c8825
               onTap: () {
                 setState(() {
                   counter++;

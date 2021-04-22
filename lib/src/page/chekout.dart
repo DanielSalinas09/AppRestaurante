@@ -26,21 +26,23 @@ class _ChekoutState extends State<Chekout> {
           title: Text('Chekout',
               style: TextStyle(
                   color: Color(0xF2979797),
-                  fontSize: 30,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold)),
         ),
         body: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _titulo(context),
-              _orden(context, carritoProvider),
-              SizedBox(
-                height: 40,
-              ),
-              _resumen(carritoProvider),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _titulo(context),
+                _orden(context, carritoProvider),
+                SizedBox(
+                  height: 40,
+                ),
+                _resumen(carritoProvider),
+              ],
+            ),
           ),
         ),
         bottomNavigationBar: _button(context));
@@ -48,7 +50,7 @@ class _ChekoutState extends State<Chekout> {
 
   Widget _button(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(30),
       child: BottomAppBar(
         elevation: 0,
         color: Colors.white,
@@ -56,10 +58,10 @@ class _ChekoutState extends State<Chekout> {
           style: ElevatedButton.styleFrom(
               primary: Color(0xF2EB1515), elevation: 5),
           child: Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(12.0),
             child: Text(
               'Hacer Pedido',
-              style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
           ),
           onPressed: () => Navigator.pushNamed(context, 'reviewOrder'),
@@ -75,7 +77,7 @@ class _ChekoutState extends State<Chekout> {
         children: [
           Text(
             'Tu \nOrden',
-            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           InkWell(
             onTap: () => Navigator.pushNamed(context, 'navigation'),
@@ -84,7 +86,7 @@ class _ChekoutState extends State<Chekout> {
                 Text(
                   'Agregar \nproductos',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 19,
                       fontWeight: FontWeight.bold,
                       color: Color(0xF2EB1515)),
                 ),
@@ -102,7 +104,6 @@ class _ChekoutState extends State<Chekout> {
 
   Widget _orden(BuildContext context, CarritoProvider carritoProvider) {
     return Container(
-      height: 250,
       child: ListView.builder(
           shrinkWrap: true,
           itemCount: carritoProvider.items.length,
@@ -131,7 +132,7 @@ class _ChekoutState extends State<Chekout> {
                     color: Color(0xF2EB1515),
                   ),
                   Container(
-                    width: 180,
+                    width: 150,
                     child: Text(
                       nombre,
                       style: TextStyle(
@@ -148,7 +149,7 @@ class _ChekoutState extends State<Chekout> {
                   Icon(Icons.attach_money),
                   Text(conver.format(precio),
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 17,
                         fontWeight: FontWeight.w600,
                       )),
                   SizedBox(
@@ -183,12 +184,12 @@ class _ChekoutState extends State<Chekout> {
       children: [
         Text(
           'Resumen',
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         Container(
           color: Color(0xF2EB1515),
-          height: 3,
-          width: 100,
+          height: 2,
+          width: 90,
         ),
         SizedBox(
           height: 20,

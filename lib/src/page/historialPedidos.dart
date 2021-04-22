@@ -142,14 +142,14 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
               Text(
                 "calle 38B # 1c-72",
                 style: TextStyle(
-                    fontSize: 18.0,
+                    fontSize: 17.0,
                     color: Colors.black,
                     fontWeight: FontWeight.bold),
               ),
               Text(
                 "Estado: " + estado,
                 style: TextStyle(
-                    fontSize: 16.0,
+                    fontSize: 14.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.black),
               ),
@@ -163,7 +163,9 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
           ),
         ],
       ),
-      onTap: () {},
+      onTap: () {
+        
+      },
     );
   }
 
@@ -202,7 +204,7 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
             shrinkWrap: true,
             itemCount: snapshot.data.length,
             padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-            itemBuilder: (BuildContext context, int index) {
+            itemBuilder: (BuildContext context, int index) {             
               return _condicionalPedidos(
                   snapshot.data[index].numero,
                   snapshot.data[index].estado,

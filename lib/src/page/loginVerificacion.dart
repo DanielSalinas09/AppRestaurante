@@ -39,7 +39,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
               _fondo(),
               SizedBox(height: 10),
               _form(),
-              SizedBox(height: 150),
+              SizedBox(height: 90),
               _button()
             ],
           ),
@@ -85,7 +85,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
               SizedBox(
-                height: 20,
+                height: 15,
               ),
               Text(
                 'Verificacion movil',

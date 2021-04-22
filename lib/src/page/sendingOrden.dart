@@ -129,13 +129,14 @@ class _SendingOrderState extends State<SendingOrder> {
         children: [
           Text(
             'Tu orden',
-            style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
           SizedBox(
-            height: 10,
+            height: 30,
           ),
           Container(
-            height: 100,
+            height: 105,
+            width: 200,
             decoration: BoxDecoration(
                 color: Color(0xF2EB1515),
                 borderRadius: BorderRadius.circular(15)),
@@ -147,11 +148,11 @@ class _SendingOrderState extends State<SendingOrder> {
                     '30 - 40 min',
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 25,
+                        fontSize: 19,
                         fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    height: 8,
+                    height: 15,
                   ),
                   Text(
                     'Hora de entrega',
@@ -165,17 +166,17 @@ class _SendingOrderState extends State<SendingOrder> {
             ),
           ),
           SizedBox(
-            height: 15,
+            height: 10,
           ),
           Padding(
-            padding: EdgeInsets.only(left: 30, right: 30),
+            padding: EdgeInsets.only(left: 30, right: 30, top: 30),
             child: Text(
               'Con Delivery fast food, recibirá la entrega prioritaria de su pedido antes de las 10:00 pm, ¡o correremos por nuestra cuenta!',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 20,
           ),
           Container(
             height: 100,
@@ -209,13 +210,13 @@ class _SendingOrderState extends State<SendingOrder> {
                   Text(
                     tiempo,
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 15,
                     ),
                   ),
                   Text(
                     'Garantizado',
                     style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 15,
                         fontWeight: FontWeight.w600,
                         color: Color(0xFF9B9999)),
                   ),
@@ -249,7 +250,7 @@ class _SendingOrderState extends State<SendingOrder> {
         Text(
           infoProvider.direction,
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 15,
           ),
         ),
         Divider(),
@@ -258,7 +259,7 @@ class _SendingOrderState extends State<SendingOrder> {
           children: [
             Text(
               'Detalles de la Orden ',
-              style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
             InkWell(
               onTap: () => Navigator.pushNamed(context, 'order'),

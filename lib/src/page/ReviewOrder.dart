@@ -31,7 +31,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
         title: Text(
           'Revision de orden',
           style: TextStyle(
-              fontSize: 27,
+              fontSize: 25,
               color: Color(0xF2979797),
               fontWeight: FontWeight.bold),
         ),
@@ -54,14 +54,14 @@ class _ReviewOrderState extends State<ReviewOrder> {
   Widget _title(String nOrder) {
     return Text(
       nOrder,
-      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
     );
   }
 
   Widget _button(BuildContext context, CarritoProvider carritoProvider,
       InfoProvider infoProvider) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(30),
       child: BottomAppBar(
         elevation: 0,
         color: Colors.white,
@@ -69,10 +69,10 @@ class _ReviewOrderState extends State<ReviewOrder> {
             style: ElevatedButton.styleFrom(
                 primary: Color(0xF2EB1515), elevation: 5),
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(12.0),
               child: Text(
                 'Confirmar pedido',
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
             ),
             onPressed: () {
@@ -144,6 +144,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
   Widget _body(
       String direction, String tiempo, int valor, BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(padding: EdgeInsets.only(top:10)),
       Text(
         'Direccion',
         style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
@@ -244,7 +245,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
         ),
       ),
       SizedBox(
-        height: 25,
+        height: 30,
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
