@@ -40,16 +40,16 @@ class Historialenviados {
   }
 }
 
-class Categorias {
+class Historialdelospedidos {
   // ignore: deprecated_member_use
-  final List<Historialenviados> categorys = new List();
-  Categorias();
-  Categorias.fromJsonList(List<dynamic> jsonList) {
+  final List<Historialenviados> historialdepedidos = new List();
+  Historialdelospedidos();
+  Historialdelospedidos.fromJsonList(List<dynamic> jsonList) {
     if (jsonList == null) return;
 
     for (var item in jsonList) {
-      final category = new Historialenviados.fromJsonMap(item);
-      categorys.add(category);
+      final historial = new Historialenviados.fromJsonMap(item);
+      historialdepedidos.add(historial);
     }
   }
 }

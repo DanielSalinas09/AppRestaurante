@@ -223,6 +223,12 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
 
   _condicionalPedidos(int numeroPedido, String estado, int valor, List plato,
       String id, List tamano) {
-    return _pedido(numeroPedido, estado, valor, plato, id, tamano[0]["nombre"]);
+    return _pedido(
+      numeroPedido,
+      estado,
+      valor,
+      plato,
+      id,
+      tamano[0]["nombre"]);
   }
 }

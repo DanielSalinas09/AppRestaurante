@@ -10,16 +10,16 @@ class PedidosProvider {
     final url = Uri.https(_url, '/api/pedido/');
     final response = await http.get(url, headers: {'x-access-token': token});
     final decodeData = json.decode(response.body);
-    final pedidos = new Categorias.fromJsonList(decodeData['pedidos']);
-    return pedidos.categorys;
+    final pedidos = new Historialdelospedidos.fromJsonList(decodeData['pedidos']);
+    return pedidos.historialdepedidos;
   }
 
   Future<Historialenviados> getOne(String id, String token) async {
     final url = Uri.https(_url, '/api/pedido/' + id);
     final response = await http.get(url, headers: {'x-access-token': token});
     final decodeData = json.decode(response.body);
-    final categoria = new Historialenviados.fromJsonMap(decodeData['pedidos']);
-    return categoria;
+    final historialdepedidos = new Historialenviados.fromJsonMap(decodeData['pedidos']);
+    return historialdepedidos;
   }
 }
 
