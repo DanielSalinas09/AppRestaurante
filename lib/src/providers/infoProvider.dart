@@ -3,7 +3,6 @@ import 'package:app_restaurante/src/models/platoModel.dart';
 import 'package:flutter/foundation.dart';
 
 class InfoProvider with ChangeNotifier {
-
   String _idDirection;
   String _idUsuario;
   String _idPedido;
@@ -12,9 +11,18 @@ class InfoProvider with ChangeNotifier {
   String _direccion = "Escoja su direccion";
   String _token;
   int _number;
+  String _estados = "disponible";
 
   List<Plato> _platos = [];
   List<CategoryModal> _categorias = [];
+
+  get estado {
+    return _estados;
+  }
+
+  set estado(String estado) {
+    this._estados = estado;
+  }
 
   get idPedido {
     return _idPedido;

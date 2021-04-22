@@ -1,4 +1,6 @@
 import 'package:app_restaurante/src/page/carrito.dart';
+import 'package:app_restaurante/src/page/sendingOrden.dart';
+
 import 'package:app_restaurante/src/page/usuario.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ class _NavegationState extends State<Navegation> {
   final Home homePage = Home();
   final Carrito carritoPage = Carrito();
   final Usuario usuario = Usuario();
+  final SendingOrder orden = SendingOrder();
 
   Widget _showPage = new Home();
 
@@ -31,6 +34,9 @@ class _NavegationState extends State<Navegation> {
         return carritoPage;
         break;
       case 2:
+        return orden;
+        break;
+      case 3:
         return usuario;
         break;
       default:
@@ -55,6 +61,7 @@ class _NavegationState extends State<Navegation> {
         items: <Widget>[
           Icon(Icons.home, size: 25),
           Icon(Icons.shopping_cart_outlined, size: 25),
+          Icon(Icons.assignment_outlined),
           Icon(Icons.person, size: 25),
         ],
         onTap: (index) {

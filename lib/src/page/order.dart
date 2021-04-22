@@ -44,16 +44,24 @@ class _OrderProductState extends State<OrderProduct> {
             infoProvider.token, infoProvider.idPedido),
         builder: (BuildContext context, AsyncSnapshot<List<Plato>> snapshot) {
           if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, i) {
-                return Column(
-                  children: [
-                    _orden(snapshot.data[i].nombre, snapshot.data[i].precio)
-                  ],
-                );
-              },
-            );
+            if (snapshot.data.isEmpty) {
+              return Center(
+                  child: Text(
+                "usted no tiene pedido pendiente!!",
+                style: TextStyle(fontSize: 18, color: Colors.redAccent),
+              ));
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, i) {
+                  return Column(
+                    children: [
+                      _orden(snapshot.data[i].nombre, snapshot.data[i].precio)
+                    ],
+                  );
+                },
+              );
+            }
           } else {
             return Center(
               child: CircularProgressIndicator(),

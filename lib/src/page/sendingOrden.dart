@@ -16,54 +16,97 @@ class _SendingOrderState extends State<SendingOrder> {
   @override
   Widget build(BuildContext context) {
     final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
-    return WillPopScope(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              "Pedido",
-              style: TextStyle(
-                  fontSize: 30,
-                  color: Color(0xF2979797),
-                  fontWeight: FontWeight.bold),
-            ),
-            elevation: 0,
-            iconTheme: IconThemeData(color: Color(0xFF7575753)),
-
-            shadowColor: Colors.white,
-
-            backgroundColor: Colors.white,
-            centerTitle: true,
-            // color
+    if (infoProvider.estado == "disponible") {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Pedido",
+            style: TextStyle(
+                fontSize: 30,
+                color: Color(0xF2979797),
+                fontWeight: FontWeight.bold),
           ),
+          elevation: 0,
+          iconTheme: IconThemeData(color: Color(0xFF7575753)),
+
+          shadowColor: Colors.white,
+
           backgroundColor: Colors.white,
-          body: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Se esta preparando tu pedido',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Llegara en 30 - 40 min',
-                    style: TextStyle(fontSize: 19, color: Color(0xFF807E7E)),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  _card(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  _lisView('10:00 PM', infoProvider)
-                ],
+          centerTitle: true,
+          // color
+        ),
+        body: Center(
+          child: Text("Usted no tiene pedidos pendiente"),
+        ),
+      );
+    } else {
+      return WillPopScope(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                "Pedido",
+                style: TextStyle(
+                    fontSize: 30,
+                    color: Color(0xF2979797),
+                    fontWeight: FontWeight.bold),
               ),
+              elevation: 0,
+              iconTheme: IconThemeData(color: Color(0xFF7575753)),
+
+              shadowColor: Colors.white,
+
+              backgroundColor: Colors.white,
+              centerTitle: true,
+              // color
+            ),
+            backgroundColor: Colors.white,
+            body: FutureBuilder(
+              future: pedidoProvider.status(
+                  infoProvider.token, infoProvider.idPedido),
+              builder: (BuildContext context,
+                  AsyncSnapshot<Map<String, dynamic>> snapshot) {
+                infoProvider.estado = snapshot.data["estado"];
+
+                print("EL ESTADO ACTUAL ES :" + infoProvider.estado);
+                if (snapshot.hasData) {
+                  return SingleChildScrollView(
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Se esta ${infoProvider.estado} tu pedido',
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            'Llegara en 30 - 40 min',
+                            style: TextStyle(
+                                fontSize: 19, color: Color(0xFF807E7E)),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          _card(),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          _lisView('10:00 PM', infoProvider)
+                        ],
+                      ),
+                    ),
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
             ),
           ),
-        ),
-        onWillPop: _willPopCallback);
+          onWillPop: _willPopCallback);
+    }
   }
 
   Future<bool> _willPopCallback() async {
@@ -127,7 +170,7 @@ class _SendingOrderState extends State<SendingOrder> {
           Padding(
             padding: EdgeInsets.only(left: 30, right: 30),
             child: Text(
-              'Con Take-Out Express, recibirá la entrega prioritaria de su pedido antes de las 10:00 pm, ¡o correremos por nuestra cuenta!',
+              'Con Delivery fast food, recibirá la entrega prioritaria de su pedido antes de las 10:00 pm, ¡o correremos por nuestra cuenta!',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
           ),
@@ -179,20 +222,23 @@ class _SendingOrderState extends State<SendingOrder> {
                 ],
               ),
             ),
-            ElevatedButton(
-              style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      EdgeInsets.all(12)),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Color(0xF2EB1515))),
-              child: Text(
-                "Cancelar Pedido",
-                style: TextStyle(fontSize: 18),
-              ),
-              onPressed: () {
-                _submit(infoProvider);
-              },
-            ),
+            if (infoProvider.estado == "Por confirmar")
+              {
+                ElevatedButton(
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          EdgeInsets.all(12)),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Color(0xF2EB1515))),
+                  child: Text(
+                    "Cancelar Pedido",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  onPressed: () {
+                    _submit(infoProvider);
+                  },
+                )
+              }
           ],
         ),
         Divider(),

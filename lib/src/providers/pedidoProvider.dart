@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 class PedidoProvider {
   String _url = 'backend-delivery.azurewebsites.net';
+
   Future<Map<String, dynamic>> pedido(String token, String idUsuario,
       String idDireccion, List<String> platos) async {
     var now = new DateTime.now();
@@ -26,7 +27,7 @@ class PedidoProvider {
         body: body);
 
     final respDecode = jsonDecode(resp.body);
-
+    print(respDecode);
     return respDecode;
   }
 
@@ -47,8 +48,21 @@ class PedidoProvider {
 
     final respDecode = json.decode(resp.body);
     print(respDecode);
-    final plato = Platos.fromJsonList(respDecode["pedido"]["platos"]);
+    if (respDecode["message"] == "error al encontrar el pedido") {
+      return [];
+    } else {
+      final plato = Platos.fromJsonList(respDecode["pedido"]["platos"]);
+      return plato.platos;
+    }
+  }
 
-    return plato.platos;
+  Future<Map<String, dynamic>> status(String token, String idPedido) async {
+    final url = Uri.https(_url, '/api/pedido/get/status/$idPedido');
+
+    final resp = await http.get(url, headers: {'x-access-token': token});
+
+    final respDecode = json.decode(resp.body);
+    print(respDecode);
+    return respDecode["pedido"];
   }
 }

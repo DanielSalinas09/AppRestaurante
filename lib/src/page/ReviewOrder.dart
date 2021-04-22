@@ -107,6 +107,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
 
       if (info["message"] == "pedido guardada correctametne") {
         infoProvider.idPedido = info["pedido"]["_id"];
+        infoProvider.estado = info["pedido"]["estado"];
         print("El id del pedido" + infoProvider.idPedido);
         Navigator.pushNamed(context, 'sendingOrder');
       } else {
