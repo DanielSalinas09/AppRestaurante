@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:app_restaurante/src/models/platoModel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -21,7 +22,6 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.grey),
@@ -82,7 +82,8 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
     );
   }
 
-  Widget _pedido(int numeroPedido, String estado, int valor, String plato, String id, dynamic pedido) {
+  Widget _pedido(int numeroPedido, String estado, int valor, List plato,
+      String id, dynamic pedido) {
     Color colorBar;
     switch (estado) {
       case "enviado":
@@ -94,7 +95,7 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
       case "preparando":
         colorBar = Colors.yellow;
         break;
-       case "cancelado":
+      case "cancelado":
         colorBar = Colors.black;
         break;
       default:
@@ -106,7 +107,7 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
           Row(
             children: [
               Text(
-                "pedido # " +  numeroPedido.toString(),
+                "pedido # " + numeroPedido.toString(),
                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
               ),
               Expanded(child: SizedBox()),
@@ -120,8 +121,7 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              
-              _listPedido(plato.toString()),
+              _listPedido(plato),
               Container(
                 decoration: BoxDecoration(
                     color: colorBar, borderRadius: BorderRadius.circular(20.0)),
@@ -156,26 +156,28 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
               SizedBox()
             ],
           ),
-               Divider(
-        color: Colors.black,
-        height: 27,
-        thickness: 1.1,
-      ),
+          Divider(
+            color: Colors.black,
+            height: 27,
+            thickness: 1.1,
+          ),
         ],
       ),
-      onTap: () {
-    
-      },
+      onTap: () {},
     );
   }
 
-   Widget _listPedido(String platos) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _itemList(platos),
-        SizedBox(height: 5.0),
-      ],
+  Widget _listPedido(List platos) {
+    return Expanded(
+      child: Container(
+        child: ListView.builder(
+          itemCount: platos.length,
+          shrinkWrap: true,
+          itemBuilder: (BuildContext context, int index) {
+            return _itemList(platos[index]['nombre']);
+          },
+        ),
+      ),
     );
   }
 
@@ -188,43 +190,39 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
     );
   }
 
-
   Widget _builderHistorialpedidos(BuildContext context) {
-  final infoProvider = Provider.of<InfoProvider>(context);
-  return FutureBuilder(
-    future: PedidosProvider().getAll(infoProvider.token),
-    builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-      if (snapshot.hasData) {
-        // return Text("hola");
-        return ListView.builder(
-          physics: ScrollPhysics(parent: ScrollPhysics()),
-          shrinkWrap: true,
-          itemCount: snapshot.data.length,
-          padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-          itemBuilder: (BuildContext context, int index) {
+    final infoProvider = Provider.of<InfoProvider>(context);
+    return FutureBuilder(
+      future: PedidosProvider().getAll(infoProvider.token),
+      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+        if (snapshot.hasData) {
+          // return Text("hola");
+          return ListView.builder(
+            physics: ScrollPhysics(parent: ScrollPhysics()),
+            shrinkWrap: true,
+            itemCount: snapshot.data.length,
+            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+            itemBuilder: (BuildContext context, int index) {
+              return _condicionalPedidos(
+                  snapshot.data[index].numero,
+                  snapshot.data[index].estado,
+                  snapshot.data[index].valor,
+                  snapshot.data[index].platos,
+                  snapshot.data[index].id,
+                  snapshot.data[index].platos);
+            },
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
 
-            
-            return 
-              
-                _condicionalPedidos(snapshot.data[index].numero, snapshot.data[index].estado,snapshot.data[index].valor,snapshot.data[index].platos[0]["nombre"],snapshot.data[index].id,snapshot.data[index].platos);
-              
-            
-          },
-        );
-      } else {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-    },
-  );
-}
-  _condicionalPedidos(int numeroPedido, String estado, int valor, String plato, String id, List tamano){
-    
-      return _pedido(numeroPedido, estado, valor, plato, id, tamano[0]["nombre"]);
-    
-               
+  _condicionalPedidos(int numeroPedido, String estado, int valor, List plato,
+      String id, List tamano) {
+    return _pedido(numeroPedido, estado, valor, plato, id, tamano[0]["nombre"]);
   }
 }
-
-

@@ -2,8 +2,10 @@
 
 import 'dart:convert';
 
+import 'package:app_restaurante/src/models/platoModel.dart';
+
 class Historialenviados {
-    List platos;
+  List platos;
   String nombre;
   String id;
   int valor;
@@ -12,7 +14,6 @@ class Historialenviados {
   String direccionId;
   String fecha;
   int numero;
-
 
   Historialenviados({
     this.nombre,
@@ -27,8 +28,8 @@ class Historialenviados {
   });
 
   Historialenviados.fromJsonMap(Map<String, dynamic> json) {
-    platos=json["platos"];
-    nombre= json["nombre"] ;
+    platos = json["platos"];
+    nombre = json["nombre"];
     id = json['_id'];
     valor = json['valor'];
     usuarioId = json['usuario_id'];
@@ -52,4 +53,3 @@ class Categorias {
     }
   }
 }
-
