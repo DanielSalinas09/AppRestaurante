@@ -193,10 +193,10 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
   Widget _builderHistorialpedidos(BuildContext context) {
     final infoProvider = Provider.of<InfoProvider>(context);
     return FutureBuilder(
-      future: PedidosProvider().getAll(infoProvider.token),
+      future:
+          PedidosProvider().getAll(infoProvider.idUsuario, infoProvider.token),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.hasData) {
-          // return Text("hola");
           return ListView.builder(
             physics: ScrollPhysics(parent: ScrollPhysics()),
             shrinkWrap: true,
@@ -223,12 +223,6 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
 
   _condicionalPedidos(int numeroPedido, String estado, int valor, List plato,
       String id, List tamano) {
-    return _pedido(
-      numeroPedido,
-      estado,
-      valor,
-      plato,
-      id,
-      tamano[0]["nombre"]);
+    return _pedido(numeroPedido, estado, valor, plato, id, tamano[0]["nombre"]);
   }
 }
