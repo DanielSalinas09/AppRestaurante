@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:app_restaurante/src/models/loginModals.dart';
 import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:app_restaurante/src/providers/loginProvider-verification.dart';
@@ -44,25 +45,27 @@ class _LoginState extends State<Login> {
   Widget _button() {
     // ignore: deprecated_member_use
     return RaisedButton(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-      color: Color(0xF2EB1515),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(60),
-      ),
-      child: Text(
-        'Enviar Codigo',
-        style: TextStyle(
-            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-      ),
-      onPressed: () => submit(),
-    );
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
+        color: Color(0xF2EB1515),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(60),
+        ),
+        child: Text(
+          'Enviar Codigo',
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        onPressed: () => submit());
   }
 
   submit() async {
     final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-
+      EasyLoading.show(
+          status: "Loading",
+          maskType: EasyLoadingMaskType.black,
+          dismissOnTap: false);
       bool info = await loginProvider.user(infoProvider.number);
 
       if (info) {
@@ -71,6 +74,7 @@ class _LoginState extends State<Login> {
         _mostrarAlert(loginProvider.message);
       }
     }
+    return true;
   }
 
   void _mostrarAlert(String message) {

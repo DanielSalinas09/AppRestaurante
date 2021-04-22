@@ -2,6 +2,7 @@ import 'package:app_restaurante/src/page/carrito.dart';
 import 'package:app_restaurante/src/page/usuario.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'home.dart';
 
@@ -35,6 +36,12 @@ class _NavegationState extends State<Navegation> {
       default:
         return new Container(child: Text('No a seleccionado ninguna pagina'));
     }
+  }
+
+  @override
+  void initState() {
+    EasyLoading.dismiss();
+    super.initState();
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:app_restaurante/src/providers/CarritoProvider.dart';
 
 import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:app_restaurante/src/page/ReviewOrder.dart';
 import 'package:app_restaurante/src/page/carrito.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(fontFamily: 'MPLUSRounded1c'),
         debugShowCheckedModeBanner: false,
+        builder: EasyLoading.init(),
         initialRoute: 'login',
         routes: {
           'splashScreen': (BuildContext context) => SplashsCreen(),

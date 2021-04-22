@@ -1,3 +1,4 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 import 'package:app_restaurante/src/models/loginModals.dart';
@@ -19,6 +20,12 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
   final formKey = GlobalKey<FormState>();
   final loginModal = new LoginModal();
   final loginVerificationProvider = new LoginVerificationProvider();
+
+  @override
+  void initState() {
+    EasyLoading.dismiss();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +134,10 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       print("Codigo digitado" + verify.toString());
-
+      EasyLoading.show(
+          status: "Loading",
+          maskType: EasyLoadingMaskType.black,
+          dismissOnTap: false);
       var info = await loginVerificationProvider.verification(verify, number);
 
       print(info);
