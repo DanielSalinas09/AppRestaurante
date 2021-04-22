@@ -5,6 +5,14 @@ class DirectionModal {
 
   DirectionModal({this.id, this.direction, this.usuarioId});
 
+  get direccion {
+    return direccion;
+  }
+
+  set direccion(String direccion) {
+    this.direction = direccion;
+  }
+
   DirectionModal.fromJsonMap(Map<String, dynamic> json) {
     id = json['_id'];
     direction = json['direccion'];

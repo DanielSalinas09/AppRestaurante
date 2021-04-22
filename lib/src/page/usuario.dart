@@ -1,4 +1,6 @@
+import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Usuario extends StatefulWidget {
   Usuario({Key key}) : super(key: key);
@@ -10,6 +12,7 @@ class Usuario extends StatefulWidget {
 class _UsuarioState extends State<Usuario> {
   @override
   Widget build(BuildContext context) {
+    final infoProvider = Provider.of<InfoProvider>(context);
     return Scaffold(
       backgroundColor: Color(0xEEEEEEEEEE),
       body: Column(
@@ -35,7 +38,8 @@ class _UsuarioState extends State<Usuario> {
                   style: TextStyle(fontFamily: 'Chonburi', fontSize: 20),
                 )),
                 Center(
-                    child: Text('Nombre usuario',
+                    child: Text(
+                        infoProvider.nombre + " " + infoProvider.apellido,
                         style:
                             TextStyle(fontFamily: 'Chonburi', fontSize: 20))),
               ],

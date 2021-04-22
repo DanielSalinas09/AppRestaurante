@@ -1,4 +1,9 @@
+import 'package:app_restaurante/src/providers/CarritoProvider.dart';
+import 'package:app_restaurante/src/providers/infoProvider.dart';
+import 'package:app_restaurante/src/providers/pedidoProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ReviewOrder extends StatefulWidget {
   ReviewOrder({Key key}) : super(key: key);
@@ -9,8 +14,13 @@ class ReviewOrder extends StatefulWidget {
 
 class _ReviewOrderState extends State<ReviewOrder> {
   int _value = 1;
+  var conver = NumberFormat("#,###", 'es-CO');
+  final pedidoProvider = new PedidoProvider();
   @override
   Widget build(BuildContext context) {
+    final infoProvider = Provider.of<InfoProvider>(context, listen: false);
+    final carritoProvider =
+        Provider.of<CarritoProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -31,16 +41,25 @@ class _ReviewOrderState extends State<ReviewOrder> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _title('Pedido #1', 'Hamburguesa'),
-            _body('Cra 46 # 53 - 130', '10:00pm', '75.800')
+            _title('Pedidos'),
+            _body(infoProvider.direction, '30 - 40 min', carritoProvider.total,
+                context)
           ],
         ),
       ),
-      bottomNavigationBar: _button(context),
+      bottomNavigationBar: _button(context, carritoProvider, infoProvider),
     );
   }
 
-  Widget _button(BuildContext context) {
+  Widget _title(String nOrder) {
+    return Text(
+      nOrder,
+      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+    );
+  }
+
+  Widget _button(BuildContext context, CarritoProvider carritoProvider,
+      InfoProvider infoProvider) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: BottomAppBar(
@@ -59,7 +78,8 @@ class _ReviewOrderState extends State<ReviewOrder> {
             onPressed: () {
               switch (_value) {
                 case 1:
-                  Navigator.pushNamed(context, 'sendingOrder');
+                  _realizarPedido(carritoProvider, infoProvider);
+
                   break;
                 case 2:
                   Navigator.pushNamed(context, 'pagosOnline');
@@ -71,30 +91,67 @@ class _ReviewOrderState extends State<ReviewOrder> {
     );
   }
 
-  Widget _title(String nOrder, String category) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          nOrder,
-          style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-        ),
-        Text(
-          category,
-          style: TextStyle(fontSize: 20, color: Color(0xF2979797)),
-        )
-      ],
-    );
+  _realizarPedido(
+      CarritoProvider carritoProvider, InfoProvider infoProvider) async {
+    carritoProvider.realizarPedido();
+    if (infoProvider.idDirection == null) {
+      _mostrarAlert();
+      print("Entro aqui");
+    } else {
+      print("Direccion: " + infoProvider.idDirection);
+      Map info = await pedidoProvider.pedido(
+          infoProvider.token,
+          infoProvider.idUsuario,
+          infoProvider.idDirection,
+          carritoProvider.datos);
+
+      if (info["message"] == "pedido guardada correctametne") {
+        infoProvider.idPedido = info["pedido"]["_id"];
+        print("El id del pedido" + infoProvider.idPedido);
+        Navigator.pushNamed(context, 'sendingOrder');
+      } else {
+        _mostrarAlert();
+        print("Entro aqui 2");
+      }
+    }
   }
 
-  Widget _body(String direction, String tiempo, String valor) {
+  void _mostrarAlert() {
+    showDialog(
+        useSafeArea: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Informacion incorrecta',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
+            content: Text(
+              "El pedido no ha sido efectuado verifique la direccion",
+              style: TextStyle(fontSize: 18),
+            ),
+            actions: [
+              TextButton(
+                child: Text('Ok', style: TextStyle(fontSize: 20)),
+                onPressed: () => Navigator.of(context).pop(),
+              )
+            ],
+          );
+        });
+  }
+
+  Widget _body(
+      String direction, String tiempo, int valor, BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
         'Direccion',
         style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
       ),
       InkWell(
-        onTap: () {},
+        onTap: () async {
+          await Navigator.pushNamed(context, 'searchDireccion');
+          setState(() {});
+        },
         child: Container(
           height: 60,
           padding: EdgeInsets.only(left: 15, right: 15),
@@ -199,7 +256,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
             children: [
               Icon(Icons.attach_money),
               Text(
-                valor,
+                conver.format(valor),
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ],

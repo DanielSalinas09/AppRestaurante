@@ -51,7 +51,7 @@ class LoginVerificationProvider {
 
     print(respDecode);
     if (respDecode["message"] == "verificacion completada") {
-      return [true, respDecode["token"]];
+      return [true, respDecode["token"], respDecode["user"]];
     } else {
       return [false];
     }

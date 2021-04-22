@@ -3,13 +3,26 @@ import 'package:app_restaurante/src/models/platoModel.dart';
 import 'package:flutter/foundation.dart';
 
 class InfoProvider with ChangeNotifier {
-  
+
+  String _idDirection;
+  String _idUsuario;
+  String _idPedido;
+  String _nombre;
+  String _apellido;
+  String _direccion = "Escoja su direccion";
   String _token;
   int _number;
-  String _idDirection;
-  String _direccion = "Escoja su direccion";
+
   List<Plato> _platos = [];
   List<CategoryModal> _categorias = [];
+
+  get idPedido {
+    return _idPedido;
+  }
+
+  set idPedido(String id) {
+    this._idPedido = id;
+  }
 
   List<CategoryModal> get categoria {
     return _categorias;
@@ -39,7 +52,7 @@ class InfoProvider with ChangeNotifier {
     return _idDirection;
   }
 
-  set idDirection(idDirection) {
+  set idDirection(String idDirection) {
     this._idDirection = idDirection;
   }
 
@@ -57,6 +70,30 @@ class InfoProvider with ChangeNotifier {
 
   set token(String value) {
     this._token = value;
+  }
+
+  get idUsuario {
+    return _idUsuario;
+  }
+
+  set idUsuario(String idUsuario) {
+    this._idUsuario = idUsuario;
+  }
+
+  get nombre {
+    return _nombre;
+  }
+
+  set nombre(String nombre) {
+    this._nombre = nombre;
+  }
+
+  get apellido {
+    return _apellido;
+  }
+
+  set apellido(String apellido) {
+    this._apellido = apellido;
   }
 
   @override
