@@ -65,10 +65,9 @@ class _SendingOrderState extends State<SendingOrder> {
                   infoProvider.token, infoProvider.idPedido),
               builder: (BuildContext context,
                   AsyncSnapshot<Map<String, dynamic>> snapshot) {
-                infoProvider.estado = snapshot.data["estado"];
-
-                print("EL ESTADO ACTUAL ES :" + infoProvider.estado);
                 if (snapshot.hasData) {
+                  infoProvider.estado = snapshot.data["estado"];
+                  print("EL ESTADO ACTUAL ES :" + infoProvider.estado);
                   return SingleChildScrollView(
                     child: Container(
                       padding: const EdgeInsets.all(20),
@@ -223,23 +222,7 @@ class _SendingOrderState extends State<SendingOrder> {
                 ],
               ),
             ),
-            if (infoProvider.estado == "Por confirmar")
-              {
-                ElevatedButton(
-                  style: ButtonStyle(
-                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          EdgeInsets.all(12)),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xF2EB1515))),
-                  child: Text(
-                    "Cancelar Pedido",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  onPressed: () {
-                    _submit(infoProvider);
-                  },
-                )
-              }
+            mostrarBotonCancelar(),
           ],
         ),
         Divider(),
@@ -320,5 +303,27 @@ class _SendingOrderState extends State<SendingOrder> {
             ],
           );
         });
+  }
+
+  Widget mostrarBotonCancelar() {
+    final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
+    if (infoProvider.estado == "por confirmar") {
+      return ElevatedButton(
+        style: ButtonStyle(
+            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                EdgeInsets.all(12)),
+            backgroundColor:
+                MaterialStateProperty.all<Color>(Color(0xF2EB1515))),
+        child: Text(
+          "Cancelar Pedido",
+          style: TextStyle(fontSize: 18),
+        ),
+        onPressed: () {
+          _submit(infoProvider);
+        },
+      );
+    } else {
+      return SizedBox();
+    }
   }
 }
