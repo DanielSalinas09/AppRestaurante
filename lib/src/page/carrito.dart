@@ -18,7 +18,9 @@ class _CarritoState extends State<Carrito> {
     final carritoProvider =
         Provider.of<CarritoProvider>(context, listen: false);
     final infoProvider = Provider.of<InfoProvider>(context, listen: false);
-    if (carritoProvider.numeroItems == 0) {
+    if (infoProvider.estado == 'preparando' ||
+        infoProvider.estado == 'por confirmar' ||
+        infoProvider.estado == 'enviado') {
       return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -35,16 +37,19 @@ class _CarritoState extends State<Carrito> {
         ),
         body: Container(
           child: Center(
-            child: Text("Agregue platos al carrito para pedir la cena"),
+            child: Column(
+              children: [
+                Center(child: Text("Ya hay un pedido en curso")),
+                Center(child: Text('terminelo para pedir nuevamente')),
+              ],
+            ),
           ),
           color: Colors.white,
           height: double.infinity,
         ),
       );
     } else {
-      if (infoProvider.estado == 'preparando' ||
-          infoProvider.estado == 'por confirmar' ||
-          infoProvider.estado == 'enviado') {
+      if (carritoProvider.numeroItems == 0) {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -61,12 +66,7 @@ class _CarritoState extends State<Carrito> {
           ),
           body: Container(
             child: Center(
-              child: Column(
-                children: [
-                  Center(child: Text("Ya hay un pedido en curso")),
-                  Center(child: Text('terminelo para pedir nuevamente')),
-                ],
-              ),
+              child: Text("Agregue platos al carrito para pedir la cena"),
             ),
             color: Colors.white,
             height: double.infinity,
