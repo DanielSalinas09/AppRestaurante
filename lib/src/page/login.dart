@@ -19,6 +19,11 @@ class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
   final loginProvider = new LoginProvider();
   LoginModal loginModal = new LoginModal();
+  @override
+  void initState() {
+    EasyLoading.dismiss();
+    super.initState();
+  }
 
   // InfoProvider infoProvider;
   @override
