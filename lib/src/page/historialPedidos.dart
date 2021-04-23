@@ -46,7 +46,7 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
   }
 
   Widget _pedido(int numeroPedido, String estado, int valor, List plato,
-      String id, dynamic pedido) {
+      String id, dynamic pedido, String direccion) {
     Color colorBar;
     switch (estado) {
       case "enviado":
@@ -103,7 +103,7 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "calle 38B # 1c-72",
+                direccion,
                 style: TextStyle(
                     fontSize: 17.0,
                     color: Colors.black,
@@ -172,7 +172,9 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
                   snapshot.data[index].valor,
                   snapshot.data[index].platos,
                   snapshot.data[index].id,
-                  snapshot.data[index].platos);
+                  snapshot.data[index].platos,
+                  snapshot.data[index].direccion.direccion,
+                  );
             },
           );
         } else {
@@ -185,7 +187,7 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
   }
 
   _condicionalPedidos(int numeroPedido, String estado, int valor, List plato,
-      String id, List tamano) {
-    return _pedido(numeroPedido, estado, valor, plato, id, tamano[0]["nombre"]);
+      String id, List tamano, String direccion) {
+    return _pedido(numeroPedido, estado, valor, plato, id, tamano[0]["nombre"], direccion);
   }
 }
