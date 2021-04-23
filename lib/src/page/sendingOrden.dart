@@ -270,6 +270,7 @@ class _SendingOrderState extends State<SendingOrder> {
         infoProvider.token, infoProvider.idPedido);
     if (info["message"] == "el pedido ha sido cancelado") {
       _mostrarAlert("Informacion", "El pedido ha sido cancelado");
+      infoProvider.estado = 'disponible';
     } else if (info["message"] ==
         "el pedido ya se esta preparando, no se puede cancelar") {
       _mostrarAlert("Informacion",
