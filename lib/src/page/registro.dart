@@ -72,6 +72,7 @@ class _RegistroState extends State<Registro> {
         print("El estado es :" + registerProvider.state);
         Navigator.pushNamed(context, 'login');
       } else {
+        EasyLoading.dismiss();
         print("El Usuario ya existe");
         _mostrarAlert();
       }

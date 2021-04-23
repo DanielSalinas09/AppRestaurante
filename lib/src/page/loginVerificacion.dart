@@ -150,6 +150,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
         Navigator.of(context)
             .pushNamedAndRemoveUntil('navigation', (route) => false);
       } else {
+        EasyLoading.dismiss();
         _mostrarAlert("El codigo es Incorrecto");
       }
     }
