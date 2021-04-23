@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(fontFamily: 'MPLUSRounded1c'),
         debugShowCheckedModeBanner: false,
         builder: EasyLoading.init(),
-        initialRoute: 'login',
+        initialRoute: 'splashScreen',
         routes: {
           'splashScreen': (BuildContext context) => SplashsCreen(),
           'login': (BuildContext context) => Login(),
