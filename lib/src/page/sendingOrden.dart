@@ -75,7 +75,7 @@ class _SendingOrderState extends State<SendingOrder> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Se esta ${infoProvider.estado} tu pedido',
+                            'Su pedido esta ${infoProvider.estado}',
                             style: TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold),
                           ),
@@ -86,6 +86,10 @@ class _SendingOrderState extends State<SendingOrder> {
                           ),
                           SizedBox(
                             height: 15,
+                          ),
+                          buttonPedidoRecibido(),
+                          SizedBox(
+                            height: 9,
                           ),
                           _card(),
                           SizedBox(
@@ -321,6 +325,30 @@ class _SendingOrderState extends State<SendingOrder> {
         ),
         onPressed: () {
           _submit(infoProvider);
+        },
+      );
+    } else {
+      return SizedBox();
+    }
+  }
+
+  Widget buttonPedidoRecibido() {
+    final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
+    if (infoProvider.estado == "enviado") {
+      return ElevatedButton(
+        style: ButtonStyle(
+            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                EdgeInsets.all(12)),
+            backgroundColor:
+                MaterialStateProperty.all<Color>(Color(0xF2EB1515))),
+        child: Text(
+          "Pedido Recibido",
+          style: TextStyle(fontSize: 18),
+        ),
+        onPressed: () {
+          infoProvider.estado = "disponible";
+          infoProvider.idPedido = "";
+          Navigator.pushReplacementNamed(context, "navigation");
         },
       );
     } else {
