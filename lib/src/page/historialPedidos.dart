@@ -28,7 +28,8 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
         shadowColor: Colors.black,
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("Pedidos Pendientes", style: TextStyle(color: Colors.grey)),
+        title:
+            Text("Historial de pedidos", style: TextStyle(color: Colors.grey)),
       ),
       body: ListView(
         children: [
@@ -37,47 +38,14 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
             padding: EdgeInsets.fromLTRB(20, 15, 20, 0),
             child: Column(
               children: [
-                _formSearch(),
                 SizedBox(
-                  height: 20.0,
+                  height: 5.0,
                 ),
                 _builderHistorialpedidos(context),
-                Divider(
-                  color: Colors.grey,
-                  height: 30.0,
-                ),
               ],
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Widget _formSearch() {
-    return Form(
-      key: formKey,
-      child: TextFormField(
-        decoration: InputDecoration(
-            hintText: "Busca un plato",
-            labelStyle:
-                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-            prefixIcon: Icon(
-              Icons.search,
-              color: Color(0x7E838989),
-            ),
-            focusColor: Color(0xffffffff),
-            fillColor: Color(0xF2F2F2F2),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15.0),
-              borderSide: BorderSide(
-                color: Colors.white,
-                width: 2.0,
-              ),
-            ),
-            filled: true),
-        onFieldSubmitted: (value) =>
-            {Navigator.pushNamed(context, 'searchPlato')},
       ),
     );
   }
@@ -157,15 +125,13 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
             ],
           ),
           Divider(
-            color: Colors.black,
+            color: Color(0xF2C7C7C7),
             height: 27,
             thickness: 1.1,
           ),
         ],
       ),
-      onTap: () {
-        
-      },
+      onTap: () {},
     );
   }
 
@@ -204,7 +170,7 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
             shrinkWrap: true,
             itemCount: snapshot.data.length,
             padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-            itemBuilder: (BuildContext context, int index) {             
+            itemBuilder: (BuildContext context, int index) {
               return _condicionalPedidos(
                   snapshot.data[index].numero,
                   snapshot.data[index].estado,
