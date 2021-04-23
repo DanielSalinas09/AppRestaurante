@@ -1,4 +1,5 @@
 import 'package:app_restaurante/src/providers/CarritoProvider.dart';
+import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class _CarritoState extends State<Carrito> {
   Widget build(BuildContext context) {
     final carritoProvider =
         Provider.of<CarritoProvider>(context, listen: false);
+    final infoProvider = Provider.of<InfoProvider>(context, listen: false);
     if (carritoProvider.numeroItems == 0) {
       return Scaffold(
         appBar: AppBar(
@@ -40,6 +42,37 @@ class _CarritoState extends State<Carrito> {
         ),
       );
     } else {
+      if (infoProvider.estado == 'preparando' ||
+          infoProvider.estado == 'por confirmar' ||
+          infoProvider.estado == 'enviado') {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            centerTitle: true,
+            iconTheme: IconThemeData(color: Color(0xF2979797)),
+            title: Text(
+              'Carrito',
+              style: TextStyle(
+                  fontSize: 30,
+                  color: Color(0xF2979797),
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          body: Container(
+            child: Center(
+              child: Column(
+                children: [
+                  Center(child: Text("Ya hay un pedido en curso")),
+                  Center(child: Text('terminelo para pedir nuevamente')),
+                ],
+              ),
+            ),
+            color: Colors.white,
+            height: double.infinity,
+          ),
+        );
+      }
       return WillPopScope(
           child: Scaffold(
             backgroundColor: Colors.white,
