@@ -19,6 +19,11 @@ class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
   final loginProvider = new LoginProvider();
   LoginModal loginModal = new LoginModal();
+  @override
+  void initState() {
+    EasyLoading.dismiss();
+    super.initState();
+  }
 
   // InfoProvider infoProvider;
   @override
@@ -71,6 +76,7 @@ class _LoginState extends State<Login> {
       if (info) {
         Navigator.pushNamed(context, 'loginVerificacion');
       } else {
+        EasyLoading.dismiss();
         _mostrarAlert(loginProvider.message);
       }
     }

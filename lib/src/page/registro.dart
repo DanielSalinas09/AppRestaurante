@@ -2,6 +2,7 @@ import 'package:app_restaurante/src/models/registroModal.dart';
 import 'package:app_restaurante/src/providers/registroProvider.dart';
 import 'package:app_restaurante/src/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class Registro extends StatefulWidget {
   Registro({Key key}) : super(key: key);
@@ -59,6 +60,10 @@ class _RegistroState extends State<Registro> {
   _submit() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
+      EasyLoading.show(
+          status: "Loading",
+          maskType: EasyLoadingMaskType.black,
+          dismissOnTap: false);
 
       bool info = await registerProvider.register(registros.numero,
           registros.nombre, registros.apellido, registros.email);
@@ -67,6 +72,7 @@ class _RegistroState extends State<Registro> {
         print("El estado es :" + registerProvider.state);
         Navigator.pushNamed(context, 'login');
       } else {
+        EasyLoading.dismiss();
         print("El Usuario ya existe");
         _mostrarAlert();
       }

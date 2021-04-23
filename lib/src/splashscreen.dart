@@ -11,47 +11,43 @@ class _SplashsCreenState extends State<SplashsCreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xF2EB1515),
       body: Container(
-        color: Colors.red[900],
+        padding: EdgeInsets.all(18),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(
+              height: 20,
+            ),
             Container(
-              color: Colors.blue,
-              height: 400,
-              child: Padding(
-                padding: const EdgeInsets.all(30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      
-                      width: 90,
-                      height: 90,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: AssetImage('assets/img/logo.jpg')),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Food for everyone',
-                      style: TextStyle(
-                        fontSize: 65,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'MPLUSRounded1c',
-                      ),
-                    )
-                  ],
-                ),
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage('assets/img/logo.jpg'),
+                  )),
+            ),
+            Text(
+              'Delivery Fast Food',
+              style: TextStyle(
+                fontSize: 65,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'MPLUSRounded1c',
               ),
             ),
             Container(
-                child: Row(
-              children: [Container()],
-            )),
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage('assets/img/img-mujer.jpg'),
+              )),
+            ),
           ],
         ),
       ),
