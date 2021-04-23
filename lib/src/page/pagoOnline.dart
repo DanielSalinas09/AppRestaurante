@@ -1,7 +1,11 @@
+import 'package:app_restaurante/src/providers/CarritoProvider.dart';
+import 'package:app_restaurante/src/providers/infoProvider.dart';
+import 'package:app_restaurante/src/providers/pedidoProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_form.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(PagosOnline());
 
@@ -19,9 +23,12 @@ class PagosOnlineState extends State<PagosOnline> {
   String cvvCode = '';
   bool isCvvFocused = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
+  final pedidoProvider = new PedidoProvider();
   @override
   Widget build(BuildContext context) {
+    final infoProvider = Provider.of<InfoProvider>(context, listen: false);
+    final carritoProvider =
+        Provider.of<CarritoProvider>(context, listen: false);
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -81,7 +88,7 @@ class PagosOnlineState extends State<PagosOnline> {
                           ),
                           onCreditCardModelChange: onCreditCardModelChange,
                         ),
-                        _button(context),
+                        _button(context, infoProvider, carritoProvider),
                       ],
                     ),
                   ),
@@ -102,7 +109,8 @@ class PagosOnlineState extends State<PagosOnline> {
     });
   }
 
-  Widget _button(BuildContext context) {
+  Widget _button(BuildContext context, InfoProvider infoProvider,
+      CarritoProvider carritoProvider) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: BottomAppBar(
@@ -120,12 +128,62 @@ class PagosOnlineState extends State<PagosOnline> {
             ),
             onPressed: () {
               if (formKey.currentState.validate()) {
-                Navigator.popAndPushNamed(context, 'sendingOrder');
+                _realizarPedido(carritoProvider, infoProvider);
               } else {
                 print('invalid!');
               }
             }),
       ),
     );
+  }
+
+  _realizarPedido(
+      CarritoProvider carritoProvider, InfoProvider infoProvider) async {
+    carritoProvider.realizarPedido();
+    if (infoProvider.idDirection == null) {
+      _mostrarAlert();
+      print("Entro aqui");
+    } else {
+      print("Direccion: " + infoProvider.idDirection);
+      Map info = await pedidoProvider.pedido(
+          infoProvider.token,
+          infoProvider.idUsuario,
+          infoProvider.idDirection,
+          carritoProvider.datos);
+
+      if (info["message"] == "pedido guardada correctametne") {
+        infoProvider.idPedido = info["pedido"]["_id"];
+        infoProvider.estado = info["pedido"]["estado"];
+        print("El id del pedido" + infoProvider.idPedido);
+        Navigator.pushNamed(context, 'sendingOrder');
+      } else {
+        _mostrarAlert();
+        print("Entro aqui 2");
+      }
+    }
+  }
+
+  void _mostrarAlert() {
+    showDialog(
+        useSafeArea: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Informacion incorrecta',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
+            content: Text(
+              "El pedido no ha sido efectuado verifique la direccion",
+              style: TextStyle(fontSize: 18),
+            ),
+            actions: [
+              TextButton(
+                child: Text('Ok', style: TextStyle(fontSize: 20)),
+                onPressed: () => Navigator.of(context).pop(),
+              )
+            ],
+          );
+        });
   }
 }
