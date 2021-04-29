@@ -9,7 +9,9 @@ class ConfiguracionUser extends StatefulWidget {
 
 class _ConfiguracionUserState extends State<ConfiguracionUser> {
   @override
+
   Widget build(BuildContext context) {
+    final _sizedScreen = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.grey),
@@ -18,14 +20,31 @@ class _ConfiguracionUserState extends State<ConfiguracionUser> {
         centerTitle: true, 
         title: Text("Configuracion", style: TextStyle(color: Colors.black54)),
       ),
-      body: Column(
+      body: ListView(children: [
+          Column(
         children: [
-          _form(),
-          _form2(),
-          _form3(),
-          _button(context),
+          Container(
+          width: _sizedScreen.width * 0.99,
+          child:_form()
+          ),
+
+          Container(
+            width:_sizedScreen.width * 0.99,
+            child: _form2()
+            ),
+          Container(
+            width: _sizedScreen.width * 0.99,
+            child: _form3(),
+          ),
+          Container(
+            width: _sizedScreen.width * 0.9,
+            child: _button(context) ,
+          ),
+
+        
         ],
       ),
+      ],)
     );
   }
 
