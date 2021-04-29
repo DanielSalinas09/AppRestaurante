@@ -36,7 +36,8 @@ class _ReviewOrderState extends State<ReviewOrder> {
               fontWeight: FontWeight.bold),
         ),
       ),
-      body: Padding(
+      body: ListView(children: [
+        Padding(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +48,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
           ],
         ),
       ),
-      bottomNavigationBar: _button(context, carritoProvider, infoProvider),
+      ],),bottomNavigationBar: _button(context, carritoProvider, infoProvider),
     );
   }
 

@@ -288,42 +288,48 @@ class _DescriptionDishState extends State<DescriptionDish> {
         padding: const EdgeInsets.all(5.0),
         child: Row(
           children: [
-            InkWell(
-              child: Icon(
-                Icons.remove,
-                size: 25,
+            Expanded(
+                child: InkWell(
+                child: Icon(
+                  Icons.remove,
+                  size: 25,
+                ),
+                onTap: () {
+                  if (counter == 1) {
+                  } else {
+                    setState(() {
+                      counter--;
+                      subTotal = precio * counter;
+                    });
+                  }
+                },
               ),
-              onTap: () {
-                if (counter == 1) {
-                } else {
+            ),
+            
+            Expanded(
+                  child: 
+                  Container(alignment: Alignment.center,
+                    child:Text(
+                     
+                counter.toString(),
+                style: TextStyle(fontSize: 20),
+              ),)
+                 
+            ),
+            
+            Expanded(
+                          child: InkWell(
+                child: Icon(
+                  Icons.add,
+                  size: 25,
+                ),
+                onTap: () {
                   setState(() {
-                    counter--;
+                    counter++;
                     subTotal = precio * counter;
                   });
-                }
-              },
-            ),
-            SizedBox(
-              width: 15,
-            ),
-            Text(
-              counter.toString(),
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(
-              width: 15,
-            ),
-            InkWell(
-              child: Icon(
-                Icons.add,
-                size: 25,
+                },
               ),
-              onTap: () {
-                setState(() {
-                  counter++;
-                  subTotal = precio * counter;
-                });
-              },
             )
           ],
         ),
