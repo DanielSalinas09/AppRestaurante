@@ -1,3 +1,4 @@
+import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
 import 'package:app_restaurante/src/providers/CarritoProvider.dart';
 
 import 'package:app_restaurante/src/providers/infoProvider.dart';
@@ -23,14 +24,30 @@ import 'package:app_restaurante/src/page/searchPlato.dart';
 import 'package:app_restaurante/src/page/sendingOrden.dart';
 import 'package:app_restaurante/src/splashscreen.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = new PreferenciasUsuario();
+  await prefs.initPrefs();
+  print(prefs.token);
+
+  runApp(MyAPP());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyAPP extends StatefulWidget {
+  @override
+  _MyAPPState createState() => _MyAPPState();
+}
+
+class _MyAPPState extends State<MyAPP> {
+  final _prefs = new PreferenciasUsuario();
+  String navegacion;
   @override
   Widget build(BuildContext context) {
+    if (_prefs.token != "") {
+      navegacion = "navigation";
+    } else {
+      navegacion = "login";
+    }
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -42,7 +59,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(fontFamily: 'MPLUSRounded1c'),
         debugShowCheckedModeBanner: false,
         builder: EasyLoading.init(),
-        initialRoute: 'login',
+        initialRoute: navegacion,
         routes: {
           'splashScreen': (BuildContext context) => SplashsCreen(),
           'login': (BuildContext context) => Login(),

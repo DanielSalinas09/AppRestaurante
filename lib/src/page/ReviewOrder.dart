@@ -1,5 +1,6 @@
+import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
 import 'package:app_restaurante/src/providers/CarritoProvider.dart';
-import 'package:app_restaurante/src/providers/infoProvider.dart';
+
 import 'package:app_restaurante/src/providers/pedidoProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -16,9 +17,9 @@ class _ReviewOrderState extends State<ReviewOrder> {
   int _value = 1;
   var conver = NumberFormat("#,###", 'es-CO');
   final pedidoProvider = new PedidoProvider();
+  final _prefs = new PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
-    final infoProvider = Provider.of<InfoProvider>(context, listen: false);
     final carritoProvider =
         Provider.of<CarritoProvider>(context, listen: false);
     return Scaffold(
@@ -36,19 +37,25 @@ class _ReviewOrderState extends State<ReviewOrder> {
               fontWeight: FontWeight.bold),
         ),
       ),
-      body: ListView(children: [
-        Padding(
-        padding: EdgeInsets.only(left: 20, right: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _title('Pedidos'),
-            _body(infoProvider.direction, '30 - 40 min', carritoProvider.total,
-                context)
-          ],
-        ),
+      body: ListView(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 20, right: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _title('Pedidos'),
+                _body(_prefs.direction, '30 - 40 min', carritoProvider.total,
+                    context)
+              ],
+            ),
+          ),
+        ],
       ),
-      ],),bottomNavigationBar: _button(context, carritoProvider, infoProvider),
+      bottomNavigationBar: _button(
+        context,
+        carritoProvider,
+      ),
     );
   }
 
@@ -59,8 +66,10 @@ class _ReviewOrderState extends State<ReviewOrder> {
     );
   }
 
-  Widget _button(BuildContext context, CarritoProvider carritoProvider,
-      InfoProvider infoProvider) {
+  Widget _button(
+    BuildContext context,
+    CarritoProvider carritoProvider,
+  ) {
     return Padding(
       padding: const EdgeInsets.all(30),
       child: BottomAppBar(
@@ -79,7 +88,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
             onPressed: () {
               switch (_value) {
                 case 1:
-                  _realizarPedido(carritoProvider, infoProvider);
+                  _realizarPedido(carritoProvider);
 
                   break;
                 case 2:
@@ -92,24 +101,20 @@ class _ReviewOrderState extends State<ReviewOrder> {
     );
   }
 
-  _realizarPedido(
-      CarritoProvider carritoProvider, InfoProvider infoProvider) async {
+  _realizarPedido(CarritoProvider carritoProvider) async {
     carritoProvider.realizarPedido();
-    if (infoProvider.idDirection == null) {
+    if (_prefs.idDirection == null) {
       _mostrarAlert();
       print("Entro aqui");
     } else {
-      print("Direccion: " + infoProvider.idDirection);
-      Map info = await pedidoProvider.pedido(
-          infoProvider.token,
-          infoProvider.idUsuario,
-          infoProvider.idDirection,
-          carritoProvider.datos);
+      print("Direccion: " + _prefs.idDirection);
+      Map info = await pedidoProvider.pedido(_prefs.token, _prefs.idUsuario,
+          _prefs.idDirection, carritoProvider.datos);
 
       if (info["message"] == "pedido guardada correctametne") {
-        infoProvider.idPedido = info["pedido"]["_id"];
-        infoProvider.estado = info["pedido"]["estado"];
-        print("El id del pedido" + infoProvider.idPedido);
+        _prefs.idPedido = info["pedido"]["_id"];
+        _prefs.estado = info["pedido"]["estado"];
+
         Navigator.pushNamed(context, 'sendingOrder');
       } else {
         _mostrarAlert();
@@ -145,7 +150,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
   Widget _body(
       String direction, String tiempo, int valor, BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(padding: EdgeInsets.only(top:10)),
+      Padding(padding: EdgeInsets.only(top: 10)),
       Text(
         'Direccion',
         style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),

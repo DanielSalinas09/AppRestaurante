@@ -1,5 +1,6 @@
+import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
 import 'package:app_restaurante/src/providers/CarritoProvider.dart';
-import 'package:app_restaurante/src/providers/infoProvider.dart';
+
 import 'package:app_restaurante/src/providers/pedidoProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,10 +14,10 @@ class SendingOrder extends StatefulWidget {
 
 class _SendingOrderState extends State<SendingOrder> {
   final pedidoProvider = new PedidoProvider();
+  final _prefs = new PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
-    final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
-    if (infoProvider.estado == "disponible") {
+    if (_prefs.estado == "disponible") {
       return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -61,13 +62,12 @@ class _SendingOrderState extends State<SendingOrder> {
             ),
             backgroundColor: Colors.white,
             body: FutureBuilder(
-              future: pedidoProvider.status(
-                  infoProvider.token, infoProvider.idPedido),
+              future: pedidoProvider.status(_prefs.token, _prefs.idPedido),
               builder: (BuildContext context,
                   AsyncSnapshot<Map<String, dynamic>> snapshot) {
                 if (snapshot.hasData) {
-                  infoProvider.estado = snapshot.data["estado"];
-                  print("EL ESTADO ACTUAL ES :" + infoProvider.estado);
+                  _prefs.estado = snapshot.data["estado"];
+                  print("EL ESTADO ACTUAL ES :" + _prefs.estado);
                   return SingleChildScrollView(
                     child: Container(
                       padding: const EdgeInsets.all(20),
@@ -75,7 +75,7 @@ class _SendingOrderState extends State<SendingOrder> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Su pedido esta ${infoProvider.estado}',
+                            'Su pedido esta ${_prefs.estado}',
                             style: TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold),
                           ),
@@ -95,7 +95,7 @@ class _SendingOrderState extends State<SendingOrder> {
                           SizedBox(
                             height: 10,
                           ),
-                          _lisView('10:00 PM', infoProvider)
+                          _lisView('10:00 PM')
                         ],
                       ),
                     ),
@@ -195,7 +195,7 @@ class _SendingOrderState extends State<SendingOrder> {
     );
   }
 
-  Widget _lisView(String tiempo, InfoProvider infoProvider) {
+  Widget _lisView(String tiempo) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -235,7 +235,7 @@ class _SendingOrderState extends State<SendingOrder> {
           style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600),
         ),
         Text(
-          infoProvider.direction,
+          _prefs.direction,
           style: TextStyle(
             fontSize: 15,
           ),
@@ -263,21 +263,6 @@ class _SendingOrderState extends State<SendingOrder> {
         Divider()
       ],
     );
-  }
-
-  _submit(InfoProvider infoProvider) async {
-    Map<String, dynamic> info = await pedidoProvider.cancelarPedido(
-        infoProvider.token, infoProvider.idPedido);
-    if (info["message"] == "el pedido ha sido cancelado") {
-      _mostrarAlert("Informacion", "El pedido ha sido cancelado");
-      infoProvider.estado = 'disponible';
-    } else if (info["message"] ==
-        "el pedido ya se esta preparando, no se puede cancelar") {
-      _mostrarAlert("Informacion",
-          "El pedido ya se esta preparando, nose puede cancelar");
-    } else {
-      print("El pedido se cancelo" + info.toString());
-    }
   }
 
   void _mostrarAlert(String title, String message) {
@@ -311,8 +296,7 @@ class _SendingOrderState extends State<SendingOrder> {
   }
 
   Widget mostrarBotonCancelar() {
-    final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
-    if (infoProvider.estado == "por confirmar") {
+    if (_prefs.estado == "por confirmar") {
       return ElevatedButton(
         style: ButtonStyle(
             padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
@@ -324,7 +308,7 @@ class _SendingOrderState extends State<SendingOrder> {
           style: TextStyle(fontSize: 18),
         ),
         onPressed: () {
-          _submit(infoProvider);
+          _submit();
         },
       );
     } else {
@@ -332,9 +316,23 @@ class _SendingOrderState extends State<SendingOrder> {
     }
   }
 
+  _submit() async {
+    Map<String, dynamic> info =
+        await pedidoProvider.cancelarPedido(_prefs.token, _prefs.idPedido);
+    if (info["message"] == "el pedido ha sido cancelado") {
+      _mostrarAlert("Informacion", "El pedido ha sido cancelado");
+      _prefs.estado = 'disponible';
+    } else if (info["message"] ==
+        "el pedido ya se esta preparando, no se puede cancelar") {
+      _mostrarAlert("Informacion",
+          "El pedido ya se esta preparando, nose puede cancelar");
+    } else {
+      print("El pedido se cancelo" + info.toString());
+    }
+  }
+
   Widget buttonPedidoRecibido() {
-    final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
-    if (infoProvider.estado == "enviado") {
+    if (_prefs.estado == "enviado") {
       return ElevatedButton(
         style: ButtonStyle(
             padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
@@ -346,8 +344,8 @@ class _SendingOrderState extends State<SendingOrder> {
           style: TextStyle(fontSize: 18),
         ),
         onPressed: () {
-          infoProvider.estado = "disponible";
-          infoProvider.idPedido = "";
+          _prefs.estado = "disponible";
+          _prefs.idPedido = "";
           Navigator.pushReplacementNamed(context, "navigation");
         },
       );

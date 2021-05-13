@@ -1,3 +1,5 @@
+import 'package:app_restaurante/src/page/navigation.dart';
+import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -19,6 +21,7 @@ class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
   final loginProvider = new LoginProvider();
   LoginModal loginModal = new LoginModal();
+  final _prefs = new PreferenciasUsuario();
   @override
   void initState() {
     EasyLoading.dismiss();
@@ -64,14 +67,13 @@ class _LoginState extends State<Login> {
   }
 
   submit() async {
-    final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       EasyLoading.show(
           status: "Loading",
           maskType: EasyLoadingMaskType.black,
           dismissOnTap: false);
-      bool info = await loginProvider.user(infoProvider.number);
+      bool info = await loginProvider.user(_prefs.numero);
 
       if (info) {
         Navigator.pushNamed(context, 'loginVerificacion');
@@ -183,11 +185,11 @@ class _LoginState extends State<Login> {
   }
 
   Widget _input() {
-    final infoProvider = Provider.of<InfoProvider>(this.context);
+    final _prefs = new PreferenciasUsuario();
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(),
-      onSaved: (value) => infoProvider.number = int.parse(value),
+      onSaved: (value) => _prefs.numero = int.parse(value),
       validator: (value) {
         if (utils.isNumeric(value) && value.length == 10) {
           return null;

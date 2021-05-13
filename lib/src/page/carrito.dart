@@ -1,5 +1,6 @@
+import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
 import 'package:app_restaurante/src/providers/CarritoProvider.dart';
-import 'package:app_restaurante/src/providers/infoProvider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -13,14 +14,15 @@ class Carrito extends StatefulWidget {
 
 class _CarritoState extends State<Carrito> {
   var precio = NumberFormat("#,###", 'es-CO');
+  final _prefs = new PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
     final carritoProvider =
         Provider.of<CarritoProvider>(context, listen: false);
-    final infoProvider = Provider.of<InfoProvider>(context, listen: false);
-    if (infoProvider.estado == 'preparando' ||
-        infoProvider.estado == 'por confirmar' ||
-        infoProvider.estado == 'enviado') {
+
+    if (_prefs.estado == 'preparando' ||
+        _prefs.estado == 'por confirmar' ||
+        _prefs.estado == 'enviado') {
       return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,

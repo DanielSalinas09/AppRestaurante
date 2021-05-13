@@ -1,10 +1,10 @@
 import 'package:app_restaurante/src/models/platoModel.dart';
+import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
 import 'package:app_restaurante/src/providers/categoryProvider.dart';
-import 'package:app_restaurante/src/providers/infoProvider.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class Category extends StatefulWidget {
   Category({Key key}) : super(key: key);
@@ -16,10 +16,10 @@ class Category extends StatefulWidget {
 class CategoryState extends State<Category> {
   final formKey = GlobalKey<FormState>();
   final categoryProvider = new CateroryProvider();
+  final _prefs = new PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
     Map parametro = ModalRoute.of(context).settings.arguments;
-    final infoProvider = Provider.of<InfoProvider>(context);
 
     return SafeArea(
       top: false,
@@ -58,7 +58,7 @@ class CategoryState extends State<Category> {
                     SizedBox(
                       height: 20,
                     ),
-                    _scrollCard(infoProvider.token, parametro['id']),
+                    _scrollCard(_prefs.token, parametro['id']),
                   ],
                 )),
           )),

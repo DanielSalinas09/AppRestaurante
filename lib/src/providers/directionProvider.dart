@@ -6,21 +6,22 @@ import 'package:http/http.dart' as http;
 class DirectionProvider {
   String _url = "backend-delivery.azurewebsites.net";
   Future<List<dynamic>> createAddres(
-      String search, String token, int number) async {
+      String search, String token, String number) async {
     final url = Uri.https(_url, '/api/direccion/create');
     final resp = await http.post(url,
         headers: {'x-access-token': token},
-        body: {"numero": number.toString(), "direccion": search});
+        body: {"numero": number, "direccion": search});
     final respDecode = jsonDecode(resp.body);
     return [respDecode["direccion"]["_id"]];
   }
 
-  Future<List<DirectionModal>> showDirection(String token, int number) async {
+  Future<List<DirectionModal>> showDirection(
+      String token, String number) async {
     final url = Uri.https(_url, "/api/direccion");
     final resp = await http.post(url, headers: {
       'x-access-token': token,
     }, body: {
-      "numero": number.toString(),
+      "numero": number,
     });
     final respDecode = json.decode(resp.body);
     final direccion =

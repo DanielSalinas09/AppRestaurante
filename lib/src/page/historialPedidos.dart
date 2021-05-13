@@ -1,9 +1,8 @@
+import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_restaurante/src/providers/historialpedidosProvider.dart';
-import 'package:app_restaurante/src/providers/infoProvider.dart';
-import 'package:provider/provider.dart';
 
 class PedidosPendientes extends StatefulWidget {
   PedidosPendientes({Key key}) : super(key: key);
@@ -14,7 +13,7 @@ class PedidosPendientes extends StatefulWidget {
 
 class _PedidosPendientesState extends State<PedidosPendientes> {
   final formKey = GlobalKey<FormState>();
-
+  final _prefs = new PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -154,10 +153,8 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
   }
 
   Widget _builderHistorialpedidos(BuildContext context) {
-    final infoProvider = Provider.of<InfoProvider>(context);
     return FutureBuilder(
-      future:
-          PedidosProvider().getAll(infoProvider.idUsuario, infoProvider.token),
+      future: PedidosProvider().getAll(_prefs.idUsuario, _prefs.token),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
@@ -167,14 +164,14 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
             padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
             itemBuilder: (BuildContext context, int index) {
               return _condicionalPedidos(
-                  snapshot.data[index].numero,
-                  snapshot.data[index].estado,
-                  snapshot.data[index].valor,
-                  snapshot.data[index].platos,
-                  snapshot.data[index].id,
-                  snapshot.data[index].platos,
-                  snapshot.data[index].direccion.direccion,
-                  );
+                snapshot.data[index].numero,
+                snapshot.data[index].estado,
+                snapshot.data[index].valor,
+                snapshot.data[index].platos,
+                snapshot.data[index].id,
+                snapshot.data[index].platos,
+                snapshot.data[index].direccion.direccion,
+              );
             },
           );
         } else {
@@ -188,6 +185,7 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
 
   _condicionalPedidos(int numeroPedido, String estado, int valor, List plato,
       String id, List tamano, String direccion) {
-    return _pedido(numeroPedido, estado, valor, plato, id, tamano[0]["nombre"], direccion);
+    return _pedido(
+        numeroPedido, estado, valor, plato, id, tamano[0]["nombre"], direccion);
   }
 }

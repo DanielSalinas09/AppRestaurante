@@ -1,6 +1,7 @@
 import 'package:app_restaurante/src/models/categoryModal.dart';
 import 'package:app_restaurante/src/models/directionModal.dart';
 import 'package:app_restaurante/src/models/platoModel.dart';
+import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
 import 'package:app_restaurante/src/providers/categoryProvider.dart';
 
 import 'package:app_restaurante/src/providers/infoProvider.dart';
@@ -23,9 +24,10 @@ class HomeState extends State {
   final categoryProvider = new CateroryProvider();
   TextEditingController clear = new TextEditingController();
   ScrollController scroll = new ScrollController();
+  final _prefs = new PreferenciasUsuario();
+
   @override
   Widget build(BuildContext context) {
-    final infoProvider = Provider.of<InfoProvider>(context);
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -43,9 +45,9 @@ class HomeState extends State {
                 SizedBox(height: 10.0),
                 _descubre(),
                 SizedBox(height: 10.0),
-                _scrollHorizontalCategory(infoProvider.token),
+                _scrollHorizontalCategory(_prefs.token),
                 SizedBox(height: 30.0),
-                _scrollCard(infoProvider.token),
+                _scrollCard(_prefs.token),
               ],
             ),
           ),
@@ -55,8 +57,6 @@ class HomeState extends State {
   }
 
   Widget _enviarDireccion() {
-    final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
-    String direccion = infoProvider.direction;
     return Row(
       children: [
         Text(
@@ -74,7 +74,7 @@ class HomeState extends State {
         ),
         InkWell(
           child: Text(
-            direccion,
+            _prefs.direction,
             style: TextStyle(
                 color: Color(0xFF000000),
                 fontSize: 20.0,

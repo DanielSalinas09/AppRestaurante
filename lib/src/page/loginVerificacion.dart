@@ -1,3 +1,4 @@
+import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
@@ -6,6 +7,7 @@ import 'package:app_restaurante/src/models/loginModals.dart';
 import 'package:app_restaurante/src/providers/infoProvider.dart';
 import 'package:app_restaurante/src/providers/loginProvider-verification.dart';
 import 'package:app_restaurante/src/utils/utils.dart';
+
 import 'package:flutter/material.dart';
 
 class LoginVerificacion extends StatefulWidget {
@@ -20,6 +22,7 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
   final formKey = GlobalKey<FormState>();
   final loginModal = new LoginModal();
   final loginVerificationProvider = new LoginVerificationProvider();
+  final _prefs = new PreferenciasUsuario();
 
   @override
   void initState() {
@@ -129,8 +132,6 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
   }
 
   _submit() async {
-    final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
-    int number = infoProvider.number;
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       print("Codigo digitado" + verify.toString());
@@ -138,14 +139,16 @@ class _LoginVerificacionState extends State<LoginVerificacion> {
           status: "Loading",
           maskType: EasyLoadingMaskType.black,
           dismissOnTap: false);
-      var info = await loginVerificationProvider.verification(verify, number);
+      var info =
+          await loginVerificationProvider.verification(verify, _prefs.numero);
 
       print(info);
       if (info[0]) {
-        infoProvider.token = info[1];
-        infoProvider.nombre = info[2]["nombre"];
-        infoProvider.apellido = info[2]["apellidos"];
-        infoProvider.idUsuario = info[2]["_id"];
+        print("TOKEN PERSISTENTE" + _prefs.token);
+
+        _prefs.nombre = info[2]["nombre"];
+        _prefs.apellido = info[2]["apellidos"];
+        _prefs.idUsuario = info[2]["_id"];
 
         Navigator.of(context)
             .pushNamedAndRemoveUntil('navigation', (route) => false);

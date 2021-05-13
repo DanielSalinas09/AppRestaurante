@@ -1,6 +1,6 @@
 import 'package:app_restaurante/src/models/platoModel.dart';
-import 'package:app_restaurante/src/providers/infoProvider.dart';
-import 'package:provider/provider.dart';
+import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
+
 import 'package:intl/intl.dart';
 import 'package:app_restaurante/src/providers/platosProdiver.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class SearchPlato extends StatefulWidget {
 class SearchPlatoState extends State<SearchPlato> {
   PlatosProvider platoProvider = new PlatosProvider();
   dynamic buscador;
-
+  final _prefs = new PreferenciasUsuario();
   Widget build(BuildContext context) {
     Map parametro = ModalRoute.of(context).settings.arguments;
 
@@ -63,9 +63,8 @@ class SearchPlatoState extends State<SearchPlato> {
     BuildContext context,
     String plato,
   ) {
-    final infoProvider = Provider.of<InfoProvider>(this.context, listen: false);
     return FutureBuilder(
-      future: platoProvider.searchPlato(plato, infoProvider.token),
+      future: platoProvider.searchPlato(plato, _prefs.token),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data.isEmpty) {

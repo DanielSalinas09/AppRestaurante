@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:app_restaurante/src/models/loginModals.dart';
-import 'package:app_restaurante/src/providers/infoProvider.dart';
+import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
+
 import 'package:http/http.dart' as http;
 
 class LoginProvider {
@@ -11,13 +12,11 @@ class LoginProvider {
     return _message;
   }
 
-  final infoProvider = new InfoProvider();
   final loginModal = new LoginModal();
-  Future<bool> user(int number) async {
+  Future<bool> user(String number) async {
     String url = "https://backend-delivery.azurewebsites.net/api/auth/login";
 
-    var response =
-        await http.post(Uri.parse(url), body: {"numero": number.toString()});
+    var response = await http.post(Uri.parse(url), body: {"numero": number});
 
     final respDecode = jsonDecode(response.body);
     loginModal.code = respDecode["codigo"];
@@ -38,12 +37,13 @@ class LoginVerificationProvider {
   String token;
 
   final loginModal = new LoginModal();
+  final _prefs = new PreferenciasUsuario();
 
-  Future<List<dynamic>> verification(int code, int number) async {
+  Future<List<dynamic>> verification(int code, String number) async {
     String url = "https://backend-delivery.azurewebsites.net/api/auth/verify";
 
     final resp = await http.post(Uri.parse(url), body: {
-      "numero": number.toString(),
+      "numero": number,
       "codigo": code.toString(),
     });
 
@@ -51,6 +51,8 @@ class LoginVerificationProvider {
 
     print(respDecode);
     if (respDecode["message"] == "verificacion completada") {
+      _prefs.token = respDecode["token"];
+      print("TOKEN 1 : ====" + _prefs.token);
       return [true, respDecode["token"], respDecode["user"]];
     } else {
       return [false];

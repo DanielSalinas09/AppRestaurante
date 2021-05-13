@@ -1,5 +1,6 @@
+import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
 import 'package:app_restaurante/src/providers/CarritoProvider.dart';
-import 'package:app_restaurante/src/providers/infoProvider.dart';
+
 import 'package:app_restaurante/src/providers/pedidoProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_form.dart';
@@ -24,9 +25,9 @@ class PagosOnlineState extends State<PagosOnline> {
   bool isCvvFocused = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final pedidoProvider = new PedidoProvider();
+  final _prefs = new PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
-    final infoProvider = Provider.of<InfoProvider>(context, listen: false);
     final carritoProvider =
         Provider.of<CarritoProvider>(context, listen: false);
     return Scaffold(
@@ -88,7 +89,7 @@ class PagosOnlineState extends State<PagosOnline> {
                           ),
                           onCreditCardModelChange: onCreditCardModelChange,
                         ),
-                        _button(context, infoProvider, carritoProvider),
+                        _button(context, carritoProvider),
                       ],
                     ),
                   ),
@@ -109,8 +110,7 @@ class PagosOnlineState extends State<PagosOnline> {
     });
   }
 
-  Widget _button(BuildContext context, InfoProvider infoProvider,
-      CarritoProvider carritoProvider) {
+  Widget _button(BuildContext context, CarritoProvider carritoProvider) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: BottomAppBar(
@@ -128,7 +128,7 @@ class PagosOnlineState extends State<PagosOnline> {
             ),
             onPressed: () {
               if (formKey.currentState.validate()) {
-                _realizarPedido(carritoProvider, infoProvider);
+                _realizarPedido(carritoProvider);
               } else {
                 print('invalid!');
               }
@@ -138,23 +138,21 @@ class PagosOnlineState extends State<PagosOnline> {
   }
 
   _realizarPedido(
-      CarritoProvider carritoProvider, InfoProvider infoProvider) async {
+    CarritoProvider carritoProvider,
+  ) async {
     carritoProvider.realizarPedido();
-    if (infoProvider.idDirection == null) {
+    if (_prefs.idDirection == null) {
       _mostrarAlert();
       print("Entro aqui");
     } else {
-      print("Direccion: " + infoProvider.idDirection);
-      Map info = await pedidoProvider.pedido(
-          infoProvider.token,
-          infoProvider.idUsuario,
-          infoProvider.idDirection,
-          carritoProvider.datos);
+      print("Direccion: " + _prefs.idDirection);
+      Map info = await pedidoProvider.pedido(_prefs.token, _prefs.idUsuario,
+          _prefs.idDirection, carritoProvider.datos);
 
       if (info["message"] == "pedido guardada correctametne") {
-        infoProvider.idPedido = info["pedido"]["_id"];
-        infoProvider.estado = info["pedido"]["estado"];
-        print("El id del pedido" + infoProvider.idPedido);
+        _prefs.idPedido = info["pedido"]["_id"];
+        _prefs.estado = info["pedido"]["estado"];
+        print("El id del pedido" + _prefs.idPedido);
         Navigator.pushNamed(context, 'sendingOrder');
       } else {
         _mostrarAlert();

@@ -1,10 +1,9 @@
 import 'package:app_restaurante/src/models/directionModal.dart';
+import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
 import 'package:app_restaurante/src/providers/directionProvider.dart';
-import 'package:app_restaurante/src/providers/infoProvider.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SearchDireccion extends StatefulWidget {
   SearchDireccion({Key key}) : super(key: key);
@@ -17,10 +16,9 @@ class SearchDireccionState extends State<SearchDireccion> {
   final formKey = GlobalKey<FormState>();
   final directionProvider = new DirectionProvider();
   TextEditingController clear = new TextEditingController();
-
+  final _prefs = new PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
-    final infoProvider = Provider.of<InfoProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -47,7 +45,7 @@ class SearchDireccionState extends State<SearchDireccion> {
               SizedBox(
                 height: 40.0,
               ),
-              _showDirection(infoProvider.token, infoProvider.number)
+              _showDirection(_prefs.token, _prefs.numero)
             ],
           ),
         ),
@@ -55,7 +53,8 @@ class SearchDireccionState extends State<SearchDireccion> {
     );
   }
 
-  Widget _showDirection(String token, int number) {
+  Widget _showDirection(String token, String number) {
+    print("Numero: " + number.toString());
     return FutureBuilder(
       future: directionProvider.showDirection(token, number),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
@@ -116,12 +115,11 @@ class SearchDireccionState extends State<SearchDireccion> {
   }
 
   _submitSearch(String value) async {
-    final infoProvider = Provider.of<InfoProvider>(context, listen: false);
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       var info = await directionProvider.createAddres(
-          value, infoProvider.token, infoProvider.number);
-      infoProvider.idDirection = info[0];
+          value, _prefs.token, _prefs.numero);
+      _prefs.idDirection = info[0];
     }
   }
 
@@ -133,6 +131,7 @@ class SearchDireccionState extends State<SearchDireccion> {
         color: Color(0xDCDB0D0D),
       ),
       onDismissed: (direccion) {
+        _prefs.direction = "Escoja su direccion";
         directionProvider.deleteDirection(direction.id, token);
       },
       child: ListTile(
@@ -162,10 +161,8 @@ class SearchDireccionState extends State<SearchDireccion> {
 
   _submitDireccion(DirectionModal direction) {
     setState(() {
-      final infoProvider =
-          Provider.of<InfoProvider>(this.context, listen: false);
-      infoProvider.direction = direction.direction;
-      infoProvider.idDirection = direction.id;
+      _prefs.direction = direction.direction;
+      _prefs.idDirection = direction.id;
     });
 
     return Navigator.pop(context);

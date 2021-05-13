@@ -1,9 +1,9 @@
 import 'package:app_restaurante/src/models/platoModel.dart';
-import 'package:app_restaurante/src/providers/infoProvider.dart';
+import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
+
 import 'package:app_restaurante/src/providers/pedidoProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class OrderProduct extends StatefulWidget {
   OrderProduct({Key key}) : super(key: key);
@@ -15,9 +15,9 @@ class OrderProduct extends StatefulWidget {
 class _OrderProductState extends State<OrderProduct> {
   final pedidoProvider = new PedidoProvider();
   var precio = NumberFormat("#,###", 'es-CO');
+  final _prefs = new PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
-    final infoProvider = Provider.of<InfoProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -33,15 +33,13 @@ class _OrderProductState extends State<OrderProduct> {
               fontWeight: FontWeight.bold),
         ),
       ),
-      body:
-          Padding(padding: EdgeInsets.all(20), child: _showOrder(infoProvider)),
+      body: Padding(padding: EdgeInsets.all(20), child: _showOrder()),
     );
   }
 
-  Widget _showOrder(InfoProvider infoProvider) {
+  Widget _showOrder() {
     return FutureBuilder(
-        future: pedidoProvider.showPedido(
-            infoProvider.token, infoProvider.idPedido),
+        future: pedidoProvider.showPedido(_prefs.token, _prefs.idPedido),
         builder: (BuildContext context, AsyncSnapshot<List<Plato>> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.isEmpty) {
