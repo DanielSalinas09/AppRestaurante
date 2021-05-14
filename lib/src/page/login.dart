@@ -28,8 +28,7 @@ class _LoginState extends State<Login> {
   void initState() {
     super.initState();
     EasyLoading.dismiss();
-    var androidInitialize =
-        new AndroidInitializationSettings('mipmap/ic_launcher');
+    var androidInitialize = new AndroidInitializationSettings('logo');
     var iOsInitialize = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
         android: androidInitialize, iOS: iOsInitialize);
