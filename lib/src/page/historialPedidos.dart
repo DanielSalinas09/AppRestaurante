@@ -17,6 +17,7 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.grey),
         shadowColor: Colors.black,
@@ -154,33 +155,40 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
 
   Widget _builderHistorialpedidos(BuildContext context) {
     return FutureBuilder(
-      future: PedidosProvider().getAll(_prefs.idUsuario, _prefs.token),
-      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-        if (snapshot.hasData) {
-          return ListView.builder(
-            physics: ScrollPhysics(parent: ScrollPhysics()),
-            shrinkWrap: true,
-            itemCount: snapshot.data.length,
-            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-            itemBuilder: (BuildContext context, int index) {
-              return _condicionalPedidos(
-                snapshot.data[index].numero,
-                snapshot.data[index].estado,
-                snapshot.data[index].valor,
-                snapshot.data[index].platos,
-                snapshot.data[index].id,
-                snapshot.data[index].platos,
-                snapshot.data[index].direccion.direccion,
+        future: PedidosProvider().getAll(_prefs.idUsuario, _prefs.token),
+        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data.isEmpty) {
+              return Center(
+                  child: Text(
+                "Usted no tiene pedidos!!",
+                style: TextStyle(fontSize: 18, color: Colors.redAccent),
+              ));
+            } else {
+              return ListView.builder(
+                physics: ScrollPhysics(parent: ScrollPhysics()),
+                shrinkWrap: true,
+                itemCount: snapshot.data.length,
+                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                itemBuilder: (BuildContext context, int index) {
+                  return _condicionalPedidos(
+                    snapshot.data[index].numero,
+                    snapshot.data[index].estado,
+                    snapshot.data[index].valor,
+                    snapshot.data[index].platos,
+                    snapshot.data[index].id,
+                    snapshot.data[index].platos,
+                    snapshot.data[index].direccion.direccion,
+                  );
+                },
               );
-            },
-          );
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
-    );
+            }
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 
   _condicionalPedidos(int numeroPedido, String estado, int valor, List plato,

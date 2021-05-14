@@ -23,6 +23,7 @@ class _LoginState extends State<Login> {
   final loginProvider = new LoginProvider();
   LoginModal loginModal = new LoginModal();
   final _prefs = new PreferenciasUsuario();
+  TextEditingController clear = new TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -39,12 +40,9 @@ class _LoginState extends State<Login> {
   FlutterLocalNotificationsPlugin localNotification;
 
   Future _showNotication(String code) async {
-    var androidDetails = new AndroidNotificationDetails(
-        "notification_channel_id",
-        "Channel name",
-        "Here we will put the description about the channel",
-        importance: Importance.max,
-        priority: Priority.high);
+    var androidDetails = new AndroidNotificationDetails("id de la notificacion",
+        "nombre de la notificacion", "descripcion de la notificacion",
+        importance: Importance.max, priority: Priority.high);
 
     var iosDetails = new IOSNotificationDetails();
     var generalNotificationDetails =
@@ -89,7 +87,10 @@ class _LoginState extends State<Login> {
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        onPressed: () => submit());
+        onPressed: () {
+          submit();
+          clear.clear();
+        });
   }
 
   submit() async {
@@ -100,9 +101,10 @@ class _LoginState extends State<Login> {
           maskType: EasyLoadingMaskType.black,
           dismissOnTap: false);
       List info = await loginProvider.user(_prefs.numero);
-      _showNotication(info[1].toString());
 
       if (info[0]) {
+        _showNotication(info[1].toString());
+
         Navigator.pushNamed(context, 'loginVerificacion');
       } else {
         EasyLoading.dismiss();
@@ -215,6 +217,7 @@ class _LoginState extends State<Login> {
     final _prefs = new PreferenciasUsuario();
     return TextFormField(
       keyboardType: TextInputType.number,
+      controller: clear,
       decoration: InputDecoration(),
       onSaved: (value) => _prefs.numero = int.parse(value),
       validator: (value) {
