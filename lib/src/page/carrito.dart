@@ -26,8 +26,9 @@ class _CarritoState extends State<Carrito> {
       return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          elevation: 0,
+          elevation: 2.5,
           centerTitle: true,
+          shadowColor: Colors.white,
           iconTheme: IconThemeData(color: Color(0xF2979797)),
           title: Text(
             'Carrito',
@@ -55,9 +56,10 @@ class _CarritoState extends State<Carrito> {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
-            elevation: 0,
+            elevation: 2.5,
             centerTitle: true,
             iconTheme: IconThemeData(color: Color(0xF2979797)),
+            shadowColor: Colors.white,
             title: Text(
               'Carrito',
               style: TextStyle(
@@ -80,8 +82,9 @@ class _CarritoState extends State<Carrito> {
             backgroundColor: Colors.white,
             appBar: AppBar(
               backgroundColor: Colors.white,
-              elevation: 0,
+              elevation: 2.5,
               centerTitle: true,
+              shadowColor: Colors.white,
               iconTheme: IconThemeData(color: Color(0xF2979797)),
               title: Text(
                 'Carrito',

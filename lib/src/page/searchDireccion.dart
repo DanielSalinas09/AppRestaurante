@@ -120,6 +120,9 @@ class SearchDireccionState extends State<SearchDireccion> {
       var info = await directionProvider.createAddres(
           value, _prefs.token, _prefs.numero);
       _prefs.idDirection = info[0];
+      setState(() {
+        _showDirection(_prefs.token, _prefs.numero);
+      });
     }
   }
 

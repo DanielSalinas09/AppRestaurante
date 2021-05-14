@@ -30,6 +30,7 @@ class HomeState extends State {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Color(0xF2FFFFFF),
         body: SingleChildScrollView(
           child: Container(
             color: Colors.white,
@@ -168,7 +169,7 @@ class HomeState extends State {
                     );
                   });
             } else {
-              return Text("no hay categoria");
+              return Center(child: Text("Cargando Categorias ..."));
             }
           },
         ),

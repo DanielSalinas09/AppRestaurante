@@ -19,6 +19,7 @@ class _SendingOrderState extends State<SendingOrder> {
   Widget build(BuildContext context) {
     if (_prefs.estado == "disponible") {
       return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
             "Pedido",
@@ -27,7 +28,7 @@ class _SendingOrderState extends State<SendingOrder> {
                 color: Color(0xF2979797),
                 fontWeight: FontWeight.bold),
           ),
-          elevation: 0,
+          elevation: 2.5,
           iconTheme: IconThemeData(color: Color(0xFF7575753)),
 
           shadowColor: Colors.white,
@@ -43,6 +44,7 @@ class _SendingOrderState extends State<SendingOrder> {
     } else {
       return WillPopScope(
           child: Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
               title: Text(
                 "Pedido",
@@ -51,7 +53,7 @@ class _SendingOrderState extends State<SendingOrder> {
                     color: Color(0xF2979797),
                     fontWeight: FontWeight.bold),
               ),
-              elevation: 0,
+              elevation: 25,
               iconTheme: IconThemeData(color: Color(0xFF7575753)),
 
               shadowColor: Colors.white,
@@ -60,7 +62,6 @@ class _SendingOrderState extends State<SendingOrder> {
               centerTitle: true,
               // color
             ),
-            backgroundColor: Colors.white,
             body: FutureBuilder(
               future: pedidoProvider.status(_prefs.token, _prefs.idPedido),
               builder: (BuildContext context,

@@ -26,8 +26,9 @@ class _ReviewOrderState extends State<ReviewOrder> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 2.5,
         centerTitle: true,
+        shadowColor: Colors.white,
         iconTheme: IconThemeData(color: Color(0xF2979797)),
         title: Text(
           'Revision de orden',
