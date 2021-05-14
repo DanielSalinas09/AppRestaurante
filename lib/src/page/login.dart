@@ -1,5 +1,6 @@
 import 'package:app_restaurante/src/page/navigation.dart';
 import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -24,8 +25,33 @@ class _LoginState extends State<Login> {
   final _prefs = new PreferenciasUsuario();
   @override
   void initState() {
-    EasyLoading.dismiss();
     super.initState();
+    EasyLoading.dismiss();
+    var androidInitialize =
+        new AndroidInitializationSettings('mipmap/ic_launcher');
+    var iOsInitialize = new IOSInitializationSettings();
+    var initializationSettings = new InitializationSettings(
+        android: androidInitialize, iOS: iOsInitialize);
+    localNotification = new FlutterLocalNotificationsPlugin();
+    localNotification.initialize(initializationSettings);
+  }
+
+  FlutterLocalNotificationsPlugin localNotification;
+
+  Future _showNotication(String code) async {
+    var androidDetails = new AndroidNotificationDetails(
+        "notification_channel_id",
+        "Channel name",
+        "Here we will put the description about the channel",
+        importance: Importance.max,
+        priority: Priority.high);
+
+    var iosDetails = new IOSNotificationDetails();
+    var generalNotificationDetails =
+        new NotificationDetails(android: androidDetails, iOS: iosDetails);
+
+    await localNotification.show(0, "Codigo de verificacion",
+        "El codigo de verificacion es $code", generalNotificationDetails);
   }
 
   // InfoProvider infoProvider;
@@ -73,9 +99,10 @@ class _LoginState extends State<Login> {
           status: "Loading",
           maskType: EasyLoadingMaskType.black,
           dismissOnTap: false);
-      bool info = await loginProvider.user(_prefs.numero);
+      List info = await loginProvider.user(_prefs.numero);
+      _showNotication(info[1].toString());
 
-      if (info) {
+      if (info[0]) {
         Navigator.pushNamed(context, 'loginVerificacion');
       } else {
         EasyLoading.dismiss();
