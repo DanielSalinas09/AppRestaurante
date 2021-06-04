@@ -79,7 +79,7 @@ class HomeState extends State {
               _prefs.direction,
               style: TextStyle(
                   color: Color(0xFF000000),
-                  fontSize: 20.0,
+                  fontSize: 18.0,
                   fontWeight: FontWeight.bold),
             ),
             onTap: () async {
@@ -144,7 +144,7 @@ class HomeState extends State {
     return Container(
       child: Text(
         "Descubrir",
-        style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
       ),
     );
   }

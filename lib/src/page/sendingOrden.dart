@@ -138,7 +138,7 @@ class _SendingOrderState extends State<SendingOrder> {
           SizedBox(
             height: 30,
           ),
-          Expanded(
+          
             child: Container(
               height: 105,
               width: 200,
@@ -170,7 +170,7 @@ class _SendingOrderState extends State<SendingOrder> {
                 ),
               ),
             ),
-          ),
+          
           SizedBox(
             height: 10,
           ),
