@@ -21,6 +21,7 @@ class LoginProvider {
 
     final respDecode = jsonDecode(response.body);
     loginModal.code = respDecode["codigo"];
+    print(respDecode);
 
     print("El Codigo es " + loginModal.code.toString());
 

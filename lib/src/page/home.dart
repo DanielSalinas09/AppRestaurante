@@ -73,18 +73,20 @@ class HomeState extends State {
         SizedBox(
           width: 10.0,
         ),
-        InkWell(
-          child: Text(
-            _prefs.direction,
-            style: TextStyle(
-                color: Color(0xFF000000),
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold),
+        Expanded(
+          child: InkWell(
+            child: Text(
+              _prefs.direction,
+              style: TextStyle(
+                  color: Color(0xFF000000),
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold),
+            ),
+            onTap: () async {
+              await Navigator.pushNamed(context, 'searchDireccion');
+              setState(() {});
+            },
           ),
-          onTap: () async {
-            await Navigator.pushNamed(context, 'searchDireccion');
-            setState(() {});
-          },
         )
       ],
     );

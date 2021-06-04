@@ -57,7 +57,7 @@ class _UsuarioState extends State<Usuario> {
           borderRadius: BorderRadius.only(
               bottomRight: Radius.circular(30.0),
               bottomLeft: Radius.circular(30.0))),
-      height: 250,
+      height: 260,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -71,9 +71,11 @@ class _UsuarioState extends State<Usuario> {
             'USUARIO',
             style: TextStyle(fontFamily: 'Chonburi', fontSize: 20),
           )),
-          Center(
-              child: Text(nombre + " " + apellido,
-                  style: TextStyle(fontFamily: 'Chonburi', fontSize: 20))),
+          Expanded(
+            child: Center(
+                child: Text(nombre + " " + apellido,
+                    style: TextStyle(fontFamily: 'Chonburi', fontSize: 20))),
+          ),
         ],
       ),
     );
@@ -183,7 +185,7 @@ class _UsuarioState extends State<Usuario> {
             onTap: () => {
               Navigator.of(context)
                   .pushNamedAndRemoveUntil('login', (route) => false),
-              _prefs.token = ""
+              _prefs.token = "",
             },
           ),
         ),

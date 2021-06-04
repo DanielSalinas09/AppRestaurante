@@ -109,14 +109,18 @@ class _PedidosPendientesState extends State<PedidosPendientes> {
                     color: Colors.black,
                     fontWeight: FontWeight.bold),
               ),
-              Text(
-                "Estado: " + estado,
-                style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+              SizedBox(
+                width: 30,
               ),
-              SizedBox()
+              Expanded(
+                child: Text(
+                  "Estado: " + estado,
+                  style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+              ),
             ],
           ),
           Divider(

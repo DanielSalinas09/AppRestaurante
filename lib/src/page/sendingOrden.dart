@@ -138,34 +138,36 @@ class _SendingOrderState extends State<SendingOrder> {
           SizedBox(
             height: 30,
           ),
-          Container(
-            height: 105,
-            width: 200,
-            decoration: BoxDecoration(
-                color: Color(0xF2EB1515),
-                borderRadius: BorderRadius.circular(15)),
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                children: [
-                  Text(
-                    '30 - 40 min',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    'Hora de entrega',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
+          Expanded(
+            child: Container(
+              height: 105,
+              width: 200,
+              decoration: BoxDecoration(
+                  color: Color(0xF2EB1515),
+                  borderRadius: BorderRadius.circular(15)),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    Text(
+                      '30 - 40 min',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 19,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      'Hora de entrega',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
