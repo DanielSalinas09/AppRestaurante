@@ -28,7 +28,8 @@ class _RegistroState extends State<Registro> {
               _fondo(context),
               SizedBox(height: 10),
               _form(),
-              _button(context)
+              _button(context),
+             
             ],
           ),
         ),
@@ -258,4 +259,5 @@ class _RegistroState extends State<Registro> {
       },
     );
   }
+   
 }

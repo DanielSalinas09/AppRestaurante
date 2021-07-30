@@ -65,7 +65,8 @@ class _LoginState extends State<Login> {
               SizedBox(height: 20),
               _form(context),
               SizedBox(height: 80),
-              _button()
+              _button(),
+              _google(),
             ],
           ),
         ),
@@ -227,5 +228,25 @@ class _LoginState extends State<Login> {
         }
       },
     );
+  }
+ Widget _google(){
+    return Center(child: Container(  
+      margin: new EdgeInsets.symmetric(vertical: 20.0),
+      width: 244,
+      height: 49,
+      color: Colors.blue, 
+      child: Row(
+        
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            child: Image.network("https://img.icons8.com/fluency/48/000000/google-logo.png"),
+            color: Colors.white,
+          ),
+          Text('Sign up with Google', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white))
+        ],
+      ),
+    ),);
+    
   }
 }
