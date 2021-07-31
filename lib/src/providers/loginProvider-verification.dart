@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:ffi';
-
+import 'package:flutter/material.dart';
 import 'package:app_restaurante/src/models/loginModals.dart';
 import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -13,6 +14,7 @@ class LoginProvider {
     return _message;
   }
 
+  String _url = 'backend-delivery.azurewebsites.net';
   final loginModal = new LoginModal();
   Future<List<dynamic>> user(String number) async {
     String url = "https://backend-delivery.azurewebsites.net/api/auth/login";
@@ -31,6 +33,29 @@ class LoginProvider {
       return [false];
     } else {
       return [true, respDecode["codigo"]];
+    }
+  }
+
+  Future<String> loginGoogle(BuildContext context, String uid, String name,
+      phone, bool newUser) async {
+    // pr = new ProgressDialog(context);
+
+    final url = Uri.https(_url, '/api/auth/loginWithGoogle');
+    final data = {"uid": uid, "name": name, "phone": phone, "newUser": newUser};
+    if (phone == null) {
+      phone = '';
+    }
+    var response = await http.post(url, body: json.encode(data));
+
+    final decodeData = json.decode(response.body);
+    print(response);
+    final respDecode = jsonDecode(response.body);
+    // loginModal.code = respDecode["codigo"];
+
+    if (respDecode["message"] == "Login exitoso") {
+      return respDecode["token"];
+    } else {
+      return respDecode["message"];
     }
   }
 }

@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "505245526058",
+    "project_id": "delivery-cca14",
+    "storage_bucket": "delivery-cca14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505245526058:android:75fa77e146dfbd57253b53",
+        "android_client_info": {
+          "package_name": "com.empresa.deliveryApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505245526058-vbhkebnq0sektq79tasg9iu4rssu9rth.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.empresa.deliveryApp",
+            "certificate_hash": "cccd4e57fb92f3dce1680856806773c63a4da56e"
+          }
+        },
+        {
+          "client_id": "505245526058-qtg2tjsttmbvpegoefo626vi2m52787l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJQqaignsT17WAnZwPKmBGn7xCb3_uQMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505245526058-qtg2tjsttmbvpegoefo626vi2m52787l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505245526058:android:7c532bbd7b4030e4253b53",
+        "android_client_info": {
+          "package_name": "com.example.app_restaurante"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505245526058-qtg2tjsttmbvpegoefo626vi2m52787l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJQqaignsT17WAnZwPKmBGn7xCb3_uQMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505245526058-qtg2tjsttmbvpegoefo626vi2m52787l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

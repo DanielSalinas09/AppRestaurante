@@ -27,8 +27,12 @@ dependencies:
   curved_navigation_bar: ^0.3.7
   flutter_credit_card: ^0.1.4
   provider:
+  progress_dialog:
   shared_preferences: ^2.0.5
-   
+  firebase_core:
+  firebase_auth:
+  google_sign_in:
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
@@ -36,6 +40,7 @@ dependencies:
   flutter_easyloading: ^3.0.0
   #flutter_local_notifications: ^5.0.0+4
 dev_dependencies:
+  change_app_package_name:
   flutter_test:
     sdk: flutter
 

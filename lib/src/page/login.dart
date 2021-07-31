@@ -1,7 +1,6 @@
-
 import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:app_restaurante/src/models/loginModals.dart';
@@ -10,6 +9,8 @@ import 'package:app_restaurante/src/providers/loginProvider-verification.dart';
 import 'package:app_restaurante/src/utils/utils.dart' as utils;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -229,24 +230,95 @@ class _LoginState extends State<Login> {
       },
     );
   }
- Widget _google(){
-    return Center(child: Container(  
-      margin: new EdgeInsets.symmetric(vertical: 20.0),
-      width: 244,
-      height: 49,
-      color: Colors.blue, 
-      child: Row(
-        
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            child: Image.network("https://img.icons8.com/fluency/48/000000/google-logo.png"),
-            color: Colors.white,
+
+  Widget _google() {
+    return Center(
+      child: GestureDetector(
+        onTap: () async {
+          try {
+            ProgressDialog pr = new ProgressDialog(context);
+            pr.style(
+                message: 'Entrando a su cuenta...',
+                borderRadius: 10.0,
+                backgroundColor: Colors.white,
+                progressWidget: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.red),
+                ),
+                elevation: 10.0,
+                insetAnimCurve: Curves.easeInOut,
+                progress: 0.0,
+                maxProgress: 100.0,
+                progressTextStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 10.0,
+                    fontWeight: FontWeight.w400),
+                messageTextStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w600));
+            UserCredential userGoogle = await signInWithGoogle();
+            pr.show();
+            _prefs.nombre = userGoogle.user.displayName;
+            // print(userGoogle.user.email);
+
+            print("resp");
+
+            String resp = await loginProvider.loginGoogle(
+                context,
+                userGoogle.user.uid,
+                userGoogle.user.displayName,
+                userGoogle.user.phoneNumber,
+                userGoogle.additionalUserInfo.isNewUser);
+            pr.hide();
+            if (resp.substring(0, 13) == "hubo un error") {
+              print(resp);
+            } else {
+              _prefs.token = resp;
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('navigation', (route) => false);
+            }
+
+            print(resp);
+          } catch (e) {}
+        },
+        child: Container(
+          margin: new EdgeInsets.symmetric(vertical: 20.0),
+          width: 244,
+          height: 49,
+          color: Colors.blue,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                child: Image.network(
+                    "https://img.icons8.com/fluency/48/000000/google-logo.png"),
+                color: Colors.white,
+              ),
+              Text('Sign up with Google',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white))
+            ],
           ),
-          Text('Sign up with Google', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white))
-        ],
+        ),
       ),
-    ),);
-    
+    );
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

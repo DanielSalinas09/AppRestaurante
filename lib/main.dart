@@ -1,7 +1,9 @@
+import 'package:app_restaurante/src/page/googleSignUp.dart';
 import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
 import 'package:app_restaurante/src/providers/CarritoProvider.dart';
 
 import 'package:app_restaurante/src/providers/infoProvider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +30,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = new PreferenciasUsuario();
   await prefs.initPrefs();
+  await Firebase.initializeApp();
   print(prefs.token);
 
   runApp(MyAPP());
@@ -63,6 +66,7 @@ class _MyAPPState extends State<MyAPP> {
         routes: {
           'splashScreen': (BuildContext context) => SplashsCreen(),
           'login': (BuildContext context) => Login(),
+          'loginWithGoogle': (BuildContext context) => GoogleSignUp(),
           'loginVerificacion': (BuildContext context) => LoginVerificacion(),
           'registro': (BuildContext context) => Registro(),
           'navigation': (BuildContext context) => Navegation(),

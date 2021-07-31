@@ -1,6 +1,8 @@
 import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Usuario extends StatefulWidget {
   Usuario({Key key}) : super(key: key);
@@ -182,10 +184,12 @@ class _UsuarioState extends State<Usuario> {
                 ],
               ),
             ),
-            onTap: () => {
+            onTap: () async {
+              GoogleSignInAccount googleUser = await GoogleSignIn().signOut();
+
               Navigator.of(context)
-                  .pushNamedAndRemoveUntil('login', (route) => false),
-              _prefs.token = "",
+                  .pushNamedAndRemoveUntil('login', (route) => false);
+              _prefs.token = "";
             },
           ),
         ),
