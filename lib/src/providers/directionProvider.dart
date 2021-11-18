@@ -4,7 +4,7 @@ import 'package:app_restaurante/src/models/directionModal.dart';
 import 'package:http/http.dart' as http;
 
 class DirectionProvider {
-  String _url = "backend-delivery.azurewebsites.net";
+  String _url = "backend-delivery2.azurewebsites.net";
   Future<List<dynamic>> createAddres(
       String search, String token, String number) async {
     final url = Uri.https(_url, '/api/direccion/create');

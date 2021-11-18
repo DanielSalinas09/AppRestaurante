@@ -1,6 +1,6 @@
 import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:app_restaurante/src/models/loginModals.dart';
@@ -29,19 +29,19 @@ class _LoginState extends State<Login> {
   void initState() {
     super.initState();
     EasyLoading.dismiss();
-    /* var androidInitialize = new AndroidInitializationSettings('logo');
+    var androidInitialize = new AndroidInitializationSettings('logo');
     var iOsInitialize = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
         android: androidInitialize, iOS: iOsInitialize);
     localNotification = new FlutterLocalNotificationsPlugin();
-    localNotification.initialize(initializationSettings); */
+    localNotification.initialize(initializationSettings); 
   }
 
-  //FlutterLocalNotificationsPlugin localNotification;
+  FlutterLocalNotificationsPlugin localNotification;
 
-  /* Future _showNotication(String code) async {
+  Future _showNotication(String code) async {
     var androidDetails = new AndroidNotificationDetails("id de la notificacion",
-        "nombre de la notificacion", "descripcion de la notificacion",
+        "nombre de la notificacion",
         importance: Importance.max, priority: Priority.high);
 
     var iosDetails = new IOSNotificationDetails();
@@ -50,7 +50,7 @@ class _LoginState extends State<Login> {
 
     await localNotification.show(0, "Codigo de verificacion",
         "El codigo de verificacion es $code", generalNotificationDetails);
-  } */
+  }
 
   // InfoProvider infoProvider;
   @override
@@ -104,7 +104,7 @@ class _LoginState extends State<Login> {
       List info = await loginProvider.user(_prefs.numero);
 
       if (info[0]) {
-        //_showNotication(info[1].toString());
+        _showNotication(info[1].toString());
         print("CODIGO: " + info[1].toString());
         Navigator.pushNamed(context, 'loginVerificacion');
       } else {

@@ -5,7 +5,7 @@ import 'package:app_restaurante/src/models/platoModel.dart';
 import 'package:http/http.dart' as http;
 
 class CateroryProvider {
-  String _url = "backend-delivery.azurewebsites.net";
+  String _url = "backend-delivery2.azurewebsites.net";
   Future<List<CategoryModal>> showCategory(String token) async {
     final url = Uri.https(_url, '/api/category/');
     final resp = await http.get(url, headers: {'x-access-token': token});

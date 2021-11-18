@@ -15,7 +15,7 @@ class RegisterProvider {
 
   Future<bool> register(
       int numero, String nombre, String apellido, String email) async {
-    String url = "https://backend-delivery.azurewebsites.net/api/auth/registro";
+    String url = "https://backend-delivery2.azurewebsites.net/api/auth/registro";
     print(numero.toString() + " - " + nombre + " - " + apellido);
     var response = await http.post(Uri.parse(url), body: {
       "numero": numero.toString(),

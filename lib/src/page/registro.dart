@@ -65,18 +65,18 @@ class _RegistroState extends State<Registro> {
           status: "Loading",
           maskType: EasyLoadingMaskType.black,
           dismissOnTap: false);
-
-      bool info = await registerProvider.register(registros.numero,
-          registros.nombre, registros.apellido, registros.email);
-      print(info);
-      if (info) {
-        print("El estado es :" + registerProvider.state);
-        Navigator.pushNamed(context, 'login');
-      } else {
-        EasyLoading.dismiss();
-        print("El Usuario ya existe");
-        _mostrarAlert();
-      }
+      print("Hola======="+registros.nombre);
+      // bool info = await registerProvider.register(registros.numero,
+      //     registros.nombre, registros.apellido, registros.email);
+      // print(info);
+      // if (info) {
+      //   print("El estado es :" + registerProvider.state);
+      //   Navigator.pushNamed(context, 'login');
+      // } else {
+      //   EasyLoading.dismiss();
+      //   print("El Usuario ya existe");
+      //   _mostrarAlert();
+      // }
     }
   }
 

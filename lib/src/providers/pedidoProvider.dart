@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 class PedidoProvider {
-  String _url = 'backend-delivery.azurewebsites.net';
+  String _url = 'backend-delivery2.azurewebsites.net';
 
   Future<Map<String, dynamic>> pedido(String token, String idUsuario,
       String idDireccion, List<String> platos) async {

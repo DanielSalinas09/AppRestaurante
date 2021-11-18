@@ -4,7 +4,7 @@ import 'package:app_restaurante/src/models/platoModel.dart';
 import 'package:http/http.dart' as http;
 
 class PlatosProvider {
-  String _url = 'backend-delivery.azurewebsites.net';
+  String _url = 'backend-delivery2.azurewebsites.net';
 
   Future<List<Plato>> getAll(String token) async {
     final url = Uri.https(_url, '/api/plato');
