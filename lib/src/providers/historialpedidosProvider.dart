@@ -11,7 +11,7 @@ class PedidosProvider {
     final response = await http.get(url, headers: {'x-access-token': token});
     final decodeData = json.decode(response.body);
     final pedidos =
-        new Historialdelospedidos.fromJsonList(decodeData['pedidos']);
+        new Historialdelospedidos.fromJsonList(decodeData['pedido']);
     return pedidos.historialdepedidos;
   }
 
