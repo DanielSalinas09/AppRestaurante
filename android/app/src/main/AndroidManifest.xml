@@ -13,6 +13,8 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="app_restaurante"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyC_x7pumhDUUfLUqtyQBagFnWcB-b-R3Vk"/>
         
         <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
         <intent-filter>

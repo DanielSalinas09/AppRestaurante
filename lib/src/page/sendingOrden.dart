@@ -1,6 +1,6 @@
 import 'package:app_restaurante/src/preferencias_usuario/preferencias.dart';
 import 'package:app_restaurante/src/providers/CarritoProvider.dart';
-
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:app_restaurante/src/providers/pedidoProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -92,7 +92,8 @@ class _SendingOrderState extends State<SendingOrder> {
                           SizedBox(
                             height: 9,
                           ),
-                          _card(),
+                          card(),
+                          //_card(),
                           SizedBox(
                             height: 10,
                           ),
@@ -122,81 +123,100 @@ class _SendingOrderState extends State<SendingOrder> {
 
     return true; // return true if the route to be popped
   }
-
-  Widget _card() {
+  Widget card(){
     return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-          border: Border.all(width: 2, color: Color(0x88B1AEAE)),
-          borderRadius: BorderRadius.circular(15)),
-      child: Column(
-        children: [
-          Text(
-            'Tu orden',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Container(
-            width: 200,
-            decoration: BoxDecoration(
-                color: Color(0xF2EB1515),
-                borderRadius: BorderRadius.circular(15)),
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                children: [
-                  Text(
-                    '30 - 40 min',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    'Hora de entrega',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 7,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 30, right: 30, top: 30),
-            child: Text(
-              'Con Delivery fast food, recibirá la entrega prioritaria de su pedido antes de las 10:00 pm, ¡o correremos por nuestra cuenta!',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            height: 100,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/img/carroExpress.jpg'))),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-        ],
-      ),
+      height: 400,
+      child: _map(),
     );
+
   }
+  Widget _map() {
+    return GoogleMap(
+        myLocationEnabled: true,
+        myLocationButtonEnabled: true,
+        zoomControlsEnabled: true,
+        initialCameraPosition: CameraPosition(
+          target: LatLng(10.909075, -74.802325),
+          zoom: 16,
+        ));
+       
+        
+  }
+
+  // Widget _card() {
+  //   return Container(
+  //     width: double.infinity,
+  //     decoration: BoxDecoration(
+  //         border: Border.all(width: 2, color: Color(0x88B1AEAE)),
+  //         borderRadius: BorderRadius.circular(15)),
+  //     child: Column(
+  //       children: [
+  //         Text(
+  //           'Tu orden',
+  //           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+  //         ),
+  //         SizedBox(
+  //           height: 30,
+  //         ),
+  //         Container(
+  //           width: 200,
+  //           decoration: BoxDecoration(
+  //               color: Color(0xF2EB1515),
+  //               borderRadius: BorderRadius.circular(15)),
+  //           child: Padding(
+  //             padding: const EdgeInsets.all(15.0),
+  //             child: Column(
+  //               children: [
+  //                 Text(
+  //                   '30 - 40 min',
+  //                   style: TextStyle(
+  //                       color: Colors.white,
+  //                       fontSize: 19,
+  //                       fontWeight: FontWeight.bold),
+  //                 ),
+  //                 SizedBox(
+  //                   height: 15,
+  //                 ),
+  //                 Text(
+  //                   'Hora de entrega',
+  //                   style: TextStyle(
+  //                       color: Colors.white,
+  //                       fontSize: 17,
+  //                       fontWeight: FontWeight.bold),
+  //                 ),
+  //                 SizedBox(
+  //                   height: 7,
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //         SizedBox(
+  //           height: 10,
+  //         ),
+  //         Padding(
+  //           padding: EdgeInsets.only(left: 30, right: 30, top: 30),
+  //           child: Text(
+  //             'Con Delivery fast food, recibirá la entrega prioritaria de su pedido antes de las 10:00 pm, ¡o correremos por nuestra cuenta!',
+  //             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+  //           ),
+  //         ),
+  //         SizedBox(
+  //           height: 20,
+  //         ),
+  //         Container(
+  //           height: 100,
+  //           decoration: BoxDecoration(
+  //               image: DecorationImage(
+  //                   image: AssetImage('assets/img/carroExpress.jpg'))),
+  //         ),
+  //         SizedBox(
+  //           height: 20,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _lisView(String tiempo) {
     return Column(
